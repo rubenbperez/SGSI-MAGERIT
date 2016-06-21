@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="false"
+    android:descendantFocusability="blocksDescendants"
+    android:focusable="false"
+    android:focusableInTouchMode="false">
+
+    <TextView
+        android:id="@+id/asset_code_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="name"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:clickable="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"/>
+
+    <TextView
+        android:id="@+id/asset_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="name2"
+        android:textSize="16sp"
+        android:layout_below="@+id/asset_code_name"
+        android:clickable="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"/>
+
+    <TextView
+        android:id="@+id/asset_resp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="name3"
+        android:textSize="16sp"
+        android:layout_below="@+id/asset_desc"
+        android:clickable="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"/>
+
+    <TextView
+        android:id="@+id/asset_loc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="name3"
+        android:textSize="16sp"
+        android:layout_below="@+id/asset_resp"
+        android:clickable="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"/>
+
+</RelativeLayout>

@@ -1,0 +1,138 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/frag">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        tools:context=".AddEditProject.AddProjectDetailsFragment"
+        android:descendantFocusability="beforeDescendants"
+        android:focusableInTouchMode="true"
+        android:layout_centerInParent="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_centerInParent="true">
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/nombreProyectoWrapper"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:hintTextAppearance="@style/HintTextLabel">
+
+                <EditText
+                    android:id="@+id/nombreProyecto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:hint="Nombre del proyecto"
+                    android:imeOptions="flagNoFullscreen"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/directorProyectoWrapper"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/nombreProyectoWrapper"
+                android:layout_marginTop="2dp"
+                app:hintTextAppearance="@style/HintTextLabel">
+
+                <EditText
+                    android:id="@+id/directorProyecto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:hint="Director del proyecto"
+                    android:imeOptions="flagNoFullscreen"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/descripcionProyectoWrapper"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/directorProyectoWrapper"
+                android:layout_marginTop="2dp"
+                app:hintTextAppearance="@style/HintTextLabel">
+
+                <EditText
+                    android:id="@+id/descripcionProyecto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine"
+                    android:hint="Descripción del proyecto"
+                    android:imeOptions="flagNoFullscreen"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/versionProyectoWrapper"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/descripcionProyectoWrapper"
+                android:layout_marginTop="2dp"
+                app:hintTextAppearance="@style/HintTextLabel">
+
+                <EditText
+                    android:id="@+id/versionProyecto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:hint="Versión del proyecto"
+                    android:imeOptions="flagNoFullscreen"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/fechaCreacionProyectoWrapper"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/versionProyectoWrapper"
+                android:layout_marginTop="2dp"
+                app:hintTextAppearance="@style/HintTextLabel">
+
+                <EditText
+                    android:id="@+id/fechaCreacionProyecto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:inputType="text"
+                    android:hint="Fecha de creación del proyecto"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_centerInParent="true"
+                android:layout_below="@id/fechaCreacionProyectoWrapper">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="Activado:"
+                    android:id="@+id/textViewActivado" />
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/proyectoActivado"
+                    android:layout_alignBaseline="@id/textViewActivado"
+                    android:layout_toRightOf="@id/textViewActivado"/>
+
+            </RelativeLayout>
+        </LinearLayout>
+    </RelativeLayout>
+</ScrollView>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="Sizing_spinner">
+        <item>Parametrizar Activos</item>
+        <item>Parametrizar Vulnerabilidad</item>
+        <item>Parametrizar Impacto</item>
+        <item>Parametrizar Control de seguridad</item>
+    </string-array>
+
+
+</resources>

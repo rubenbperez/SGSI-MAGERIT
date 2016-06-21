@@ -1,0 +1,1807 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <Spinner
+        android:id="@+id/spnMySpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        style="@android:style/Widget.Holo.Light.Spinner"
+        android:spinnerMode="dropdown"
+        android:clickable="true"
+        android:focusable="true" />
+
+    <!-- Fake TextView to use to set in an error state to allow an error to be shown for the TextView -->
+    <android.widget.TextView
+        android:id="@+id/tvInvisibleError"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_alignRight="@+id/spnMySpinner"
+        android:layout_alignBottom="@+id/spnMySpinner"
+        android:focusable="true"
+        android:focusableInTouchMode="true" />
+</RelativeLayout>
+
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@id/scrollView">
+
+    <LinearLayout
+        android:id="@+id/linearLayoutPrincipal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:weightSum="1"
+        android:visibility="visible"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+
+    <!-- Definimos el tableLayout para la parametrización de activos-->
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="0,1,2,3"
+            android:shrinkColumns="0"
+            android:collapseColumns="*"
+            android:descendantFocusability="beforeDescendants"
+            android:layout_weight="0.15"
+            android:id="@+id/tabla1"
+            android:visibility="visible">
+            <!-- Esta Fila es para indicar el nombre de la tabla(Parametrizacion Activos -->
+            <TableRow android:id="@+id/tableRowTitleTable1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:background="#90A4AE">
+
+                <TextView
+                    android:id="@+id/textViewTitle1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Parametrizar Activos"
+                    android:textAlignment="center"
+                    android:layout_span="4" />
+            </TableRow>
+
+            <!-- Ahora se indican los headers -->
+            <TableRow android:id="@+id/tableRowHeadersTable1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#90A4AE">
+
+                <TextView
+                    android:id="@+id/textViewHeader1Table1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Valoración"
+                    android:layout_column="0"
+                    android:textAlignment="center"
+                    android:gravity="center_vertical" />
+
+                <TextView
+                    android:id="@+id/textViewHeader2Table1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Rango"
+                    android:textAlignment="center"
+                    android:layout_column="1"
+                    android:gravity="center_vertical" />
+
+                <TextView
+                    android:id="@+id/textViewHeader3Table1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Valor"
+                    android:textAlignment="center"
+                    android:layout_column="2"
+                    android:gravity="center_vertical" />
+
+                <TextView
+                    android:id="@+id/textViewHeader4Table1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Activar"
+                    android:textAlignment="center"
+                    android:layout_column="3"
+                    android:gravity="center_vertical" />
+
+            </TableRow>
+
+            <!-- Primera fila con Datos -->
+            <TableRow
+                android:id="@+id/table1Row1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="fill_vertical"
+                android:background="#CFD8DC">
+
+                <TextView
+                    android:id="@+id/textViewTable1Row1_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textMultiLine"
+                    android:text="Muy alta"
+                    android:lines="2"
+                    android:maxLines="2"
+                    android:textAlignment="center"
+                    android:layout_column="0"
+                    android:gravity="center"
+                    android:focusable="false" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_gravity="center">
+
+                        <EditText android:id="@+id/TxtInputTable1Row1_1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:visibility="visible"
+                            android:layout_centerInParent="true"
+                            android:ellipsize="start"
+                            android:gravity="center_vertical|center_horizontal"
+                            android:singleLine="true"
+                            android:inputType="number"
+                            android:maxLength="7"
+                            android:minWidth="50dp" />
+
+                        <TextView
+                            android:id="@+id/textViewTable1Row1_2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="-"
+                            android:textAlignment="center"
+                            android:layout_column="2"
+                            android:layout_gravity="center_vertical"/>
+
+                        <EditText android:id="@+id/TxtInputTable1Row1_2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:visibility="visible"
+                            android:layout_centerInParent="true"
+                            android:ellipsize="start"
+                            android:gravity="center_vertical|center_horizontal"
+                            android:singleLine="true"
+                            android:inputType="number"
+                            android:maxLength="7"
+                            android:minWidth="50dp" />
+                        <TextView
+                            android:id="@+id/textViewTable1Row1_3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="€"
+                            android:textAlignment="center"
+                            android:layout_column="2"
+                            android:layout_gravity="center_vertical"/>
+                    </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center">
+
+                    <EditText android:id="@+id/TxtInputTable1Row1_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="visible"
+                        android:layout_centerInParent="true"
+                        android:ellipsize="start"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:singleLine="true"
+                        android:inputType="number"
+                        android:maxLength="7"
+                        android:minWidth="50dp" />
+
+                    <TextView
+                        android:id="@+id/textViewTable1Row1_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="€ "
+                        android:textAlignment="center"
+                        android:layout_column="2"
+                        android:layout_gravity="center_vertical"/>
+                </LinearLayout>
+
+                <CheckBox
+                    android:id="@+id/checkBoxTable1Row1"
+                    android:layout_column="3"
+                    android:gravity="center_horizontal"
+                        android:layout_gravity="center"
+                    android:checked="true" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/table1Row2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="fill_vertical"
+                android:background="#ECEFF1">
+
+                <TextView
+                    android:id="@+id/textViewTable1Row2_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textMultiLine"
+                    android:text="Alta"
+                    android:lines="2"
+                    android:maxLines="2"
+                    android:textAlignment="center"
+                    android:layout_column="0"
+                    android:gravity="center"
+                    android:focusable="false" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center">
+
+                    <EditText android:id="@+id/TxtInputTable1Row2_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="visible"
+                        android:layout_centerInParent="true"
+                        android:ellipsize="start"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:singleLine="true"
+                        android:inputType="number"
+                        android:maxLength="7"
+                        android:minWidth="50dp" />
+
+                    <TextView
+                        android:id="@+id/textViewTable1Row2_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="-"
+                        android:textAlignment="center"
+                        android:layout_column="2"
+                        android:layout_gravity="center_vertical"/>
+
+                    <EditText android:id="@+id/TxtInputTable1Row2_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="visible"
+                        android:layout_centerInParent="true"
+                        android:ellipsize="start"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:singleLine="true"
+                        android:inputType="number"
+                        android:maxLength="7"
+                        android:minWidth="50dp" />
+                    <TextView
+                        android:id="@+id/textViewTable1Row2_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="€"
+                        android:textAlignment="center"
+                        android:layout_column="2"
+                        android:layout_gravity="center_vertical"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center">
+
+                    <EditText android:id="@+id/TxtInputTable1Row2_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="visible"
+                        android:layout_centerInParent="true"
+                        android:ellipsize="start"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:singleLine="true"
+                        android:inputType="number"
+                        android:maxLength="7"
+                        android:minWidth="50dp" />
+
+                    <TextView
+                        android:id="@+id/textViewTable1Row2_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="€ "
+                        android:textAlignment="center"
+                        android:layout_column="2"
+                        android:layout_gravity="center_vertical"/>
+                </LinearLayout>
+
+                <CheckBox
+                    android:id="@+id/checkBoxTable1Row2"
+                    android:layout_column="3"
+                    android:gravity="center_horizontal"
+                    android:layout_gravity="center"
+                    android:checked="true" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/table1Row3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="fill_vertical"
+                android:background="#CFD8DC">
+
+                <TextView
+                    android:id="@+id/textViewTable1Row3_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textMultiLine"
+                    android:text="Media"
+                    android:lines="2"
+                    android:maxLines="2"
+                    android:textAlignment="center"
+                    android:layout_column="0"
+                    android:gravity="center"
+                    android:focusable="false" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center">
+
+                    <EditText android:id="@+id/TxtInputTable1Row3_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="visible"
+                        android:layout_centerInParent="true"
+                        android:ellipsize="start"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:singleLine="true"
+                        android:inputType="number"
+                        android:maxLength="7"
+                        android:minWidth="50dp" />
+
+                    <TextView
+                        android:id="@+id/textViewTable1Row3_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="-"
+                        android:textAlignment="center"
+                        android:layout_column="2"
+                        android:layout_gravity="center_vertical"/>
+
+                    <EditText android:id="@+id/TxtInputTable1Row3_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="visible"
+                        android:layout_centerInParent="true"
+                        android:ellipsize="start"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:singleLine="true"
+                        android:inputType="number"
+                        android:maxLength="7"
+                        android:minWidth="50dp" />
+                    <TextView
+                        android:id="@+id/textViewTable1Row3_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="€"
+                        android:textAlignment="center"
+                        android:layout_column="2"
+                        android:layout_gravity="center_vertical"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center">
+
+                    <EditText android:id="@+id/TxtInputTable1Row3_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="visible"
+                        android:layout_centerInParent="true"
+                        android:ellipsize="start"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:singleLine="true"
+                        android:inputType="number"
+                        android:maxLength="7"
+                        android:minWidth="50dp" />
+
+                    <TextView
+                        android:id="@+id/textViewTable1Row3_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="€ "
+                        android:textAlignment="center"
+                        android:layout_column="2"
+                        android:layout_gravity="center_vertical"/>
+                </LinearLayout>
+
+                <CheckBox
+                    android:id="@+id/checkBoxTable1Row3"
+                    android:layout_column="3"
+                    android:gravity="center_horizontal"
+                    android:layout_gravity="center"
+                    android:checked="true" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/table1Row4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="fill_vertical"
+                android:background="#ECEFF1">
+
+                <TextView
+                    android:id="@+id/textViewTable1Row4_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textMultiLine"
+                    android:text="Baja"
+                    android:lines="2"
+                    android:maxLines="2"
+                    android:textAlignment="center"
+                    android:layout_column="0"
+                    android:gravity="center"
+                    android:focusable="false" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center">
+
+                    <EditText android:id="@+id/TxtInputTable1Row4_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="visible"
+                        android:layout_centerInParent="true"
+                        android:ellipsize="start"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:singleLine="true"
+                        android:inputType="number"
+                        android:maxLength="7"
+                        android:minWidth="50dp" />
+
+                    <TextView
+                        android:id="@+id/textViewTable1Row4_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="-"
+                        android:textAlignment="center"
+                        android:layout_column="2"
+                        android:layout_gravity="center_vertical"/>
+
+                    <EditText android:id="@+id/TxtInputTable1Row4_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="visible"
+                        android:layout_centerInParent="true"
+                        android:ellipsize="start"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:singleLine="true"
+                        android:inputType="number"
+                        android:maxLength="7"
+                        android:minWidth="50dp" />
+                    <TextView
+                        android:id="@+id/textViewTable1Row4_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="€"
+                        android:textAlignment="center"
+                        android:layout_column="2"
+                        android:layout_gravity="center_vertical"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center">
+
+                    <EditText android:id="@+id/TxtInputTable1Row4_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="visible"
+                        android:layout_centerInParent="true"
+                        android:ellipsize="start"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:singleLine="true"
+                        android:inputType="number"
+                        android:maxLength="7"
+                        android:minWidth="50dp" />
+
+                    <TextView
+                        android:id="@+id/textViewTable1Row4_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="€ "
+                        android:textAlignment="center"
+                        android:layout_column="2"
+                        android:layout_gravity="center_vertical"/>
+                </LinearLayout>
+
+                <CheckBox
+                    android:id="@+id/checkBoxTable1Row4"
+                    android:layout_column="3"
+                    android:gravity="center_horizontal"
+                    android:layout_gravity="center"
+                    android:checked="true" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/table1Row5"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="fill_vertical"
+                android:background="#CFD8DC">
+
+                <TextView
+                    android:id="@+id/textViewTable1Row5_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textMultiLine"
+                    android:text="Muy baja"
+                    android:lines="2"
+                    android:maxLines="2"
+                    android:textAlignment="center"
+                    android:layout_column="0"
+                    android:gravity="center"
+                    android:focusable="false" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center">
+
+                    <EditText android:id="@+id/TxtInputTable1Row5_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="visible"
+                        android:layout_centerInParent="true"
+                        android:ellipsize="start"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:singleLine="true"
+                        android:inputType="number"
+                        android:maxLength="7"
+                        android:minWidth="50dp" />
+
+                    <TextView
+                        android:id="@+id/textViewTable1Row5_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="-"
+                        android:textAlignment="center"
+                        android:layout_column="2"
+                        android:layout_gravity="center_vertical"/>
+
+                    <EditText android:id="@+id/TxtInputTable1Row5_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="visible"
+                        android:layout_centerInParent="true"
+                        android:ellipsize="start"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:singleLine="true"
+                        android:inputType="number"
+                        android:maxLength="7"
+                        android:minWidth="50dp" />
+                    <TextView
+                        android:id="@+id/textViewTable1Row5_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="€"
+                        android:textAlignment="center"
+                        android:layout_column="2"
+                        android:layout_gravity="center_vertical"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center">
+
+                    <EditText android:id="@+id/TxtInputTable1Row5_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="visible"
+                        android:layout_centerInParent="true"
+                        android:ellipsize="start"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:singleLine="true"
+                        android:inputType="number"
+                        android:maxLength="7"
+                        android:minWidth="50dp" />
+
+                    <TextView
+                        android:id="@+id/textViewTable1Row5_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="€ "
+                        android:textAlignment="center"
+                        android:layout_column="2"
+                        android:layout_gravity="center_vertical"/>
+                </LinearLayout>
+
+                <CheckBox
+                    android:id="@+id/checkBoxTable1Row5"
+                    android:layout_column="3"
+                    android:gravity="center_horizontal"
+                    android:layout_gravity="center"
+                    android:checked="true" />
+            </TableRow>
+        </TableLayout>
+
+
+
+
+
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="0,1,2,3"
+            android:shrinkColumns="0"
+            android:collapseColumns="*"
+            android:descendantFocusability="beforeDescendants"
+            android:layout_weight="0.15"
+            android:id="@+id/tabla2">
+            <!-- Esta Fila es para indicar el nombre de la tabla(Parametrizacion Activos -->
+            <TableRow android:id="@+id/tableRowTitleTable2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:background="#90A4AE">
+
+                <TextView
+                    android:id="@+id/textViewTitleTable2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Parametrizar Vulnerabilidad"
+                    android:textAlignment="center"
+                    android:layout_span="4" />
+            </TableRow>
+
+            <!-- Ahora se indican los headers -->
+            <TableRow android:id="@+id/tableRowHeaders"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#90A4AE">
+
+                <TextView
+                    android:id="@+id/textViewHeader1Table2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Vulnerabilidad"
+                    android:layout_column="0"
+                    android:textAlignment="center"
+                    android:gravity="center_vertical" />
+
+                <TextView
+                    android:id="@+id/textViewHeader2Table2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Rango"
+                    android:textAlignment="center"
+                    android:layout_column="1"
+                    android:gravity="center_vertical" />
+
+                <TextView
+                    android:id="@+id/textViewHeader3Table2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Valor"
+                    android:textAlignment="center"
+                    android:layout_column="2"
+                    android:gravity="center_vertical" />
+
+                <TextView
+                    android:id="@+id/textViewHeader4Table2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Activar"
+                    android:textAlignment="center"
+                    android:layout_column="3"
+                    android:gravity="center_vertical" />
+
+            </TableRow>
+
+            <!-- Primera fila con Datos -->
+            <TableRow
+                android:id="@+id/table2Row1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="fill_vertical"
+                android:background="#CFD8DC">
+
+                <TextView
+                    android:id="@+id/textViewTable2Row1_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textMultiLine"
+                    android:text="Frecuencia Extrema"
+                    android:lines="2"
+                    android:maxLines="2"
+                    android:textAlignment="center"
+                    android:layout_column="0"
+                    android:gravity="center"
+                    android:focusable="false" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center">
+
+                    <TextView
+                        android:id="@+id/textViewTable2Row1_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1 vez cada"
+                        android:textAlignment="center"
+                        android:layout_column="2"
+                        android:layout_gravity="center_vertical" />
+
+                    <NumberPicker
+                        android:layout_width="wrap_content"
+                        android:layout_height="120dp"
+                        android:id="@+id/numberPicker1_1Table2" />
+
+                    <NumberPicker
+                        android:layout_width="wrap_content"
+                        android:layout_height="120dp"
+                        android:id="@+id/stringPicker1_2Table2" />
+
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center">
+
+                    <TextView
+                        android:id="@+id/TextViewTable2Row1_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textAlignment="center"
+                        android:layout_column="2"
+                        android:layout_gravity="center_vertical"
+                        android:inputType="numberDecimal"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:editable="false"
+                        android:elegantTextHeight="false"
+                        style="Widget.EditText" />
+                </LinearLayout>
+
+                <CheckBox
+                    android:id="@+id/checkBoxTable2Row1"
+                    android:layout_column="3"
+                    android:gravity="center_horizontal"
+                    android:layout_gravity="center"
+                    android:checked="true" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/table2Row2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="fill_vertical"
+                android:background="#ECEFF1">
+
+                <TextView
+                    android:id="@+id/textViewTable2Row2_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textMultiLine"
+                    android:text="Frecuencia Alta"
+                    android:lines="2"
+                    android:maxLines="2"
+                    android:textAlignment="center"
+                    android:layout_column="0"
+                    android:gravity="center"
+                    android:focusable="false" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center">
+
+                    <TextView
+                        android:id="@+id/textViewTable2Row2_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1 vez cada"
+                        android:textAlignment="center"
+                        android:layout_column="2"
+                        android:layout_gravity="center_vertical" />
+
+                    <NumberPicker
+                        android:layout_width="wrap_content"
+                        android:layout_height="120dp"
+                        android:id="@+id/numberPicker2_1Table2" />
+
+                    <NumberPicker
+                        android:layout_width="wrap_content"
+                        android:layout_height="120dp"
+                        android:id="@+id/stringPicker2_2Table2" />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center">
+
+                    <TextView
+                        android:id="@+id/TextViewTable2Row2_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textAlignment="center"
+                        android:layout_column="2"
+                        android:layout_gravity="center_vertical"
+                        android:inputType="numberDecimal"
+                        android:editable="false"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        style="Widget.EditText" />
+                </LinearLayout>
+
+                <CheckBox
+                    android:id="@+id/checkBoxTable2Row2"
+                    android:layout_column="3"
+                    android:gravity="center_horizontal"
+                    android:layout_gravity="center"
+                    android:checked="true" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/table2Row3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="fill_vertical"
+                android:background="#CFD8DC">
+
+                <TextView
+                    android:id="@+id/textViewTable2Row3_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textMultiLine"
+                    android:text="Frecuencia Media"
+                    android:lines="2"
+                    android:maxLines="2"
+                    android:textAlignment="center"
+                    android:layout_column="0"
+                    android:gravity="center"
+                    android:focusable="false" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center">
+
+                    <TextView
+                        android:id="@+id/textViewTable2Row3_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1 vez cada"
+                        android:textAlignment="center"
+                        android:layout_column="2"
+                        android:layout_gravity="center_vertical" />
+
+                    <NumberPicker
+                        android:layout_width="wrap_content"
+                        android:layout_height="120dp"
+                        android:id="@+id/numberPicker3_1Table2" />
+
+                    <NumberPicker
+                        android:layout_width="wrap_content"
+                        android:layout_height="120dp"
+                        android:id="@+id/stringPicker3_2Table2" />
+
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center">
+
+                    <TextView
+                        android:id="@+id/TextViewTable2Row3_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textAlignment="center"
+                        android:layout_column="2"
+                        android:layout_gravity="center_vertical"
+                        android:inputType="numberDecimal"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        style="Widget.EditText" />
+                </LinearLayout>
+
+                <CheckBox
+                    android:id="@+id/checkBoxTable2Row3"
+                    android:layout_column="3"
+                    android:gravity="center_horizontal"
+                    android:layout_gravity="center"
+                    android:checked="true" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/table2Row4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="fill_vertical"
+                android:background="#ECEFF1">
+
+                <TextView
+                    android:id="@+id/textViewTable2Row4_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textMultiLine"
+                    android:text="Frecuencia Baja"
+                    android:lines="2"
+                    android:maxLines="2"
+                    android:textAlignment="center"
+                    android:layout_column="0"
+                    android:gravity="center"
+                    android:focusable="false" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center">
+
+                    <TextView
+                        android:id="@+id/textViewTable2Row4_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1 vez cada"
+                        android:textAlignment="center"
+                        android:layout_column="2"
+                        android:layout_gravity="center_vertical" />
+
+                    <NumberPicker
+                        android:layout_width="wrap_content"
+                        android:layout_height="120dp"
+                        android:id="@+id/numberPicker4_1Table2" />
+
+                    <NumberPicker
+                        android:layout_width="wrap_content"
+                        android:layout_height="120dp"
+                        android:id="@+id/stringPicker4_2Table2" />
+
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center">
+
+                    <TextView
+                        android:id="@+id/TextViewTable2Row4_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textAlignment="center"
+                        android:layout_column="2"
+                        android:layout_gravity="center_vertical"
+                        android:inputType="numberDecimal"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        style="Widget.EditText" />
+                </LinearLayout>
+
+                <CheckBox
+                    android:id="@+id/checkBoxTable2Row4"
+                    android:layout_column="3"
+                    android:gravity="center_horizontal"
+                    android:layout_gravity="center"
+                    android:checked="true" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/table2Row5"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="fill_vertical"
+                android:background="#CFD8DC">
+
+                <TextView
+                    android:id="@+id/textViewTable2Row5_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textMultiLine"
+                    android:text="Frecuencia Muy baja"
+                    android:lines="2"
+                    android:maxLines="2"
+                    android:textAlignment="center"
+                    android:layout_column="0"
+                    android:gravity="center"
+                    android:focusable="false" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center">
+
+                    <TextView
+                        android:id="@+id/textViewTable2Row5_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1 vez cada"
+                        android:textAlignment="center"
+                        android:layout_column="2"
+                        android:layout_gravity="center_vertical" />
+
+                    <NumberPicker
+                        android:layout_width="wrap_content"
+                        android:layout_height="120dp"
+                        android:id="@+id/numberPicker5_1Table2" />
+
+                    <NumberPicker
+                        android:layout_width="wrap_content"
+                        android:layout_height="120dp"
+                        android:id="@+id/stringPicker5_2Table2" />
+
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center">
+
+                    <TextView
+                        android:id="@+id/TextViewTable2Row5_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textAlignment="center"
+                        android:layout_column="2"
+                        android:layout_gravity="center_vertical"
+                        android:inputType="numberDecimal"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        style="Widget.EditText" />
+                </LinearLayout>
+
+                <CheckBox
+                    android:id="@+id/checkBoxTable2Row5"
+                    android:layout_column="3"
+                    android:gravity="center_horizontal"
+                    android:layout_gravity="center"
+                    android:checked="true" />
+            </TableRow>
+        </TableLayout>
+
+
+
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="0,1,2,3"
+            android:shrinkColumns="0"
+            android:collapseColumns="*"
+            android:descendantFocusability="beforeDescendants"
+            android:layout_weight="0.15"
+            android:id="@+id/tabla3">
+            <!-- Esta Fila es para indicar el nombre de la tabla(Parametrizacion Activos -->
+            <TableRow android:id="@+id/tableRowTitleTable3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:background="#90A4AE">
+
+                <TextView
+                    android:id="@+id/textViewTitleTable3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Parametrizar Impacto"
+                    android:textAlignment="center"
+                    android:layout_span="3" />
+            </TableRow>
+
+            <!-- Ahora se indican los headers -->
+            <TableRow android:id="@+id/table3RowHeaders"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#90A4AE">
+
+                <TextView
+                    android:id="@+id/textViewHeader1Table3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Impacto"
+                    android:layout_column="0"
+                    android:textAlignment="center"
+                    android:gravity="center_vertical" />
+
+                <TextView
+                    android:id="@+id/textViewHeader3Table3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Valor"
+                    android:textAlignment="center"
+                    android:layout_column="1"
+                    android:gravity="center_vertical" />
+
+                <TextView
+                    android:id="@+id/textViewHeader4Table3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Activar"
+                    android:textAlignment="center"
+                    android:layout_column="2"
+                    android:gravity="center_vertical" />
+
+            </TableRow>
+
+            <!-- Primera fila con Datos -->
+            <TableRow
+                android:id="@+id/table3Row1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="fill_vertical"
+                android:background="#CFD8DC">
+
+                <TextView
+                    android:id="@+id/textViewTable3Row1_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textMultiLine"
+                    android:text="Muy Alto"
+                    android:lines="2"
+                    android:maxLines="2"
+                    android:textAlignment="center"
+                    android:layout_column="0"
+                    android:gravity="center"
+                    android:focusable="false" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center">
+
+                    <NumberPicker
+                        android:layout_width="wrap_content"
+                        android:layout_height="120dp"
+                        android:id="@+id/numberPicker1Table3" />
+
+                    <TextView
+                        android:id="@+id/textViewTable3Row1_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="%"
+                        android:textAlignment="center"
+                        android:layout_column="1"
+                        android:layout_gravity="center_vertical"
+                        android:inputType="numberDecimal"
+                        android:clickable="false"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        android:elegantTextHeight="false"
+                        style="Widget.EditText" />
+                </LinearLayout>
+
+                <CheckBox
+                    android:id="@+id/checkBoxTable3Row1"
+                    android:layout_column="2"
+                    android:gravity="center_horizontal"
+                    android:layout_gravity="center"
+                    android:checked="true" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/table3Row2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="fill_vertical"
+                android:background="#ECEFF1">
+
+                <TextView
+                    android:id="@+id/textViewTable3Row2_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textMultiLine"
+                    android:text="Alto"
+                    android:lines="2"
+                    android:maxLines="2"
+                    android:textAlignment="center"
+                    android:layout_column="0"
+                    android:gravity="center"
+                    android:focusable="false" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center">
+
+                    <NumberPicker
+                        android:layout_width="wrap_content"
+                        android:layout_height="120dp"
+                        android:id="@+id/numberPicker2Table3" />
+
+                    <TextView
+                        android:id="@+id/textViewTable3Row2_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="%"
+                        android:textAlignment="center"
+                        android:layout_column="1"
+                        android:layout_gravity="center_vertical"
+                        android:inputType="numberDecimal"
+                        android:editable="false"
+                        android:clickable="false"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        style="Widget.EditText" />
+                </LinearLayout>
+
+                <CheckBox
+                    android:id="@+id/checkBoxTable3Row2"
+                    android:layout_column="2"
+                    android:gravity="center_horizontal"
+                    android:layout_gravity="center"
+                    android:checked="true" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/table3Row3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="fill_vertical"
+                android:background="#CFD8DC">
+
+                <TextView
+                    android:id="@+id/textViewTable3Row3_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textMultiLine"
+                    android:text="Medio"
+                    android:lines="2"
+                    android:maxLines="2"
+                    android:textAlignment="center"
+                    android:layout_column="0"
+                    android:gravity="center"
+                    android:focusable="false" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center">
+
+                    <NumberPicker
+                        android:layout_width="wrap_content"
+                        android:layout_height="120dp"
+                        android:id="@+id/numberPicker3Table3" />
+
+                    <TextView
+                        android:id="@+id/textViewTable3Row3_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="%"
+                        android:textAlignment="center"
+                        android:layout_column="1"
+                        android:layout_gravity="center_vertical"
+                        android:inputType="numberDecimal"
+                        android:clickable="false"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        style="Widget.EditText" />
+                </LinearLayout>
+
+                <CheckBox
+                    android:id="@+id/checkBoxTable3Row3"
+                    android:layout_column="2"
+                    android:gravity="center_horizontal"
+                    android:layout_gravity="center"
+                    android:checked="true" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/table3Row4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="fill_vertical"
+                android:background="#ECEFF1">
+
+                <TextView
+                    android:id="@+id/textViewTable3Row4_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textMultiLine"
+                    android:text="Bajo"
+                    android:lines="2"
+                    android:maxLines="2"
+                    android:textAlignment="center"
+                    android:layout_column="0"
+                    android:gravity="center"
+                    android:focusable="false" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center">
+
+                    <NumberPicker
+                        android:layout_width="wrap_content"
+                        android:layout_height="120dp"
+                        android:id="@+id/numberPicker4Table3" />
+
+                    <TextView
+                        android:id="@+id/textViewTable3Row4_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="%"
+                        android:textAlignment="center"
+                        android:layout_column="1"
+                        android:layout_gravity="center_vertical"
+                        android:inputType="numberDecimal"
+                        android:clickable="false"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        style="Widget.EditText" />
+                </LinearLayout>
+
+                <CheckBox
+                    android:id="@+id/checkBoxTable3Row4"
+                    android:layout_column="2"
+                    android:gravity="center_horizontal"
+                    android:layout_gravity="center"
+                    android:checked="true" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/table3Row5"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="fill_vertical"
+                android:background="#CFD8DC">
+
+                <TextView
+                    android:id="@+id/textViewTable3Row5_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textMultiLine"
+                    android:text="Muy bajo"
+                    android:lines="2"
+                    android:maxLines="2"
+                    android:textAlignment="center"
+                    android:layout_column="0"
+                    android:gravity="center"
+                    android:focusable="false" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center">
+
+                    <NumberPicker
+                        android:layout_width="wrap_content"
+                        android:layout_height="120dp"
+                        android:id="@+id/numberPicker5Table3" />
+
+                    <TextView
+                        android:id="@+id/textViewTable3Row5_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="%"
+                        android:textAlignment="center"
+                        android:layout_column="1"
+                        android:layout_gravity="center_vertical"
+                        android:inputType="numberDecimal"
+                        android:clickable="false"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        style="Widget.EditText" />
+                </LinearLayout>
+
+                <CheckBox
+                    android:id="@+id/checkBoxTable3Row5"
+                    android:layout_column="2"
+                    android:gravity="center_horizontal"
+                    android:layout_gravity="center"
+                    android:checked="true" />
+            </TableRow>
+        </TableLayout>
+
+
+
+
+
+
+
+
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="0,1,2,3"
+            android:shrinkColumns="0"
+            android:collapseColumns="*"
+            android:descendantFocusability="beforeDescendants"
+            android:layout_weight="0.15"
+            android:id="@+id/tabla4">
+            <!-- Esta Fila es para indicar el nombre de la tabla(Parametrizacion Activos -->
+            <TableRow android:id="@+id/tableRowTitleTable4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:background="#90A4AE">
+
+                <TextView
+                    android:id="@+id/textViewTitleTable4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Parametrizar Control de Seguridad"
+                    android:textAlignment="center"
+                    android:layout_span="3" />
+            </TableRow>
+
+            <!-- Ahora se indican los headers -->
+            <TableRow android:id="@+id/table4RowHeaders"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#90A4AE">
+
+                <TextView
+                    android:id="@+id/textViewHeader1Table4"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Reducción \n Impacto/Vulnerabilidad"
+                    android:layout_column="0"
+                    android:textAlignment="center"
+                    android:gravity="center_vertical" />
+
+                <TextView
+                    android:id="@+id/textViewHeader3Table4"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Valor"
+                    android:textAlignment="center"
+                    android:layout_column="1"
+                    android:gravity="center_vertical" />
+
+                <TextView
+                    android:id="@+id/textViewHeader4Table4"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Activar"
+                    android:textAlignment="center"
+                    android:layout_column="2"
+                    android:gravity="center_vertical" />
+
+            </TableRow>
+
+            <!-- Primera fila con Datos -->
+            <TableRow
+                android:id="@+id/table4Row1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="fill_vertical"
+                android:background="#CFD8DC">
+
+                <TextView
+                    android:id="@+id/textViewTable4Row1_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textMultiLine"
+                    android:text="Muy Alto"
+                    android:lines="2"
+                    android:maxLines="2"
+                    android:textAlignment="center"
+                    android:layout_column="0"
+                    android:gravity="center"
+                    android:focusable="false" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center">
+
+                    <NumberPicker
+                        android:layout_width="wrap_content"
+                        android:layout_height="120dp"
+                        android:id="@+id/numberPicker1Table4" />
+
+                    <TextView
+                        android:id="@+id/textViewTable4Row1_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="%"
+                        android:textAlignment="center"
+                        android:layout_column="1"
+                        android:layout_gravity="center_vertical"
+                        android:inputType="numberDecimal"
+                        android:clickable="false"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        android:elegantTextHeight="false"
+                        style="Widget.EditText" />
+                </LinearLayout>
+
+                <CheckBox
+                    android:id="@+id/checkBoxTable4Row1"
+                    android:layout_column="2"
+                    android:gravity="center_horizontal"
+                    android:layout_gravity="center"
+                    android:checked="true" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/table4Row2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="fill_vertical"
+                android:background="#ECEFF1">
+
+                <TextView
+                    android:id="@+id/textViewTable4Row2_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textMultiLine"
+                    android:text="Alto"
+                    android:lines="2"
+                    android:maxLines="2"
+                    android:textAlignment="center"
+                    android:layout_column="0"
+                    android:gravity="center"
+                    android:focusable="false" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center">
+
+                    <NumberPicker
+                        android:layout_width="wrap_content"
+                        android:layout_height="120dp"
+                        android:id="@+id/numberPicker2Table4" />
+
+                    <TextView
+                        android:id="@+id/textViewTable4Row2_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="%"
+                        android:textAlignment="center"
+                        android:layout_column="1"
+                        android:layout_gravity="center_vertical"
+                        android:inputType="numberDecimal"
+                        android:editable="false"
+                        android:clickable="false"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        style="Widget.EditText" />
+                </LinearLayout>
+
+                <CheckBox
+                    android:id="@+id/checkBoxTable4Row2"
+                    android:layout_column="2"
+                    android:gravity="center_horizontal"
+                    android:layout_gravity="center"
+                    android:checked="true" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/table4Row3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="fill_vertical"
+                android:background="#CFD8DC">
+
+                <TextView
+                    android:id="@+id/textViewTable4Row3_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textMultiLine"
+                    android:text="Medio"
+                    android:lines="2"
+                    android:maxLines="2"
+                    android:textAlignment="center"
+                    android:layout_column="0"
+                    android:gravity="center"
+                    android:focusable="false" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center">
+
+                    <NumberPicker
+                        android:layout_width="wrap_content"
+                        android:layout_height="120dp"
+                        android:id="@+id/numberPicker3Table4" />
+
+                    <TextView
+                        android:id="@+id/textViewTable4Row3_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="%"
+                        android:textAlignment="center"
+                        android:layout_column="1"
+                        android:layout_gravity="center_vertical"
+                        android:inputType="numberDecimal"
+                        android:clickable="false"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        style="Widget.EditText" />
+                </LinearLayout>
+
+                <CheckBox
+                    android:id="@+id/checkBoxTable4Row3"
+                    android:layout_column="2"
+                    android:gravity="center_horizontal"
+                    android:layout_gravity="center"
+                    android:checked="true" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/table4Row4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="fill_vertical"
+                android:background="#ECEFF1">
+
+                <TextView
+                    android:id="@+id/textViewTable4Row4_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textMultiLine"
+                    android:text="Bajo"
+                    android:lines="2"
+                    android:maxLines="2"
+                    android:textAlignment="center"
+                    android:layout_column="0"
+                    android:gravity="center"
+                    android:focusable="false" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center">
+
+                    <NumberPicker
+                        android:layout_width="wrap_content"
+                        android:layout_height="120dp"
+                        android:id="@+id/numberPicker4Table4" />
+
+                    <TextView
+                        android:id="@+id/textViewTable4Row4_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="%"
+                        android:textAlignment="center"
+                        android:layout_column="1"
+                        android:layout_gravity="center_vertical"
+                        android:inputType="numberDecimal"
+                        android:clickable="false"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        style="Widget.EditText" />
+                </LinearLayout>
+
+                <CheckBox
+                    android:id="@+id/checkBoxTable4Row4"
+                    android:layout_column="2"
+                    android:gravity="center_horizontal"
+                    android:layout_gravity="center"
+                    android:checked="true" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/table4Row5"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="fill_vertical"
+                android:background="#CFD8DC">
+
+                <TextView
+                    android:id="@+id/textViewTable4Row5_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textMultiLine"
+                    android:text="Muy bajo"
+                    android:lines="2"
+                    android:maxLines="2"
+                    android:textAlignment="center"
+                    android:layout_column="0"
+                    android:gravity="center"
+                    android:focusable="false" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center">
+
+                    <NumberPicker
+                        android:layout_width="wrap_content"
+                        android:layout_height="120dp"
+                        android:id="@+id/numberPicker5Table4" />
+
+                    <TextView
+                        android:id="@+id/textViewTable4Row5_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="%"
+                        android:textAlignment="center"
+                        android:layout_column="1"
+                        android:layout_gravity="center_vertical"
+                        android:inputType="numberDecimal"
+                        android:clickable="false"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        style="Widget.EditText" />
+                </LinearLayout>
+
+                <CheckBox
+                    android:id="@+id/checkBoxTable4Row5"
+                    android:layout_column="2"
+                    android:gravity="center_horizontal"
+                    android:layout_gravity="center"
+                    android:checked="true" />
+            </TableRow>
+        </TableLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </LinearLayout>
+</ScrollView>
+    </LinearLayout>
