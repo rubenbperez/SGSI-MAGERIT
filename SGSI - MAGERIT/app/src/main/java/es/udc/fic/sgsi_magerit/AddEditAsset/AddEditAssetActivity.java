@@ -20,6 +20,7 @@ public class AddEditAssetActivity extends AppCompatActivity {
     private long idProyecto;
     private ViewPager viewPager;
     private AddEditAssetFragmentPagerAdapter adapter;
+    String deleteme;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
