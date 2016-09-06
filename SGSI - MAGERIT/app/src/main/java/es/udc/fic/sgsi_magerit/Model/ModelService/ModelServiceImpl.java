@@ -79,7 +79,11 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
     String sqlCreateTableActivos = "CREATE TABLE " + AssetConstants.TABLE_NAME + "(" +
             AssetConstants.ID_ACTIVO + " " + AssetConstants.INT_TYPE + " PRIMARY KEY AUTOINCREMENT, " +
             AssetConstants.ID_PROYECTO + " " + AssetConstants.INT_TYPE + " NOT NULL, " +
-            AssetConstants.ID_VALORACION_ACTIVO + " " + AssetConstants.INT_TYPE + ", " +
+            AssetConstants.ID_VALORACION_ACTIVO_DISPONIBILIDAD + " " + AssetConstants.INT_TYPE + ", " +
+            AssetConstants.ID_VALORACION_ACTIVO_INTEGRIDAD + " " + AssetConstants.INT_TYPE + ", " +
+            AssetConstants.ID_VALORACION_ACTIVO_CONFIDENCIALIDAD + " " + AssetConstants.INT_TYPE + ", " +
+            AssetConstants.ID_VALORACION_ACTIVO_AUTENTICIDAD + " " + AssetConstants.INT_TYPE + ", " +
+            AssetConstants.ID_VALORACION_ACTIVO_TRAZABILIDAD + " " + AssetConstants.INT_TYPE + ", " +
             AssetConstants.NOMBRE + " " + AssetConstants.STRING_TYPE + " NOT NULL, " +
             AssetConstants.CODIGO + " " + AssetConstants.STRING_TYPE + " NOT NULL, " +
             AssetConstants.DESCRIPCION + " " + AssetConstants.STRING_TYPE + ", " +

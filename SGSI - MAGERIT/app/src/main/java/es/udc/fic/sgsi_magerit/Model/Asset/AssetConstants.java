@@ -16,7 +16,11 @@ public class AssetConstants {
     //Columnas de la base de datos
     public static final String ID_ACTIVO = BaseColumns._ID;
     public static final String ID_PROYECTO = "idProyecto";
-    public static final String ID_VALORACION_ACTIVO = "idValoracionActivo";
+    public static final String ID_VALORACION_ACTIVO_DISPONIBILIDAD = "idValoracionActivoDisponibilidad";
+    public static final String ID_VALORACION_ACTIVO_INTEGRIDAD = "idValoracionActivoIntegridad";
+    public static final String ID_VALORACION_ACTIVO_CONFIDENCIALIDAD = "idValoracionActivoConfidencialidad";
+    public static final String ID_VALORACION_ACTIVO_AUTENTICIDAD = "idValoracionActivoAutenticidad";
+    public static final String ID_VALORACION_ACTIVO_TRAZABILIDAD = "idValoracionActivoTrazabilidad";
     public static final String NOMBRE = "nombre";
     public static final String CODIGO = "codigo";
     public static final String DESCRIPCION = "descripcion";

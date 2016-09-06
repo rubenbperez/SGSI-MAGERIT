@@ -1,6 +1,7 @@
 package es.udc.fic.sgsi_magerit.AssetsFragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -16,6 +17,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import es.udc.fic.sgsi_magerit.AddEditAsset.AddEditAssetActivity;
+import es.udc.fic.sgsi_magerit.AddEditProject.AddProjectActivity;
 import es.udc.fic.sgsi_magerit.Model.Asset.Asset;
 import es.udc.fic.sgsi_magerit.Model.Asset.AssetDTO;
 import es.udc.fic.sgsi_magerit.Model.ModelService.ModelServiceImpl;
@@ -53,6 +56,16 @@ public class Assets extends Fragment {
         fabButton = (FloatingActionButton)view.findViewById(R.id.fab);
         fabButton.setBackgroundTintList(
                 getResources().getColorStateList(R.color.fab_color));
+
+        fabButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(),AddEditAssetActivity.class);
+                intent.putExtra("idActivo", GlobalConstants.NULL_ID_PROYECTO); //Optional parameters
+                startActivityForResult(intent, GlobalConstants.REQUEST_CODE_ADD_ACTIVITY);
+            }
+        });
+
         return  view;
     }
 

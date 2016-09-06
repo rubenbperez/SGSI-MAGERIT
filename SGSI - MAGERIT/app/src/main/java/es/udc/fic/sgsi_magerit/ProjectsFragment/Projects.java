@@ -111,6 +111,12 @@ public class Projects extends Fragment {
     }
 
     private void comprobarElementosNavView(List<Project> proyectos, NavigationView navView) {
+
+        if (proyectos.isEmpty()) {
+            navView.getMenu().findItem(R.id.menuActivos).setEnabled(false);
+            return;
+        }
+
         for (Project p: proyectos) {
             if (p.getActivated()) {
                 navView.getMenu().findItem(R.id.menuActivos).setEnabled(true);
@@ -118,7 +124,6 @@ public class Projects extends Fragment {
             } else {
                 navView.getMenu().findItem(R.id.menuActivos).setEnabled(false);
             }
-
         }
     }
 
