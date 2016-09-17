@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="Sizing_spinner_AssetType">
+        <item>[essential] Activos Esenciales</item>
+        <item>[arch] Arquitectura del sistema</item>
+        <item>[D] Datos/Información</item>
+        <item>[K] Claves Criptográficas</item>
+        <item>[S] Servicios</item>
+        <item>[SW] Software</item>
+        <item>[HW] Equipamiento informático</item>
+        <item>[COM] Redes de comunicaciones</item>
+        <item>[Media] Soportes de información</item>
+        <item>[AUX] Equipamiento auxiliar</item>
+        <item>[L] Instalaciones</item>
+        <item>[P] Personal</item>
+        <item>[other] Otras clases</item>
+    </string-array>
+</resources>

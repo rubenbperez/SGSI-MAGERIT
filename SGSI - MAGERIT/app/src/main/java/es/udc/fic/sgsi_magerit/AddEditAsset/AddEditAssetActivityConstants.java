@@ -10,4 +10,5 @@ public class AddEditAssetActivityConstants {
         public final static int TAB_VALORACION = 1;
         public final static String ACTIVITY_TITLE_CREAR = "Añadir Activo";
         public final static String ACTIVITY_TITLE_EDITAR = "Editar Activo";
+        public final static int SPINNERSIZE = 2;
 }

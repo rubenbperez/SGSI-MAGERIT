@@ -1,13 +1,103 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="es.udc.fic.sgsi_magerit.AddEditAsset.IdentifyAssetTypesFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Spinner
+            android:id="@+id/spnMySpinner"
+            android:layout_width="match_parent"
+            android:layout_height= "wrap_content"
+            android:layout_alignParentTop="true"
+            style="@android:style/Widget.Holo.Light.Spinner"
+            android:spinnerMode="dropdown"
+            android:clickable="true"
+            android:focusable="true" />
+
+        <!-- Fake TextView to use to set in an error state to allow an error to be shown for the TextView -->
+        <android.widget.TextView
+            android:id="@+id/tvInvisibleError"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_alignRight="@+id/spnMySpinner"
+            android:layout_alignBottom="@+id/spnMySpinner"
+            android:focusable="true"
+            android:focusableInTouchMode="true" />
+    </RelativeLayout>
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
-
-</FrameLayout>
+        android:fillViewport="true">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <!-- Lista de arquitectura del sistema -->
+            <ListView android:id="@+id/ListSysArch"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:choiceMode="multipleChoice"
+                android:visibility="gone"/>
+            <!-- Lista DatosInfo -->
+            <ListView android:id="@+id/ListDataInfo"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:choiceMode="multipleChoice"
+                android:visibility="gone"/>
+            <!-- Lista Servicios -->
+            <ListView android:id="@+id/ListServices"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:choiceMode="multipleChoice"
+                android:visibility="gone"/>
+            <!-- Lista Software -->
+            <ListView android:id="@+id/ListSoftware"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:choiceMode="multipleChoice"
+                android:visibility="gone"/>
+            <ExpandableListView
+                android:id="@+id/ExpListSoftware"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+            </ExpandableListView>
+            <!-- Lista Redes de Comunicacion -->
+            <ListView android:id="@+id/ListCommunicationNet"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:choiceMode="multipleChoice"
+                android:visibility="gone"/>
+            <!-- Lista Personal-->
+            <ListView android:id="@+id/ListPersonal"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:choiceMode="multipleChoice"
+                android:visibility="gone"/>
+            <!-- Lista Otro -->
+            <ListView android:id="@+id/ListOther"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:choiceMode="multipleChoice"
+                android:visibility="gone"/>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

@@ -27,6 +27,7 @@
                 android:layout_width="match_parent"
                 android:minHeight="?attr/actionBarSize"
                 android:background="?attr/colorPrimary"
+                app:layout_scrollFlags="scroll|enterAlways"
                 android:elevation="4dp"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
@@ -50,8 +51,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@android:color/white"/>
-
-
         </FrameLayout>
 
     </LinearLayout>
