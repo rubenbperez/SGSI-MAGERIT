@@ -58,10 +58,12 @@ public class AddEditAssetActivity extends AppCompatActivity {
                 finish();
                 return true;
             case R.id.action_aceptar:
-                return true;
+                return false;
 
             case R.id.action_cancelar:
-                return false;
+                setResult(0, resultIntent);
+                finish();
+                return true;
         }
         return false;
     }

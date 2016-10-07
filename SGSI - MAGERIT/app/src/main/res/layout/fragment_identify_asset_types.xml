@@ -25,18 +25,22 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_alignRight="@+id/spnMySpinner"
-            android:layout_alignBottom="@+id/spnMySpinner"
-            android:focusable="true"
-            android:focusableInTouchMode="true" />
+            android:layout_alignBottom="@+id/spnMySpinner" />
     </RelativeLayout>
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true">
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
+
+            <!-- Lista de activos esenciales -->
+            <ListView android:id="@+id/ListEssential"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:choiceMode="multipleChoice"
+                android:visibility="gone"/>
             <!-- Lista de arquitectura del sistema -->
             <ListView android:id="@+id/ListSysArch"
                 android:layout_weight="1"
@@ -53,29 +57,66 @@
                 android:clickable="true"
                 android:choiceMode="multipleChoice"
                 android:visibility="gone"/>
+            <!-- Lista Claves Criptográficas -->
+            <ListView android:id="@+id/ListCryptKeps"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:choiceMode="multipleChoice"
+                android:visibility="gone"/>
             <!-- Lista Servicios -->
             <ListView android:id="@+id/ListServices"
-                android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:clickable="true"
+                android:scrollingCache="true"
                 android:choiceMode="multipleChoice"
-                android:visibility="gone"/>
+                android:visibility="gone" />
             <!-- Lista Software -->
             <ListView android:id="@+id/ListSoftware"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:scrollingCache="true"
+                android:layout_weight="1"
+                android:choiceMode="multipleChoice"
+                android:visibility="gone" />
+            <!-- Lista Hardware -->
+            <ListView android:id="@+id/ListHardware"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:scrollingCache="true"
+                android:layout_weight="1"
+                android:choiceMode="multipleChoice"
+                android:visibility="gone" />
+            <!-- Lista Redes de Comunicacion -->
+            <ListView android:id="@+id/ListCommunicationNet"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:clickable="true"
                 android:choiceMode="multipleChoice"
                 android:visibility="gone"/>
-            <ExpandableListView
-                android:id="@+id/ExpListSoftware"
+            <!-- Lista Soportes de la información -->
+            <ListView android:id="@+id/ListInfoSup"
+                android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" >
-            </ExpandableListView>
-            <!-- Lista Redes de Comunicacion -->
-            <ListView android:id="@+id/ListCommunicationNet"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:choiceMode="multipleChoice"
+                android:visibility="gone"/>
+            <!-- Lista Equipamiento Auxiliar -->
+            <ListView android:id="@+id/ListAuxEquip"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:choiceMode="multipleChoice"
+                android:visibility="gone"/>
+            <!-- Lista Instalaciones -->
+            <ListView android:id="@+id/ListInstallations"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -99,5 +140,4 @@
                 android:choiceMode="multipleChoice"
                 android:visibility="gone"/>
         </LinearLayout>
-    </ScrollView>
 </LinearLayout>

@@ -1,13 +1,195 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".AddEditAsset.EstimateAssetFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:orientation="vertical">
 
-</FrameLayout>
+        <!-- TODO: Update blank fragment layout -->
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/responsableActivoWrapper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:hintTextAppearance="@style/HintTextLabel">
+        <EditText
+            android:id="@+id/responsableActivo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:hint="Responsable del activo"
+            android:imeOptions="flagNoFullscreen"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/descripcionActivoWrapper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:hintTextAppearance="@style/HintTextLabel">
+        <EditText
+            android:id="@+id/descripcionActivo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:hint="Descripción del activo"
+            android:imeOptions="flagNoFullscreen"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/ubicacionActivoWrapper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:hintTextAppearance="@style/HintTextLabel">
+            <EditText
+                android:id="@+id/ubicacionActivo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:hint="Ubicación del activo"
+                android:imeOptions="flagNoFullscreen"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:stretchColumns="0,1"
+            android:shrinkColumns="0"
+            android:collapseColumns="*"
+            android:descendantFocusability="beforeDescendants"
+            android:layout_weight="0.15"
+            android:id="@+id/tabla1"
+            android:visibility="visible">
+
+            <TableRow
+                android:id="@+id/tableRow1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="fill_vertical">
+
+                <android.widget.TextView
+                    android:id="@+id/valorDisponibilidad"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Valoración Disponibilidad"
+                    android:focusable="false"
+                    android:textSize="18sp"/>
+                <Spinner
+                    android:id="@+id/spinnerDisponibilidad"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    style="@android:style/Widget.Holo.Light.Spinner"
+                    android:spinnerMode="dropdown"
+                    android:clickable="true"
+                    android:focusable="true" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="fill_vertical">
+
+                <android.widget.TextView
+                    android:id="@+id/valorIntegridad"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Valoración Integridad"
+                    android:focusable="false"
+                    android:textSize="18sp"/>
+                <Spinner
+                    android:id="@+id/spinnerIntegridad"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    style="@android:style/Widget.Holo.Light.Spinner"
+                    android:spinnerMode="dropdown"
+                    android:clickable="true"
+                    android:focusable="true" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="fill_vertical">
+
+                <android.widget.TextView
+                    android:id="@+id/valorConfidencialidad"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Valoración Confidencialidad"
+                    android:focusable="false"
+                    android:textSize="18sp"/>
+                <Spinner
+                    android:id="@+id/spinnerConfidencialidad"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    style="@android:style/Widget.Holo.Light.Spinner"
+                    android:spinnerMode="dropdown"
+                    android:clickable="true"
+                    android:focusable="true" />
+            </TableRow>
+
+
+            <TableRow
+                android:id="@+id/tableRow4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="fill_vertical"
+                android:focusable="false">
+
+                <android.widget.TextView
+                    android:id="@+id/valorAutenticidad"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Valoración Autenticidad"
+                    android:textSize="18sp"/>
+                <Spinner
+                    android:id="@+id/spinnerAutenticidad"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    style="@android:style/Widget.Holo.Light.Spinner"
+                    android:spinnerMode="dropdown"
+                    android:clickable="true"
+                    android:focusable="true" />
+            </TableRow>
+
+
+            <TableRow
+                android:id="@+id/tableRow5"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="fill_vertical"
+                android:gravity="center"
+                android:focusable="false">
+
+                <android.widget.TextView
+                    android:id="@+id/valorTrazabilidad"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Valoración Trazabilidad"
+                    android:focusable="false"
+                    android:textSize="18sp"/>
+                <Spinner
+                    android:id="@+id/spinnerTrazabilidad"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    style="@android:style/Widget.Holo.Light.Spinner"
+                    android:spinnerMode="dropdown"
+                    android:clickable="true"
+                    android:focusable="true" />
+            </TableRow>
+
+        </TableLayout>
+</LinearLayout>
+
+</ScrollView>
