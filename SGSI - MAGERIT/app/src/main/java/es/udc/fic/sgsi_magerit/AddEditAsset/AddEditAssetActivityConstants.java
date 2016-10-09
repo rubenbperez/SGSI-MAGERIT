@@ -11,4 +11,8 @@ public class AddEditAssetActivityConstants {
         public final static String ACTIVITY_TITLE_CREAR = "Añadir Activo";
         public final static String ACTIVITY_TITLE_EDITAR = "Editar Activo";
         public final static int SPINNERSIZE = 2;
+        public final static String ERROR_NOMBRE_ACTIVO = "Error: Nombre del activo obligatorio";
+        public final static String ERROR_CODIGO_ACTIVO = "Error: Código del activo obligatorio";
+        public final static String ERROR_NOMBRE_ACTIVO_DUPLICADO = "Error: Nombre del activo duplicado";
+        public final static String ERROR_CODIGO_ACTIVO_DUPLICADO = "Error: Código del activo duplicado";
 }

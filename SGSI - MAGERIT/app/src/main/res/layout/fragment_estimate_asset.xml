@@ -10,7 +10,43 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <android.widget.TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Detalles del Activo"
+            android:textSize="18sp"
+            android:background="#CFD8DC"/>
+
         <!-- TODO: Update blank fragment layout -->
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/nombreActivoWrapper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:hintTextAppearance="@style/HintTextLabel">
+            <EditText
+                android:id="@+id/nombreActivo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:hint="Nombre"
+                android:imeOptions="flagNoFullscreen"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/codigoActivoWrapper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:hintTextAppearance="@style/HintTextLabel">
+            <EditText
+                android:id="@+id/codigoActivo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:hint="Código"
+                android:imeOptions="flagNoFullscreen"
+                android:maxLength="5" />
+        </android.support.design.widget.TextInputLayout>
+
         <android.support.design.widget.TextInputLayout
             android:id="@+id/responsableActivoWrapper"
             android:layout_width="match_parent"
@@ -21,7 +57,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"
-            android:hint="Responsable del activo"
+            android:hint="Responsable"
             android:imeOptions="flagNoFullscreen"/>
         </android.support.design.widget.TextInputLayout>
 
@@ -35,7 +71,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"
-            android:hint="Descripción del activo"
+            android:hint="Descripción"
             android:imeOptions="flagNoFullscreen"/>
         </android.support.design.widget.TextInputLayout>
 
@@ -49,20 +85,28 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
-                android:hint="Ubicación del activo"
+                android:hint="Ubicación"
                 android:imeOptions="flagNoFullscreen"/>
         </android.support.design.widget.TextInputLayout>
+
+        <android.widget.TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="Valoración del activo"
+            android:textSize="18sp"
+            android:background="#CFD8DC"/>
 
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:stretchColumns="0,1"
-            android:shrinkColumns="0"
+            android:stretchColumns="*"
+            android:shrinkColumns="*"
             android:collapseColumns="*"
             android:descendantFocusability="beforeDescendants"
             android:layout_weight="0.15"
             android:id="@+id/tabla1"
+            android:layout_marginTop="5dp"
             android:visibility="visible">
 
             <TableRow
@@ -75,7 +119,7 @@
                     android:id="@+id/valorDisponibilidad"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Valoración Disponibilidad"
+                    android:text="Disponibilidad"
                     android:focusable="false"
                     android:textSize="18sp"/>
                 <Spinner
@@ -99,7 +143,7 @@
                     android:id="@+id/valorIntegridad"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Valoración Integridad"
+                    android:text="Integridad"
                     android:focusable="false"
                     android:textSize="18sp"/>
                 <Spinner
@@ -123,7 +167,7 @@
                     android:id="@+id/valorConfidencialidad"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Valoración Confidencialidad"
+                    android:text="Confidencialidad"
                     android:focusable="false"
                     android:textSize="18sp"/>
                 <Spinner
@@ -149,7 +193,7 @@
                     android:id="@+id/valorAutenticidad"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Valoración Autenticidad"
+                    android:text="Autenticidad"
                     android:textSize="18sp"/>
                 <Spinner
                     android:id="@+id/spinnerAutenticidad"
@@ -175,7 +219,7 @@
                     android:id="@+id/valorTrazabilidad"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Valoración Trazabilidad"
+                    android:text="Trazabilidad"
                     android:focusable="false"
                     android:textSize="18sp"/>
                 <Spinner

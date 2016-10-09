@@ -62,6 +62,7 @@ public class Assets extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(),AddEditAssetActivity.class);
                 intent.putExtra("idActivo", GlobalConstants.NULL_ID_PROYECTO); //Optional parameters
+                intent.putExtra("idProyecto", idProyectoActivo);
                 startActivityForResult(intent, GlobalConstants.REQUEST_CODE_ADD_ACTIVITY);
             }
         });
@@ -86,13 +87,25 @@ public class Assets extends Fragment {
             data.get(position).getNombreActivo());
 
             TextView lblAssetDescription = (TextView)item.findViewById(R.id.asset_desc);
-            lblAssetDescription.setText(data.get(position).getDescripcionActivo());
+            String descr = data.get(position).getDescripcionActivo();
+            if (!descr.isEmpty())
+                lblAssetDescription.setText(descr);
+            else
+                lblAssetDescription.setVisibility(View.GONE);
 
             TextView lblAssetResp = (TextView)item.findViewById(R.id.asset_resp);
-            lblAssetResp.setText(data.get(position).getResponsableActivo());
+            String resp = data.get(position).getResponsableActivo();
+            if (!resp.isEmpty())
+                lblAssetResp.setText(resp);
+            else
+                lblAssetResp.setVisibility(View.GONE);
 
             TextView lblAssetLoc = (TextView)item.findViewById(R.id.asset_loc);
-            lblAssetLoc.setText(data.get(position).getUbicacionActivo());
+            String loc = data.get(position).getUbicacionActivo();
+            if (!loc.isEmpty())
+                lblAssetLoc.setText(loc);
+            else
+                lblAssetLoc.setVisibility(View.GONE);
 
             return(item);
         }

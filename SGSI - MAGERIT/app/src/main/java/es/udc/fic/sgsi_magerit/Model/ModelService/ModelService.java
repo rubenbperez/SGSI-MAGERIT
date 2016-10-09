@@ -33,6 +33,7 @@ public interface ModelService {
     public void crearParametrizacionActivo (Long idProyecto, Long idTipo,
                                             Integer rangoSuperior, Integer rangoInferior,
                                             Integer valor, Boolean activado);
+    public List<Integer> obtenerParametrizacionesActivadas(Long idProyecto, String Table);
 
     public void crearParametrizacionVulnerabilidad (Long idProyecto,
                                                     Long idTipo, Integer valorTiempo,
@@ -60,6 +61,17 @@ public interface ModelService {
     public ParametrizacionDTO obtenerParametrizacionDeProyecto(Long idProyecto);
 
     public List<AssetDTO> obtenerActivos(long idProyecto) ;
+
     public long obtenerIdProyectoActivo();
+
+    public long crearActivo(Integer idProyecto, Integer idValoracionDisp, Integer idValoracionInt,
+                            Integer idValoracionConf, Integer idValoracionAut, Integer idValoracionTraza,
+                            String nombre, String codigo, String desc, String responsable, String ubicacion,
+                            String fechaCreacion);
+
+    public Integer comprobarNombreYCodigoActivoUnicos(String nombre, String codigo, Integer idProyecto);
+
+    public long crearActivoTipoActivo(Integer idActivo, Integer idProyecto, Integer idLista, Integer idTipoActivo);
+
 
 }

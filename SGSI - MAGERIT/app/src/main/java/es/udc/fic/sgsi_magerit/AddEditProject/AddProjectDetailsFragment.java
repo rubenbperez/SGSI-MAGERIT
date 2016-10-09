@@ -146,7 +146,6 @@ public class AddProjectDetailsFragment extends Fragment {
             fechaActual = Calendar.getInstance();
             String fechaActuaStr = dateFormat.format(fechaActual.getTime());
             etFechaCreacionProyecto.setText(fechaActuaStr);
-
         }
 
 

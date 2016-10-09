@@ -91,6 +91,12 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
             AssetConstants.UBICACION + " " + AssetConstants.STRING_TYPE + ", " +
             AssetConstants.FECHA_CREACION + " " + AssetConstants.STRING_TYPE  + " NOT NULL);";
 
+    String sqlCreateTableActivoTipoActivo = "CREATE TABLE " + AssetConstants.TABLE_NAME_ACTIVO_TIPO_ACTIVO + "(" +
+            AssetConstants.ID_ACTIVO_TIPO_ACTIVO + " " + AssetConstants.INT_TYPE + " PRIMARY KEY AUTOINCREMENT, " +
+            AssetConstants.ID_ACTIVO + " " + AssetConstants.INT_TYPE + " UNIQUE NOT NULL, " +
+            AssetConstants.ID_PROYECTO + " " + AssetConstants.INT_TYPE + " UNIQUE NOT NULL, " +
+            AssetConstants.ID_LISTA_TIPO_ACTIVO + " " + AssetConstants.INT_TYPE + " UNIQUE NOT NULL, " +
+            AssetConstants.ID_TIPO_ACTIVO + " " + AssetConstants.INT_TYPE + " UNIQUE NOT NULL);";
 
     public ModelServiceImpl(Context contexto, String nombre, int version) {
         super(contexto, nombre, null, version);
@@ -104,6 +110,7 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
         db.execSQL(sqlCreateParametrizacionImpacto);
         db.execSQL(sqlCreateParametrizacionControlSeguridad);
         db.execSQL(sqlCreateTableActivos);
+        db.execSQL(sqlCreateTableActivoTipoActivo);
 
     }
 
@@ -292,6 +299,26 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
         db.insert(ProjectSizingConstants.TABLE_NAME_PARAMETRIZACION_ACTIVO, null,
                 nuevoParametrizacionActivo);
     }
+
+    @Override
+    public List<Integer> obtenerParametrizacionesActivadas(Long idProyecto, String table) {
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT "+ ProjectSizingConstants.ID_TIPO +" FROM " +
+                table + " WHERE " + ProjectSizingConstants.ID_PROYECTO + " = " + idProyecto + " AND " +
+                ProjectSizingConstants.ACTIVADO + " = 1", null);
+
+        List<Integer> idsTipos = new ArrayList<Integer>();
+        if (cursor.moveToFirst()) {
+            do {
+                Integer idTipo = cursor.getInt(0);
+                idsTipos.add(idTipo);
+            } while ((cursor.moveToNext()));
+        }
+        cursor.close();
+        return idsTipos;
+    }
+
+
 
     @Override
     public ParametrizacionDTO obtenerParametrizacionDeProyecto(Long idProyecto) {
@@ -575,6 +602,80 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
         cursor.close();
         return idProyecto;
     }
+
+    @Override
+    public long crearActivo(Integer idProyecto, Integer idValoracionDisp, Integer idValoracionInt,
+            Integer idValoracionConf, Integer idValoracionAut, Integer idValoracionTraza,
+            String nombre, String codigo, String desc, String responsable, String ubicacion,
+            String fechaCreacion) {
+
+        SQLiteDatabase db = getReadableDatabase();
+
+        //Creamos el registro a insertar como objeto ContentValues
+        ContentValues nuevoActivo = new ContentValues();
+        nuevoActivo.put(AssetConstants.ID_PROYECTO, idProyecto);
+        nuevoActivo.put(AssetConstants.ID_VALORACION_ACTIVO_DISPONIBILIDAD,idValoracionDisp);
+        nuevoActivo.put(AssetConstants.ID_VALORACION_ACTIVO_INTEGRIDAD,idValoracionInt);
+        nuevoActivo.put(AssetConstants.ID_VALORACION_ACTIVO_CONFIDENCIALIDAD,idValoracionConf);
+        nuevoActivo.put(AssetConstants.ID_VALORACION_ACTIVO_AUTENTICIDAD,idValoracionAut);
+        nuevoActivo.put(AssetConstants.ID_VALORACION_ACTIVO_TRAZABILIDAD,idValoracionTraza);
+        nuevoActivo.put(AssetConstants.NOMBRE,nombre);
+        nuevoActivo.put(AssetConstants.CODIGO,codigo);
+        nuevoActivo.put(AssetConstants.DESCRIPCION,desc);
+        nuevoActivo.put(AssetConstants.RESPONSABLE,responsable);
+        nuevoActivo.put(AssetConstants.UBICACION,ubicacion);
+        nuevoActivo.put(AssetConstants.FECHA_CREACION,fechaCreacion);
+
+        //Insertamos el registro en la base de datos
+        return db.insert(AssetConstants.TABLE_NAME, null, nuevoActivo);
+    }
+
+    @Override
+    public Integer comprobarNombreYCodigoActivoUnicos(String nombre, String codigo, Integer idProyecto) {
+
+        Integer returnValue = -1;
+
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT " + AssetConstants.ID_ACTIVO + " FROM " +
+                AssetConstants.TABLE_NAME + " WHERE " + AssetConstants.NOMBRE + " LIKE '" + nombre +
+                "' AND " + AssetConstants.ID_PROYECTO + "=" + idProyecto, null);
+
+        if ((cursor.moveToFirst()) || cursor.getCount() > 0){
+            cursor.close();
+            return 1;
+        }
+
+        cursor = db.rawQuery("SELECT " + AssetConstants.ID_ACTIVO + " FROM " +
+                AssetConstants.TABLE_NAME + " WHERE " + AssetConstants.CODIGO + " LIKE '" + codigo +
+                "' AND " + AssetConstants.ID_PROYECTO + "=" + idProyecto, null);
+
+        if ((cursor.moveToFirst()) || cursor.getCount() > 0){
+            cursor.close();
+            return 2;
+        }
+
+        //Devuelvo -1 si OK, 1 si Nombre repetido, 2 si codigo repetido.
+        cursor.close();
+        return returnValue;
+    }
+
+    @Override
+    public long crearActivoTipoActivo(Integer idActivo,
+                              Integer idProyecto, Integer idLista, Integer idTipoActivo) {
+
+        SQLiteDatabase db = getReadableDatabase();
+
+        //Creamos el registro a insertar como objeto ContentValues
+        ContentValues nuevoActivoTipoActivo = new ContentValues();
+        nuevoActivoTipoActivo.put(AssetConstants.ID_ACTIVO, idActivo);
+        nuevoActivoTipoActivo.put(AssetConstants.ID_PROYECTO,idProyecto);
+        nuevoActivoTipoActivo.put(AssetConstants.ID_LISTA_TIPO_ACTIVO,idLista);
+        nuevoActivoTipoActivo.put(AssetConstants.ID_TIPO_ACTIVO,idTipoActivo);
+
+        //Insertamos el registro en la base de datos
+        return db.insert(AssetConstants.TABLE_NAME_ACTIVO_TIPO_ACTIVO, null, nuevoActivoTipoActivo);
+    }
+
 
 
 }
