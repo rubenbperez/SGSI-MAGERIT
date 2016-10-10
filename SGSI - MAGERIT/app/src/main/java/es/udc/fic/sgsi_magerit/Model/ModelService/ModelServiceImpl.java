@@ -93,10 +93,10 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
 
     String sqlCreateTableActivoTipoActivo = "CREATE TABLE " + AssetConstants.TABLE_NAME_ACTIVO_TIPO_ACTIVO + "(" +
             AssetConstants.ID_ACTIVO_TIPO_ACTIVO + " " + AssetConstants.INT_TYPE + " PRIMARY KEY AUTOINCREMENT, " +
-            AssetConstants.ID_ACTIVO + " " + AssetConstants.INT_TYPE + " UNIQUE NOT NULL, " +
-            AssetConstants.ID_PROYECTO + " " + AssetConstants.INT_TYPE + " UNIQUE NOT NULL, " +
-            AssetConstants.ID_LISTA_TIPO_ACTIVO + " " + AssetConstants.INT_TYPE + " UNIQUE NOT NULL, " +
-            AssetConstants.ID_TIPO_ACTIVO + " " + AssetConstants.INT_TYPE + " UNIQUE NOT NULL);";
+            AssetConstants.ID_ACTIVO_TABLA_TIPO_ACTIVO + " " + AssetConstants.INT_TYPE + " NOT NULL, " +
+            AssetConstants.ID_PROYECTO + " " + AssetConstants.INT_TYPE + " NOT NULL, " +
+            AssetConstants.ID_LISTA_TIPO_ACTIVO + " " + AssetConstants.INT_TYPE + " NOT NULL, " +
+            AssetConstants.ID_TIPO_ACTIVO + " " + AssetConstants.INT_TYPE + " NOT NULL);";
 
     public ModelServiceImpl(Context contexto, String nombre, int version) {
         super(contexto, nombre, null, version);
@@ -667,7 +667,7 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
 
         //Creamos el registro a insertar como objeto ContentValues
         ContentValues nuevoActivoTipoActivo = new ContentValues();
-        nuevoActivoTipoActivo.put(AssetConstants.ID_ACTIVO, idActivo);
+        nuevoActivoTipoActivo.put(AssetConstants.ID_ACTIVO_TABLA_TIPO_ACTIVO, idActivo);
         nuevoActivoTipoActivo.put(AssetConstants.ID_PROYECTO,idProyecto);
         nuevoActivoTipoActivo.put(AssetConstants.ID_LISTA_TIPO_ACTIVO,idLista);
         nuevoActivoTipoActivo.put(AssetConstants.ID_TIPO_ACTIVO,idTipoActivo);

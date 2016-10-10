@@ -29,6 +29,7 @@ public class AssetConstants {
     public static final String FECHA_CREACION = "fechaCreacion";
 
     public static final String TABLE_NAME_ACTIVO_TIPO_ACTIVO = "ACTIVO_TIPO_ACTIVO";
+    public static final String ID_ACTIVO_TABLA_TIPO_ACTIVO = "idActivo";
     public static final String ID_ACTIVO_TIPO_ACTIVO = "idActivoTipoActivo";
     public static final String ID_TIPO_ACTIVO = "idTipoActivo";
     public static final String ID_LISTA_TIPO_ACTIVO = "idListaTipoActivo";

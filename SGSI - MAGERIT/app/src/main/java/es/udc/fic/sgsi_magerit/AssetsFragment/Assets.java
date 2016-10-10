@@ -6,13 +6,19 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -64,10 +70,69 @@ public class Assets extends Fragment {
                 intent.putExtra("idActivo", GlobalConstants.NULL_ID_PROYECTO); //Optional parameters
                 intent.putExtra("idProyecto", idProyectoActivo);
                 startActivityForResult(intent, GlobalConstants.REQUEST_CODE_ADD_ACTIVITY);
+
             }
         });
-
+        registerForContextMenu(lstOpciones);
         return  view;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent datas) {
+        super.onActivityResult(requestCode, resultCode, datas);
+
+        if (GlobalConstants.REQUEST_CODE_ADD_ACTIVITY == requestCode ||
+                GlobalConstants.REQUEST_CODE_EDIT_ACTIVITY == requestCode) {
+
+            if (resultCode == 1) {
+                data.clear();
+                    data.addAll(service.obtenerActivos(idProyectoActivo));
+                adaptador.notifyDataSetChanged();
+            }
+
+            if (resultCode == 0)
+                return;
+        }
+    }
+
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v,
+                                    ContextMenu.ContextMenuInfo menuInfo)
+    {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getActivity().getMenuInflater();
+
+        AdapterView.AdapterContextMenuInfo info =
+                (AdapterView.AdapterContextMenuInfo)menuInfo;
+
+        menu.setHeaderTitle(data.get(info.position).getNombreActivo());
+        inflater.inflate(R.menu.menu_proyectos, menu);
+    }
+
+    //TODO
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
+        int index = info.position;
+        switch (item.getItemId()) {
+            case R.id.menuOpcBorrar:
+                /*Log.d("Posicion", Integer.toString(index));
+                //service.eliminarProyectoYDimensionamiento(data.get(index).getId());
+                data.remove(index);
+                adaptador.notifyDataSetChanged();*/
+                //comprobarElementosNavView(data,navView);
+                break;
+
+            case R.id.menuOpcEditar:
+                /*Intent intent = new Intent(getActivity(), AddProjectActivity.class);
+                intent.putExtra("idProyecto", data.get(index).getId()); //Optional parameters
+                startActivityForResult(intent, GlobalConstants.REQUEST_CODE_EDIT_ACTIVITY);*/
+                break;
+        }
+
+        return true;
     }
 
 
@@ -88,21 +153,21 @@ public class Assets extends Fragment {
 
             TextView lblAssetDescription = (TextView)item.findViewById(R.id.asset_desc);
             String descr = data.get(position).getDescripcionActivo();
-            if (!descr.isEmpty())
+            if (descr != null && !descr.isEmpty())
                 lblAssetDescription.setText(descr);
             else
                 lblAssetDescription.setVisibility(View.GONE);
 
             TextView lblAssetResp = (TextView)item.findViewById(R.id.asset_resp);
             String resp = data.get(position).getResponsableActivo();
-            if (!resp.isEmpty())
+            if (resp != null && !resp.isEmpty())
                 lblAssetResp.setText(resp);
             else
                 lblAssetResp.setVisibility(View.GONE);
 
             TextView lblAssetLoc = (TextView)item.findViewById(R.id.asset_loc);
             String loc = data.get(position).getUbicacionActivo();
-            if (!loc.isEmpty())
+            if (loc != null && !loc.isEmpty())
                 lblAssetLoc.setText(loc);
             else
                 lblAssetLoc.setVisibility(View.GONE);

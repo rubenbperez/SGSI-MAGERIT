@@ -10,15 +10,19 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.SparseBooleanArray;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.Spinner;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.List;
 
 import es.udc.fic.sgsi_magerit.Model.ModelService.ModelService;
 import es.udc.fic.sgsi_magerit.Model.ModelService.ModelServiceImpl;
@@ -44,6 +48,19 @@ public class AddEditAssetActivity extends AppCompatActivity {
     private Spinner spinnerValoracionConfidencialidad;
     private Spinner spinnerValoracionAutenticidad;
     private Spinner spinnerValoracionTrazabilidad;
+    private ListView lstOpcionesEssential;
+    private ListView lstOpcionesArchSys;
+    private ListView lstOpcionesDataInfo;
+    private ListView lstOpcionesCryptKeys;
+    private ListView lstOpcionesServices;
+    private ListView lstOpcionesCommunicationNets;
+    private ListView lstOpcionesSoftware;
+    private ListView lstOpcionesHardware;
+    private ListView lstOpcionesInfoSup;
+    private ListView lstOpcionesAuxEquip;
+    private ListView lstOpcionesInstallations;
+    private ListView lstOpcionesPersonal;
+    private ListView lstOpcionesOther;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +99,15 @@ public class AddEditAssetActivity extends AppCompatActivity {
                 finish();
                 return true;
             case R.id.action_aceptar:
-                return controlarAceptar();
+                item.setEnabled(false);
+                setResult(1, resultIntent);
+                if (controlarAceptar())
+                {
+                    item.setEnabled(true);
+                    finish();
+                    return true;
+                }
+                return false;
             case R.id.action_cancelar:
                 setResult(0, resultIntent);
                 finish();
@@ -139,17 +164,17 @@ public class AddEditAssetActivity extends AppCompatActivity {
     private boolean controlarAceptar() {
 
         boolean flag = false;
-        Fragment fr1 = (Fragment) adapter.instantiateItem(viewPager, 1);
+        Fragment fr2 = (Fragment) adapter.instantiateItem(viewPager, 1);
 
-        tilNombreActivo = (TextInputLayout) fr1.getView().findViewById(R.id.nombreActivoWrapper);
-        etNombreActivo = (EditText) fr1.getView().findViewById(R.id.nombreActivo);
+        tilNombreActivo = (TextInputLayout) fr2.getView().findViewById(R.id.nombreActivoWrapper);
+        etNombreActivo = (EditText) fr2.getView().findViewById(R.id.nombreActivo);
 
         if (etNombreActivo.getText().toString().isEmpty()) {
             tilNombreActivo.setErrorEnabled(true);
             tilNombreActivo.setError(AddEditAssetActivityConstants.ERROR_NOMBRE_ACTIVO);
             LinearLayout.LayoutParams params = (LinearLayout.LayoutParams)tilNombreActivo.getLayoutParams();
             params.setMargins(0,45,0,0);
-            fr1.getView().requestLayout();
+            fr2.getView().requestLayout();
             flag = false;
         } else {
             tilNombreActivo.setError(null);
@@ -157,8 +182,8 @@ public class AddEditAssetActivity extends AppCompatActivity {
             flag = true;
         }
 
-        tilCodigoActivo = (TextInputLayout) fr1.getView().findViewById(R.id.codigoActivoWrapper);
-        etCodigoActivo = (EditText) fr1.getView().findViewById(R.id.codigoActivo);
+        tilCodigoActivo = (TextInputLayout) fr2.getView().findViewById(R.id.codigoActivoWrapper);
+        etCodigoActivo = (EditText) fr2.getView().findViewById(R.id.codigoActivo);
 
         if (etCodigoActivo.getText().toString().isEmpty()) {
             tilCodigoActivo.setErrorEnabled(true);
@@ -185,25 +210,27 @@ public class AddEditAssetActivity extends AppCompatActivity {
         switch (retVal) {
             case -1:
                 //Creamos activo y los tipos
-                crearActivo();
+                Long idActivo = crearActivo();
+                crearTiposDeActivo(idActivo);
                 break;
             case 1:
                 tilNombreActivo.setErrorEnabled(true);
                 tilNombreActivo.setError(AddEditAssetActivityConstants.ERROR_NOMBRE_ACTIVO_DUPLICADO);
                 LinearLayout.LayoutParams params = (LinearLayout.LayoutParams)tilNombreActivo.getLayoutParams();
                 params.setMargins(0,45,0,0);
-                fr1.getView().requestLayout();
+                viewPager.setCurrentItem(AddEditAssetActivityConstants.TAB_VALORACION);
                 break;
             case 2:
                 tilCodigoActivo.setErrorEnabled(true);
                 tilCodigoActivo.setError(AddEditAssetActivityConstants.ERROR_CODIGO_ACTIVO_DUPLICADO);
+                viewPager.setCurrentItem(AddEditAssetActivityConstants.TAB_VALORACION);
                 break;
         }
 
         return flag;
     }
 
-    private void crearActivo() {
+    private Long crearActivo() {
         Fragment fr2 = (Fragment) adapter.instantiateItem(viewPager, 1);
         //Creamos el activo primero
         etNombreActivo = (EditText) fr2.getView().findViewById(R.id.nombreActivo);
@@ -221,7 +248,7 @@ public class AddEditAssetActivity extends AppCompatActivity {
         spinnerValoracionAutenticidad = (Spinner) fr2.getView().findViewById(R.id.spinnerAutenticidad);
         spinnerValoracionTrazabilidad = (Spinner) fr2.getView().findViewById(R.id.spinnerTrazabilidad);
 
-        service.crearActivo(idProyecto.intValue(),devuelveIntTipoActivoONulo(spinnerValoracionDisponibilidad),
+        return service.crearActivo(idProyecto.intValue(),devuelveIntTipoActivoONulo(spinnerValoracionDisponibilidad),
                 devuelveIntTipoActivoONulo(spinnerValoracionIntegridad),
                 devuelveIntTipoActivoONulo(spinnerValoracionConfidencialidad),
                 devuelveIntTipoActivoONulo(spinnerValoracionAutenticidad),
@@ -229,6 +256,48 @@ public class AddEditAssetActivity extends AppCompatActivity {
                 devuelveStringONulo(etCodigoActivo), devuelveStringONulo(etDescripcion),
                 devuelveStringONulo(etResponsable), devuelveStringONulo(etUbicacion), fechaActualStr);
     }
+
+    private void crearTiposDeActivo(Long idActivo) {
+        Fragment fr1 = (Fragment) adapter.instantiateItem(viewPager, 0);
+
+        lstOpcionesEssential = (ListView) fr1.getView().findViewById(R.id.ListEssential);
+        lstOpcionesArchSys = (ListView) fr1.getView().findViewById(R.id.ListSysArch);
+        lstOpcionesDataInfo = (ListView) fr1.getView().findViewById(R.id.ListDataInfo);
+        lstOpcionesCryptKeys = (ListView) fr1.getView().findViewById(R.id.ListCryptKeps);
+        lstOpcionesServices = (ListView) fr1.getView().findViewById(R.id.ListServices);
+        lstOpcionesCommunicationNets = (ListView) fr1.getView().findViewById(R.id.ListCommunicationNet);
+        lstOpcionesSoftware = (ListView) fr1.getView().findViewById(R.id.ListSoftware);
+        lstOpcionesHardware = (ListView) fr1.getView().findViewById(R.id.ListHardware);
+        lstOpcionesInfoSup = (ListView) fr1.getView().findViewById(R.id.ListInfoSup);
+        lstOpcionesAuxEquip = (ListView) fr1.getView().findViewById(R.id.ListAuxEquip);
+        lstOpcionesInstallations = (ListView) fr1.getView().findViewById(R.id.ListInstallations);
+        lstOpcionesPersonal = (ListView) fr1.getView().findViewById(R.id.ListPersonal);
+        lstOpcionesOther = (ListView) fr1.getView().findViewById(R.id.ListOther);
+
+        crearActivoTipoActivo(lstOpcionesEssential, idActivo, 0);
+        crearActivoTipoActivo(lstOpcionesArchSys, idActivo, 1);
+        crearActivoTipoActivo(lstOpcionesDataInfo, idActivo, 2);
+        crearActivoTipoActivo(lstOpcionesCryptKeys, idActivo, 3);
+        crearActivoTipoActivo(lstOpcionesServices, idActivo, 4);
+        crearActivoTipoActivo(lstOpcionesCommunicationNets, idActivo, 5);
+        crearActivoTipoActivo(lstOpcionesSoftware, idActivo, 6);
+        crearActivoTipoActivo(lstOpcionesHardware, idActivo, 7);
+        crearActivoTipoActivo(lstOpcionesInfoSup, idActivo, 8);
+        crearActivoTipoActivo(lstOpcionesAuxEquip, idActivo, 9);
+        crearActivoTipoActivo(lstOpcionesInstallations, idActivo, 10);
+        crearActivoTipoActivo(lstOpcionesPersonal, idActivo, 11);
+        crearActivoTipoActivo(lstOpcionesOther, idActivo, 12);
+    }
+
+    private void crearActivoTipoActivo(ListView lst, Long idActivo, Integer idLista)
+    {
+        SparseBooleanArray checkedPositions = lst.getCheckedItemPositions();
+        for (int i = 0; i <=lst.getAdapter().getCount(); i++) {
+            if (checkedPositions.get(i))
+                service.crearActivoTipoActivo(idActivo.intValue(),idProyecto.intValue(), idLista,i);
+        }
+    }
+    
 
     private String devuelveStringONulo(EditText et)
     {
@@ -248,9 +317,6 @@ public class AddEditAssetActivity extends AppCompatActivity {
 
         Integer value = Arrays.asList(GlobalConstants.ID_TIPOS).indexOf(
                 sp.getSelectedItem().toString());
-
-        System.out.println(value);
-
         if (value != -1)
             i = value;
         else
