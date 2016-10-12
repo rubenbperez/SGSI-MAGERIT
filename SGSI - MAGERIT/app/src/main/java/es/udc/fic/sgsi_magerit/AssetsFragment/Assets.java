@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -28,6 +29,7 @@ import es.udc.fic.sgsi_magerit.AddEditProject.AddProjectActivity;
 import es.udc.fic.sgsi_magerit.Model.Asset.Asset;
 import es.udc.fic.sgsi_magerit.Model.Asset.AssetDTO;
 import es.udc.fic.sgsi_magerit.Model.ModelService.ModelServiceImpl;
+import es.udc.fic.sgsi_magerit.Model.Project.Project;
 import es.udc.fic.sgsi_magerit.R;
 import es.udc.fic.sgsi_magerit.Util.GlobalConstants;
 
@@ -40,6 +42,7 @@ public class Assets extends Fragment {
     private ModelServiceImpl service;
     private AssetAdapter adaptador;
     private long idProyectoActivo;
+    private NavigationView navView;
 
     public Assets() {
         // Required empty public constructor
@@ -49,10 +52,12 @@ public class Assets extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_assets, container, false);
         service = new ModelServiceImpl(getContext(), GlobalConstants.DATABASE_NAME,1);
+        navView = (NavigationView)getActivity().findViewById(R.id.navview);
 
         idProyectoActivo = service.obtenerIdProyectoActivo();
 
         data = service.obtenerActivos(idProyectoActivo);
+        comprobarElementosNavView(data,navView);
         adaptador =
                 new AssetAdapter(this.getContext(), data);
 
@@ -67,7 +72,7 @@ public class Assets extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(),AddEditAssetActivity.class);
-                intent.putExtra("idActivo", GlobalConstants.NULL_ID_PROYECTO); //Optional parameters
+                intent.putExtra("idActivo", GlobalConstants.NULL_ID_ACTIVO); //Optional parameters
                 intent.putExtra("idProyecto", idProyectoActivo);
                 startActivityForResult(intent, GlobalConstants.REQUEST_CODE_ADD_ACTIVITY);
 
@@ -118,23 +123,35 @@ public class Assets extends Fragment {
         int index = info.position;
         switch (item.getItemId()) {
             case R.id.menuOpcBorrar:
-                /*Log.d("Posicion", Integer.toString(index));
-                //service.eliminarProyectoYDimensionamiento(data.get(index).getId());
+                Log.d("Posicion", Integer.toString(index));
+                service.eliminarActivosYTiposActivo(data.get(index).getIdActivo());
                 data.remove(index);
-                adaptador.notifyDataSetChanged();*/
-                //comprobarElementosNavView(data,navView);
+                adaptador.notifyDataSetChanged();
+                comprobarElementosNavView(data,navView);
                 break;
 
             case R.id.menuOpcEditar:
-                /*Intent intent = new Intent(getActivity(), AddProjectActivity.class);
-                intent.putExtra("idProyecto", data.get(index).getId()); //Optional parameters
-                startActivityForResult(intent, GlobalConstants.REQUEST_CODE_EDIT_ACTIVITY);*/
+                Intent intent = new Intent(getActivity(), AddEditAssetActivity.class);
+                intent.putExtra("idActivo", data.get(index).getIdActivo()); //Optional parameters
+                intent.putExtra("idProyecto", idProyectoActivo);
+                startActivityForResult(intent, GlobalConstants.REQUEST_CODE_EDIT_ACTIVITY);
                 break;
         }
 
         return true;
     }
 
+
+
+    private void comprobarElementosNavView(List<AssetDTO> assets, NavigationView navView) {
+
+        if (assets.isEmpty()) {
+            navView.getMenu().findItem(R.id.menuAmenazas).setEnabled(false);
+        } else {
+            navView.getMenu().findItem(R.id.menuAmenazas).setEnabled(true);
+        }
+
+    }
 
     public class AssetAdapter extends ArrayAdapter<AssetDTO> {
 

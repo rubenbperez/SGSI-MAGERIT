@@ -11,5 +11,10 @@
             android:id="@+id/menuActivos"
             android:icon="@drawable/ic_menu"
             android:title="Activos"/>
+
+        <item
+            android:id="@+id/menuAmenazas"
+            android:icon="@drawable/ic_menu"
+            android:title="Amenazas"/>
     </group>
 </menu>

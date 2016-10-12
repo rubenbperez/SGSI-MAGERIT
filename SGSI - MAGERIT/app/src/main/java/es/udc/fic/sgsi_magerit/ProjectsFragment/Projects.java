@@ -114,6 +114,7 @@ public class Projects extends Fragment {
 
         if (proyectos.isEmpty()) {
             navView.getMenu().findItem(R.id.menuActivos).setEnabled(false);
+            navView.getMenu().findItem(R.id.menuAmenazas).setEnabled(false);
             return;
         }
 
@@ -123,9 +124,20 @@ public class Projects extends Fragment {
                 break;
             } else {
                 navView.getMenu().findItem(R.id.menuActivos).setEnabled(false);
+                navView.getMenu().findItem(R.id.menuAmenazas).setEnabled(false);
             }
         }
     }
+
+    private void comprobarElementosNavViewAmenazas(List<?> lst, NavigationView navView) {
+        if (lst.isEmpty()) {
+            navView.getMenu().findItem(R.id.menuAmenazas).setEnabled(false);
+        } else {
+            navView.getMenu().findItem(R.id.menuAmenazas).setEnabled(true);
+        }
+
+    }
+
 
     public class ProjectAdapter extends ArrayAdapter<Project> {
 

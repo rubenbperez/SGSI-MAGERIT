@@ -3,6 +3,8 @@ package es.udc.fic.sgsi_magerit.Model.ModelService;
 import java.text.ParseException;
 import java.util.List;
 
+import es.udc.fic.sgsi_magerit.Model.Asset.Asset;
+import es.udc.fic.sgsi_magerit.Model.Asset.AssetAssetType;
 import es.udc.fic.sgsi_magerit.Model.Asset.AssetDTO;
 import es.udc.fic.sgsi_magerit.Model.ProjectSizing.ParametrizacionDTO;
 import es.udc.fic.sgsi_magerit.Model.Project.Project;
@@ -73,5 +75,9 @@ public interface ModelService {
 
     public long crearActivoTipoActivo(Integer idActivo, Integer idProyecto, Integer idLista, Integer idTipoActivo);
 
+    public boolean eliminarActivosYTiposActivo(Long idActivo);
 
+    public Asset obtenerActivo (Long idActivo) throws ParseException;
+
+    public List<AssetAssetType> obtenerTiposDeActivo (Long idActivo);
 }

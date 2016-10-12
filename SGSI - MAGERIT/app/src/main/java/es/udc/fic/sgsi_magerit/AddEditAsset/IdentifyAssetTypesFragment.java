@@ -23,12 +23,16 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import es.udc.fic.sgsi_magerit.Model.Asset.AssetAssetType;
+import es.udc.fic.sgsi_magerit.Model.ModelService.ModelService;
+import es.udc.fic.sgsi_magerit.Model.ModelService.ModelServiceImpl;
 import es.udc.fic.sgsi_magerit.R;
 import es.udc.fic.sgsi_magerit.Util.GlobalConstants;
 
 public class IdentifyAssetTypesFragment extends Fragment {
 
-
+    private Long idProyecto;
+    private Long idActivo;
     private Spinner spinner;
     private ArrayAdapter<CharSequence> spinnerAdapter;
     private ListView lstOpcionesEssential;
@@ -45,6 +49,8 @@ public class IdentifyAssetTypesFragment extends Fragment {
     private ListView lstOpcionesPersonal;
     private ListView lstOpcionesOther;
 
+    ModelService service;
+
     public IdentifyAssetTypesFragment() {
         // Required empty public constructor
     }
@@ -58,6 +64,12 @@ public class IdentifyAssetTypesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_identify_asset_types, container, false);
+        service = new ModelServiceImpl(this.getActivity(), GlobalConstants.DATABASE_NAME,1);
+        Bundle args = getArguments();
+        if(args != null){
+            this.idProyecto = args.getLong("idProyecto");
+            this.idActivo = args.getLong("idActivo");
+        }
 
         // Lista de Activos esenciales
         lstOpcionesEssential = (ListView) view.findViewById(R.id.ListEssential);
@@ -140,6 +152,8 @@ public class IdentifyAssetTypesFragment extends Fragment {
                     public void onNothingSelected(AdapterView<?> parent) {
                     }
                 });
+
+        cargarDatosEdicion(idActivo, view);
         return view;
     }
 
@@ -209,6 +223,56 @@ public class IdentifyAssetTypesFragment extends Fragment {
             lstOpcionesOther.setVisibility(View.VISIBLE);
         else
             lstOpcionesOther.setVisibility(View.GONE);
+    }
+
+    private void cargarDatosEdicion (Long idActivo, View view) {
+
+        List<AssetAssetType> tiposdeActivo = service.obtenerTiposDeActivo(idActivo);
+
+        for (AssetAssetType at: tiposdeActivo)
+        {
+            switch (at.getIdListaTipo().intValue()){
+                case 0:
+                    lstOpcionesEssential.setItemChecked(at.getIdTipo().intValue(), true);
+                    break;
+                case 1:
+                    lstOpcionesArchSys.setItemChecked(at.getIdTipo().intValue(), true);
+                    break;
+                case 2:
+                    lstOpcionesDataInfo.setItemChecked(at.getIdTipo().intValue(), true);
+                    break;
+                case 3:
+                    lstOpcionesCryptKeys.setItemChecked(at.getIdTipo().intValue(), true);
+                    break;
+                case 4:
+                    lstOpcionesServices.setItemChecked(at.getIdTipo().intValue(), true);
+                    break;
+                case 5:
+                    lstOpcionesSoftware.setItemChecked(at.getIdTipo().intValue(), true);
+                    break;
+                case 6:
+                    lstOpcionesHardware.setItemChecked(at.getIdTipo().intValue(), true);
+                    break;
+                case 7:
+                    lstOpcionesCommunicationNets.setItemChecked(at.getIdTipo().intValue(), true);
+                    break;
+                case 8:
+                    lstOpcionesInfoSup.setItemChecked(at.getIdTipo().intValue(), true);
+                    break;
+                case 9:
+                    lstOpcionesAuxEquip.setItemChecked(at.getIdTipo().intValue(), true);
+                    break;
+                case 10:
+                    lstOpcionesInstallations.setItemChecked(at.getIdTipo().intValue(), true);
+                    break;
+                case 11:
+                    lstOpcionesPersonal.setItemChecked(at.getIdTipo().intValue(), true);
+                    break;
+                case 12:
+                    lstOpcionesOther.setItemChecked(at.getIdTipo().intValue(), true);
+                    break;
+            }
+        }
     }
 
 }

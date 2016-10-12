@@ -18,12 +18,14 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
+import es.udc.fic.sgsi_magerit.Model.Asset.Asset;
 import es.udc.fic.sgsi_magerit.Model.ModelService.ModelService;
 import es.udc.fic.sgsi_magerit.Model.ModelService.ModelServiceImpl;
 import es.udc.fic.sgsi_magerit.R;
@@ -32,6 +34,7 @@ import es.udc.fic.sgsi_magerit.Util.GlobalConstants;
 public class AddEditAssetActivity extends AppCompatActivity {
 
     private Long idProyecto;
+    private Long idActivo;
     private ViewPager viewPager;
     private ModelService service;
     private AddEditAssetFragmentPagerAdapter adapter;
@@ -65,7 +68,8 @@ public class AddEditAssetActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         service = new ModelServiceImpl(this, GlobalConstants.DATABASE_NAME,1);
-        idProyecto = getIntent().getLongExtra("idProyecto",(long)0);
+        idProyecto = getIntent().getLongExtra("idProyecto", GlobalConstants.NULL_ID_PROYECTO);
+        idActivo = getIntent().getLongExtra("idActivo",GlobalConstants.NULL_ID_ACTIVO);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_project);
         Toolbar toolbar = (Toolbar) findViewById(R.id.appbar);
@@ -83,11 +87,12 @@ public class AddEditAssetActivity extends AppCompatActivity {
 
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_return);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        if (idProyecto == 0)
-            getSupportActionBar().setTitle(AddEditAssetActivityConstants.ACTIVITY_TITLE_CREAR);
-        else
-            getSupportActionBar().setTitle(AddEditAssetActivityConstants.ACTIVITY_TITLE_EDITAR);
 
+        if (idActivo == GlobalConstants.NULL_ID_ACTIVO)
+            getSupportActionBar().setTitle(AddEditAssetActivityConstants.ACTIVITY_TITLE_CREAR);
+        else {
+            getSupportActionBar().setTitle(AddEditAssetActivityConstants.ACTIVITY_TITLE_EDITAR);
+        }
     }
 
     @Override
@@ -141,6 +146,7 @@ public class AddEditAssetActivity extends AppCompatActivity {
             Fragment f = null;
             Bundle args = new Bundle();
             args.putLong("idProyecto", idProyecto);
+            args.putLong("idActivo", idActivo);
             switch(position) {
                 case AddEditAssetActivityConstants.TAB_IDENTIFICACION:
                     f = IdentifyAssetTypesFragment.newInstance();
@@ -323,6 +329,5 @@ public class AddEditAssetActivity extends AppCompatActivity {
             i = null;
         return i;
     }
-
 
 }

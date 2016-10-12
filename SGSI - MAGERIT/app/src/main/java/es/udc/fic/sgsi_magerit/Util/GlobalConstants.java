@@ -9,6 +9,7 @@ public class GlobalConstants {
     public final static Integer REQUEST_CODE_ADD_ACTIVITY = 1;
     public final static Integer REQUEST_CODE_EDIT_ACTIVITY = 2;
     public final static Long NULL_ID_PROYECTO = (long) 0;
+    public final static Long NULL_ID_ACTIVO = (long) 0;
     public final static String[] ID_TIPOS = {"Muy alta", "Alta", "Media", "Baja", "Muy Baja"};
 
 

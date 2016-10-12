@@ -14,10 +14,12 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
 import es.udc.fic.sgsi_magerit.AddEditProject.AddProjectActivityConstants;
+import es.udc.fic.sgsi_magerit.Model.Asset.Asset;
 import es.udc.fic.sgsi_magerit.Model.ModelService.ModelService;
 import es.udc.fic.sgsi_magerit.Model.ModelService.ModelServiceImpl;
 import es.udc.fic.sgsi_magerit.Model.Project.ProjectConstants;
@@ -47,6 +49,7 @@ public class EstimateAssetFragment extends Fragment {
 
     private ModelService service;
     private Long idProyecto;
+    private Long idActivo;
 
     public EstimateAssetFragment() {
         // Required empty public constructor
@@ -63,6 +66,7 @@ public class EstimateAssetFragment extends Fragment {
         Bundle args = getArguments();
         if(args != null){
             this.idProyecto = args.getLong("idProyecto");
+            this.idActivo = args.getLong("idActivo");
         }
         View view = inflater.inflate(R.layout.fragment_estimate_asset, container, false);
         service = new ModelServiceImpl(this.getContext(), GlobalConstants.DATABASE_NAME,1);
@@ -126,6 +130,46 @@ public class EstimateAssetFragment extends Fragment {
 
             }
         });
+        cargarDatosEdicion(idActivo, view);
         return view;
     }
+
+
+    private void cargarDatosEdicion (Long idActivo, View view) {
+        Asset activo = null;
+        try {
+            activo = service.obtenerActivo(idActivo);
+        } catch (ParseException e) {
+            //TODO
+        }
+
+        if (activo != null) {
+            EditText etNombreActivo = (EditText) view.findViewById(R.id.nombreActivo);
+            EditText etCodigoActivo = (EditText) view.findViewById(R.id.codigoActivo);
+            EditText etResponsableActivo = (EditText) view.findViewById(R.id.responsableActivo);
+            EditText etDescripcionActivo = (EditText) view.findViewById(R.id.descripcionActivo);
+            EditText etUbicacionActivo = (EditText) view.findViewById(R.id.ubicacionActivo);
+            spinnerValoracionDisponibilidad.setSelection(devuelveValorSpinner(activo.getIdValoracionDisp()));
+            spinnerValoracionIntegridad.setSelection(devuelveValorSpinner(activo.getIdValoracionInt()));
+            spinnerValoracionConfidencialidad.setSelection(devuelveValorSpinner(activo.getIdValoracionConf()));
+            spinnerValoracionAutenticidad.setSelection(devuelveValorSpinner(activo.getIdValoracionAut()));
+            spinnerValoracionTrazabilidad.setSelection(devuelveValorSpinner(activo.getIdValoracionTraz()));
+
+            etNombreActivo.setText(activo.getNombreActivo());
+            etCodigoActivo.setText(activo.getCodigoActivo());
+            etResponsableActivo.setText(activo.getResponsableActivo());
+            etDescripcionActivo.setText(activo.getDescripcionActivo());
+            etUbicacionActivo.setText(activo.getUbicacionActivo());
+
+        }
+    }
+
+    private Integer devuelveValorSpinner(Long i){
+
+        if (i == null)
+            return 0;
+        else
+            return i.intValue() + 1; //Añadimos uno porque es necesario quitarse el valor 0 del seleccionar
+    }
+
 }

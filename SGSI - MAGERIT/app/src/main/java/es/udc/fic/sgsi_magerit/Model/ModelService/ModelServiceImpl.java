@@ -14,6 +14,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import es.udc.fic.sgsi_magerit.Model.Asset.Asset;
+import es.udc.fic.sgsi_magerit.Model.Asset.AssetAssetType;
 import es.udc.fic.sgsi_magerit.Model.Asset.AssetConstants;
 import es.udc.fic.sgsi_magerit.Model.Asset.AssetDTO;
 import es.udc.fic.sgsi_magerit.Model.ProjectSizing.ParametrizacionActivo;
@@ -24,6 +25,7 @@ import es.udc.fic.sgsi_magerit.Model.ProjectSizing.ParametrizacionVulnerabilidad
 import es.udc.fic.sgsi_magerit.Model.ProjectSizing.ProjectSizingConstants;
 import es.udc.fic.sgsi_magerit.Model.Project.Project;
 import es.udc.fic.sgsi_magerit.Model.Project.ProjectConstants;
+import es.udc.fic.sgsi_magerit.Util.GlobalConstants;
 
 /**
  * Created by err0r on 13/05/2016.
@@ -225,7 +227,6 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
             cursor.close();
         }
         return pr;
-
     }
 
     @Override
@@ -676,6 +677,85 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
         return db.insert(AssetConstants.TABLE_NAME_ACTIVO_TIPO_ACTIVO, null, nuevoActivoTipoActivo);
     }
 
+    @Override
+    public boolean eliminarActivosYTiposActivo(Long idActivo) {
+        SQLiteDatabase db = getReadableDatabase();
+        db.delete(AssetConstants.TABLE_NAME, AssetConstants.ID_ACTIVO + "=" + idActivo, null);
+        db.delete(AssetConstants.TABLE_NAME_ACTIVO_TIPO_ACTIVO, AssetConstants.ID_ACTIVO_TABLA_TIPO_ACTIVO
+                + "=" + idActivo, null);
+        return true;
+    }
 
+    @Override
+    public Asset obtenerActivo (Long idActivo) throws ParseException {
+        SimpleDateFormat dateFormat = new SimpleDateFormat(GlobalConstants.DATE_FORMAT);
+        Asset as = null;
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + AssetConstants.TABLE_NAME + " WHERE "
+                + AssetConstants.ID_ACTIVO + "=" + idActivo , null);
+
+        if (cursor.moveToFirst()) {
+            Long idActivoDB = cursor.getLong(0);
+            Long idProyecto = cursor.getLong(1);
+            Long idValoracionDisp = null;
+            if (!cursor.isNull(2))
+                idValoracionDisp = cursor.getLong(2);
+
+            Long idValoracionInt = null;
+            if (!cursor.isNull(3))
+                idValoracionInt = cursor.getLong(3);
+
+            Long idValoracionConf = null;
+            if (!cursor.isNull(4))
+                idValoracionConf = cursor.getLong(4);
+
+            Long idValoracionAut = null;
+            if(!cursor.isNull(5))
+                    idValoracionAut = cursor.getLong(5);
+
+            Long idValoracionTraz = null;
+            if (!cursor.isNull(6))
+                idValoracionTraz = cursor.getLong(6);
+
+            String nombre = cursor.getString(7);
+            String codigo = cursor.getString(8);
+            String desc = cursor.getString(9);
+            String resp = cursor.getString(10);
+            String ubicacion = cursor.getString(11);
+            String fechaCreacion = cursor.getString(12);
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(dateFormat.parse(fechaCreacion));
+
+            as = new Asset(idActivoDB, idProyecto, idValoracionDisp, idValoracionInt, idValoracionConf,
+            idValoracionAut, idValoracionTraz, nombre, codigo, desc, resp, ubicacion, cal);
+            cursor.close();
+        }
+        return as;
+    }
+
+    @Override
+    public List<AssetAssetType> obtenerTiposDeActivo (Long idActivo)
+    {
+        List<AssetAssetType> tiposActivo = new ArrayList<AssetAssetType>();
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT *" + " FROM " + AssetConstants.TABLE_NAME_ACTIVO_TIPO_ACTIVO
+                + " WHERE " + AssetConstants.ID_ACTIVO_TABLA_TIPO_ACTIVO + " = " + idActivo, null);
+
+        if (cursor.moveToFirst()){
+            do {
+                Long idActivoTipoActivo = cursor.getLong(0);
+                Long idActivob = cursor.getLong(1);
+                Long idProyecto = cursor.getLong(2);
+                Long idListaTipo = cursor.getLong(3);
+                Long idTipo = cursor.getLong(4);
+
+                AssetAssetType assetType = new AssetAssetType(idActivoTipoActivo, idActivob,
+                        idProyecto, idListaTipo, idTipo);
+
+                tiposActivo.add(assetType);
+            } while ( (cursor.moveToNext()));
+        }
+        return  tiposActivo;
+    }
 
 }
