@@ -71,7 +71,7 @@ public interface ModelService {
                             String nombre, String codigo, String desc, String responsable, String ubicacion,
                             String fechaCreacion);
 
-    public Integer comprobarNombreYCodigoActivoUnicos(String nombre, String codigo, Integer idProyecto);
+    public Integer comprobarNombreYCodigoActivoUnicos(String nombre, String codigo, Integer idProyecto, Integer idActivo);
 
     public long crearActivoTipoActivo(Integer idActivo, Integer idProyecto, Integer idLista, Integer idTipoActivo);
 
@@ -80,4 +80,8 @@ public interface ModelService {
     public Asset obtenerActivo (Long idActivo) throws ParseException;
 
     public List<AssetAssetType> obtenerTiposDeActivo (Long idActivo);
+
+    public long editarActivo(Long idActivo, Integer idValoracionDisp, Integer idValoracionInt,
+                             Integer idValoracionConf, Integer idValoracionAut, Integer idValoracionTraza,
+                             String nombre, String codigo, String desc, String responsable, String ubicacion);
 }

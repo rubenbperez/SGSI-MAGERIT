@@ -34,7 +34,7 @@ import es.udc.fic.sgsi_magerit.Util.GlobalConstants;
 public class AddEditAssetActivity extends AppCompatActivity {
 
     private Long idProyecto;
-    private Long idActivo;
+    private Long idActivoRecibido;
     private ViewPager viewPager;
     private ModelService service;
     private AddEditAssetFragmentPagerAdapter adapter;
@@ -69,7 +69,7 @@ public class AddEditAssetActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         service = new ModelServiceImpl(this, GlobalConstants.DATABASE_NAME,1);
         idProyecto = getIntent().getLongExtra("idProyecto", GlobalConstants.NULL_ID_PROYECTO);
-        idActivo = getIntent().getLongExtra("idActivo",GlobalConstants.NULL_ID_ACTIVO);
+        idActivoRecibido = getIntent().getLongExtra("idActivo",GlobalConstants.NULL_ID_ACTIVO);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_project);
         Toolbar toolbar = (Toolbar) findViewById(R.id.appbar);
@@ -88,7 +88,7 @@ public class AddEditAssetActivity extends AppCompatActivity {
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_return);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        if (idActivo == GlobalConstants.NULL_ID_ACTIVO)
+        if (idActivoRecibido == GlobalConstants.NULL_ID_ACTIVO)
             getSupportActionBar().setTitle(AddEditAssetActivityConstants.ACTIVITY_TITLE_CREAR);
         else {
             getSupportActionBar().setTitle(AddEditAssetActivityConstants.ACTIVITY_TITLE_EDITAR);
@@ -112,6 +112,7 @@ public class AddEditAssetActivity extends AppCompatActivity {
                     finish();
                     return true;
                 }
+                item.setEnabled(true);
                 return false;
             case R.id.action_cancelar:
                 setResult(0, resultIntent);
@@ -146,7 +147,7 @@ public class AddEditAssetActivity extends AppCompatActivity {
             Fragment f = null;
             Bundle args = new Bundle();
             args.putLong("idProyecto", idProyecto);
-            args.putLong("idActivo", idActivo);
+            args.putLong("idActivo", idActivoRecibido);
             switch(position) {
                 case AddEditAssetActivityConstants.TAB_IDENTIFICACION:
                     f = IdentifyAssetTypesFragment.newInstance();
@@ -205,9 +206,9 @@ public class AddEditAssetActivity extends AppCompatActivity {
             viewPager.setCurrentItem(AddEditAssetActivityConstants.TAB_VALORACION);
             return false;
         }
-        //Hay datos en los campos obligatorios
+        //Hay datos en los campos obligatorios (y tienen en cuenta el idActivo)
         Integer retVal = service.comprobarNombreYCodigoActivoUnicos(etNombreActivo.getText().toString(),
-                etCodigoActivo.getText().toString(), idProyecto.intValue());
+                etCodigoActivo.getText().toString(), idProyecto.intValue(), idActivoRecibido.intValue());
 
         tilNombreActivo.setError(null);
         tilNombreActivo.setErrorEnabled(false);
@@ -216,8 +217,10 @@ public class AddEditAssetActivity extends AppCompatActivity {
         switch (retVal) {
             case -1:
                 //Creamos activo y los tipos
-                Long idActivo = crearActivo();
-                crearTiposDeActivo(idActivo);
+                Long idActivoCreado = crearOEditarActivo();
+                //TODO: Es necesario añadir la opción de editar desde aquí.
+                crearOEditarTiposDeActivo(idActivoCreado);
+                flag = true;
                 break;
             case 1:
                 tilNombreActivo.setErrorEnabled(true);
@@ -225,18 +228,20 @@ public class AddEditAssetActivity extends AppCompatActivity {
                 LinearLayout.LayoutParams params = (LinearLayout.LayoutParams)tilNombreActivo.getLayoutParams();
                 params.setMargins(0,45,0,0);
                 viewPager.setCurrentItem(AddEditAssetActivityConstants.TAB_VALORACION);
+                flag = false;
                 break;
             case 2:
                 tilCodigoActivo.setErrorEnabled(true);
                 tilCodigoActivo.setError(AddEditAssetActivityConstants.ERROR_CODIGO_ACTIVO_DUPLICADO);
                 viewPager.setCurrentItem(AddEditAssetActivityConstants.TAB_VALORACION);
+                flag = false;
                 break;
         }
 
         return flag;
     }
 
-    private Long crearActivo() {
+    private Long crearOEditarActivo() {
         Fragment fr2 = (Fragment) adapter.instantiateItem(viewPager, 1);
         //Creamos el activo primero
         etNombreActivo = (EditText) fr2.getView().findViewById(R.id.nombreActivo);
@@ -254,16 +259,27 @@ public class AddEditAssetActivity extends AppCompatActivity {
         spinnerValoracionAutenticidad = (Spinner) fr2.getView().findViewById(R.id.spinnerAutenticidad);
         spinnerValoracionTrazabilidad = (Spinner) fr2.getView().findViewById(R.id.spinnerTrazabilidad);
 
-        return service.crearActivo(idProyecto.intValue(),devuelveIntTipoActivoONulo(spinnerValoracionDisponibilidad),
-                devuelveIntTipoActivoONulo(spinnerValoracionIntegridad),
-                devuelveIntTipoActivoONulo(spinnerValoracionConfidencialidad),
-                devuelveIntTipoActivoONulo(spinnerValoracionAutenticidad),
-                devuelveIntTipoActivoONulo(spinnerValoracionTrazabilidad),devuelveStringONulo(etNombreActivo),
-                devuelveStringONulo(etCodigoActivo), devuelveStringONulo(etDescripcion),
-                devuelveStringONulo(etResponsable), devuelveStringONulo(etUbicacion), fechaActualStr);
+        if (idActivoRecibido == GlobalConstants.NULL_ID_ACTIVO)
+            return service.crearActivo(idProyecto.intValue(),devuelveIntTipoActivoONulo(spinnerValoracionDisponibilidad),
+                    devuelveIntTipoActivoONulo(spinnerValoracionIntegridad),
+                    devuelveIntTipoActivoONulo(spinnerValoracionConfidencialidad),
+                    devuelveIntTipoActivoONulo(spinnerValoracionAutenticidad),
+                    devuelveIntTipoActivoONulo(spinnerValoracionTrazabilidad),devuelveStringONulo(etNombreActivo),
+                    devuelveStringONulo(etCodigoActivo), devuelveStringONulo(etDescripcion),
+                    devuelveStringONulo(etResponsable), devuelveStringONulo(etUbicacion), fechaActualStr);
+        else {
+            service.editarActivo(idActivoRecibido, devuelveIntTipoActivoONulo(spinnerValoracionDisponibilidad),
+                    devuelveIntTipoActivoONulo(spinnerValoracionIntegridad),
+                    devuelveIntTipoActivoONulo(spinnerValoracionConfidencialidad),
+                    devuelveIntTipoActivoONulo(spinnerValoracionAutenticidad),
+                    devuelveIntTipoActivoONulo(spinnerValoracionTrazabilidad), devuelveStringONulo(etNombreActivo),
+                    devuelveStringONulo(etCodigoActivo), devuelveStringONulo(etDescripcion),
+                    devuelveStringONulo(etResponsable), devuelveStringONulo(etUbicacion));
+            return idActivoRecibido;
+        }
     }
 
-    private void crearTiposDeActivo(Long idActivo) {
+    private void crearOEditarTiposDeActivo(Long idActivo) {
         Fragment fr1 = (Fragment) adapter.instantiateItem(viewPager, 0);
 
         lstOpcionesEssential = (ListView) fr1.getView().findViewById(R.id.ListEssential);

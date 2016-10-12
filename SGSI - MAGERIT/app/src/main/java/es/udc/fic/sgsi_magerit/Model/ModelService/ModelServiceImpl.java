@@ -632,23 +632,36 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
     }
 
     @Override
-    public Integer comprobarNombreYCodigoActivoUnicos(String nombre, String codigo, Integer idProyecto) {
+    public Integer comprobarNombreYCodigoActivoUnicos(String nombre, String codigo, Integer idProyecto,
+    Integer idActivo) {
 
         Integer returnValue = -1;
 
-        SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT " + AssetConstants.ID_ACTIVO + " FROM " +
+        String query = "SELECT " + AssetConstants.ID_ACTIVO + " FROM " +
                 AssetConstants.TABLE_NAME + " WHERE " + AssetConstants.NOMBRE + " LIKE '" + nombre +
-                "' AND " + AssetConstants.ID_PROYECTO + "=" + idProyecto, null);
+                "' AND " + AssetConstants.ID_PROYECTO + "=" + idProyecto;
+
+        if (idActivo != GlobalConstants.NULL_ID_ACTIVO.intValue()) {
+            query += " AND " + AssetConstants.ID_ACTIVO + "!=" + idActivo;
+        }
+
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
 
         if ((cursor.moveToFirst()) || cursor.getCount() > 0){
             cursor.close();
             return 1;
         }
 
-        cursor = db.rawQuery("SELECT " + AssetConstants.ID_ACTIVO + " FROM " +
+        query = "SELECT " + AssetConstants.ID_ACTIVO + " FROM " +
                 AssetConstants.TABLE_NAME + " WHERE " + AssetConstants.CODIGO + " LIKE '" + codigo +
-                "' AND " + AssetConstants.ID_PROYECTO + "=" + idProyecto, null);
+                "' AND " + AssetConstants.ID_PROYECTO + "=" + idProyecto;
+
+        if (idActivo != GlobalConstants.NULL_ID_ACTIVO.intValue()) {
+            query += " AND " + AssetConstants.ID_ACTIVO + "!=" + idActivo;
+        }
+
+        cursor = db.rawQuery(query, null);
 
         if ((cursor.moveToFirst()) || cursor.getCount() > 0){
             cursor.close();
@@ -756,6 +769,31 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
             } while ( (cursor.moveToNext()));
         }
         return  tiposActivo;
+    }
+
+
+    @Override
+    public long editarActivo(Long idActivo, Integer idValoracionDisp, Integer idValoracionInt,
+                             Integer idValoracionConf, Integer idValoracionAut, Integer idValoracionTraza,
+                             String nombre, String codigo, String desc, String responsable, String ubicacion) {
+        SQLiteDatabase db = getReadableDatabase();
+
+        //Creamos el registro a editar como objeto ContentValues
+        ContentValues nuevoActivo = new ContentValues();
+        nuevoActivo.put(AssetConstants.ID_VALORACION_ACTIVO_DISPONIBILIDAD,idValoracionDisp);
+        nuevoActivo.put(AssetConstants.ID_VALORACION_ACTIVO_INTEGRIDAD,idValoracionInt);
+        nuevoActivo.put(AssetConstants.ID_VALORACION_ACTIVO_CONFIDENCIALIDAD,idValoracionConf);
+        nuevoActivo.put(AssetConstants.ID_VALORACION_ACTIVO_AUTENTICIDAD,idValoracionAut);
+        nuevoActivo.put(AssetConstants.ID_VALORACION_ACTIVO_TRAZABILIDAD,idValoracionTraza);
+        nuevoActivo.put(AssetConstants.NOMBRE,nombre);
+        nuevoActivo.put(AssetConstants.CODIGO,codigo);
+        nuevoActivo.put(AssetConstants.DESCRIPCION,desc);
+        nuevoActivo.put(AssetConstants.RESPONSABLE,responsable);
+        nuevoActivo.put(AssetConstants.UBICACION,ubicacion);
+
+        //Insertamos el registro en la base de datos
+        return db.update(AssetConstants.TABLE_NAME, nuevoActivo, AssetConstants.ID_ACTIVO
+                + "=" + idActivo, null);
     }
 
 }
