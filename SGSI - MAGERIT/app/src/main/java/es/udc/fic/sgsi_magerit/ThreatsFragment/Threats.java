@@ -26,6 +26,7 @@ import java.util.List;
 
 import es.udc.fic.sgsi_magerit.AddEditAsset.AddEditAssetActivity;
 import es.udc.fic.sgsi_magerit.AddEditProject.AddProjectActivity;
+import es.udc.fic.sgsi_magerit.AddEditThreat.AddEditThreatActivity;
 import es.udc.fic.sgsi_magerit.Model.Asset.Asset;
 import es.udc.fic.sgsi_magerit.Model.Asset.AssetDTO;
 import es.udc.fic.sgsi_magerit.Model.ModelService.ModelServiceImpl;
@@ -71,11 +72,9 @@ public class Threats extends Fragment {
         fabButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                /*Intent intent = new Intent(getActivity(),AddEditAssetActivity.class);
-                intent.putExtra("idActivo", GlobalConstants.NULL_ID_ACTIVO); //Optional parameters
+                Intent intent = new Intent(getActivity(),AddEditThreatActivity.class);
                 intent.putExtra("idProyecto", idProyectoActivo);
-                startActivityForResult(intent, GlobalConstants.REQUEST_CODE_ADD_ACTIVITY);*/
-
+                startActivityForResult(intent, GlobalConstants.REQUEST_CODE_ADD_THREAT);
             }
         });
         return  view;

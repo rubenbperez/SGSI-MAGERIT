@@ -12,7 +12,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:fitsSystemWindows="true"
-        tools:context=".AddEditProject.AddProjectActivity">
+        tools:context=".AddEditThreat.AddEditThreatActivity">
 
         <android.support.design.widget.AppBarLayout
             android:id="@+id/appbarlayout"
@@ -27,6 +27,7 @@
                 android:layout_width="match_parent"
                 android:minHeight="?attr/actionBarSize"
                 android:background="?attr/colorPrimary"
+                app:layout_scrollFlags="scroll|enterAlways"
                 android:elevation="4dp"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
@@ -46,12 +47,10 @@
             android:foreground="@drawable/header_shadow">
 
             <android.support.v4.view.ViewPager
-                android:id="@+id/viewpagerProject"
+                android:id="@+id/viewpagerThreat"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@android:color/white"/>
-
-
         </FrameLayout>
 
     </LinearLayout>

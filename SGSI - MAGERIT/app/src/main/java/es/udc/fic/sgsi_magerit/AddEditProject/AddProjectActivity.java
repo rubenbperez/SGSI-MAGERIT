@@ -127,7 +127,7 @@ public class AddProjectActivity extends AppCompatActivity implements SizingProje
         Toolbar toolbar = (Toolbar) findViewById(R.id.appbar);
         setSupportActionBar(toolbar);
 
-        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        viewPager = (ViewPager) findViewById(R.id.viewpagerProject);
         adapter = new AddProjectFragmentPagerAdapter(
                 getSupportFragmentManager(),idProyecto);
 

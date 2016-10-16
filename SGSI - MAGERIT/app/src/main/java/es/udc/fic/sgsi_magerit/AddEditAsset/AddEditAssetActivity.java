@@ -71,13 +71,13 @@ public class AddEditAssetActivity extends AppCompatActivity {
         idProyecto = getIntent().getLongExtra("idProyecto", GlobalConstants.NULL_ID_PROYECTO);
         idActivoRecibido = getIntent().getLongExtra("idActivo",GlobalConstants.NULL_ID_ACTIVO);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_project);
+        setContentView(R.layout.activity_add_edit_asset);
         Toolbar toolbar = (Toolbar) findViewById(R.id.appbar);
         setSupportActionBar(toolbar);
 
-        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        viewPager = (ViewPager) findViewById(R.id.viewpagerAsset);
         adapter = new AddEditAssetFragmentPagerAdapter(
-                getSupportFragmentManager(),idProyecto);
+                getSupportFragmentManager(),idProyecto, idActivoRecibido);
         viewPager.setAdapter(adapter);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.appbartabs);
@@ -130,10 +130,12 @@ public class AddEditAssetActivity extends AppCompatActivity {
     public class AddEditAssetFragmentPagerAdapter extends FragmentPagerAdapter {
 
         Long idProyecto;
+        Long idActivo;
 
-        public AddEditAssetFragmentPagerAdapter(FragmentManager fm, Long idProyecto) {
+        public AddEditAssetFragmentPagerAdapter(FragmentManager fm, Long idProyecto, Long idActivo) {
             super(fm);
             this.idProyecto = idProyecto;
+            this.idActivo = idActivo;
         }
 
         @Override
@@ -147,7 +149,7 @@ public class AddEditAssetActivity extends AppCompatActivity {
             Fragment f = null;
             Bundle args = new Bundle();
             args.putLong("idProyecto", idProyecto);
-            args.putLong("idActivo", idActivoRecibido);
+            args.putLong("idActivo", idActivo);
             switch(position) {
                 case AddEditAssetActivityConstants.TAB_IDENTIFICACION:
                     f = IdentifyAssetTypesFragment.newInstance();

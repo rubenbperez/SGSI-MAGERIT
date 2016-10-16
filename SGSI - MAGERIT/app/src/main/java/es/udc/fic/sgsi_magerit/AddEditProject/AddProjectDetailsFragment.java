@@ -121,7 +121,7 @@ public class AddProjectDetailsFragment extends Fragment {
 
         proyectoActivado = (CheckBox) view.findViewById(R.id.proyectoActivado);
 
-        ViewPager viewPager = (ViewPager) view.findViewById(R.id.viewpager);
+        ViewPager viewPager = (ViewPager) view.findViewById(R.id.viewpagerProject);
 
         CheckBox cbActivadoProyecto = (CheckBox) view.findViewById(R.id.proyectoActivado);
 
