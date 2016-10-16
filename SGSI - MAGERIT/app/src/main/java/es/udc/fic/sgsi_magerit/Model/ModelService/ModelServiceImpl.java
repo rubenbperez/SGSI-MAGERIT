@@ -25,6 +25,9 @@ import es.udc.fic.sgsi_magerit.Model.ProjectSizing.ParametrizacionVulnerabilidad
 import es.udc.fic.sgsi_magerit.Model.ProjectSizing.ProjectSizingConstants;
 import es.udc.fic.sgsi_magerit.Model.Project.Project;
 import es.udc.fic.sgsi_magerit.Model.Project.ProjectConstants;
+import es.udc.fic.sgsi_magerit.Model.Threat.Threat;
+import es.udc.fic.sgsi_magerit.Model.Threat.ThreatConstants;
+import es.udc.fic.sgsi_magerit.Model.Threat.ThreatDTO;
 import es.udc.fic.sgsi_magerit.Util.GlobalConstants;
 
 /**
@@ -100,6 +103,16 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
             AssetConstants.ID_LISTA_TIPO_ACTIVO + " " + AssetConstants.INT_TYPE + " NOT NULL, " +
             AssetConstants.ID_TIPO_ACTIVO + " " + AssetConstants.INT_TYPE + " NOT NULL);";
 
+    String sqlCreateTableAmenazas = "CREATE TABLE " + ThreatConstants.TABLE_NAME + "(" +
+            ThreatConstants.ID_AMENAZA + " " + ThreatConstants.INT_TYPE + " PRIMARY KEY AUTOINCREMENT, " +
+            ThreatConstants.ID_ACTIVO + " " + ThreatConstants.INT_TYPE + " NOT NULL, " +
+            ThreatConstants.ID_PROYECTO + " " + ThreatConstants.INT_TYPE + " NOT NULL, " +
+            ThreatConstants.ID_LISTA_TIPO_AMENAZA + " " + ThreatConstants.INT_TYPE + " NOT NULL, " +
+            ThreatConstants.ID_TIPO_AMENAZA + " " + ThreatConstants.INT_TYPE + " NOT NULL, " +
+            ThreatConstants.ID_FRECUENCIA + " " + ThreatConstants.INT_TYPE + ", " +
+            ThreatConstants.ID_IMPACTO + " " + ThreatConstants.INT_TYPE + ", " +
+            ThreatConstants.FECHA_CREACION + " " + AssetConstants.STRING_TYPE  + " NOT NULL);";
+
     public ModelServiceImpl(Context contexto, String nombre, int version) {
         super(contexto, nombre, null, version);
     }
@@ -113,6 +126,7 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
         db.execSQL(sqlCreateParametrizacionControlSeguridad);
         db.execSQL(sqlCreateTableActivos);
         db.execSQL(sqlCreateTableActivoTipoActivo);
+        db.execSQL(sqlCreateTableAmenazas);
 
     }
 
@@ -794,6 +808,36 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
         //Insertamos el registro en la base de datos
         return db.update(AssetConstants.TABLE_NAME, nuevoActivo, AssetConstants.ID_ACTIVO
                 + "=" + idActivo, null);
+    }
+
+    @Override
+    public boolean eliminarTiposActivoDeActivo(Long idActivo)
+    {
+        SQLiteDatabase db = getReadableDatabase();
+        db.delete(AssetConstants.TABLE_NAME_ACTIVO_TIPO_ACTIVO, AssetConstants.ID_ACTIVO_TABLA_TIPO_ACTIVO
+                + "=" + idActivo, null);
+        return true;
+    }
+
+    @Override
+    public List<ThreatDTO> obtenerAmenazas(long idProyecto) {
+        List <ThreatDTO> amenazas = new ArrayList<ThreatDTO>();
+
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT DISTINCT " +
+                ThreatConstants.ID_LISTA_TIPO_AMENAZA + ", " + ThreatConstants.ID_TIPO_AMENAZA  +
+                " FROM " + ThreatConstants.TABLE_NAME + " WHERE " +
+                AssetConstants.ID_PROYECTO + " = " + idProyecto, null);
+        if (cursor.moveToFirst()){
+            do {
+                Long idTipoLista = cursor.getLong(0);
+                Long idTipoAmenaza = cursor.getLong(1);
+                ThreatDTO threatDTO = new ThreatDTO(idTipoLista, idTipoAmenaza);
+                amenazas.add(threatDTO);
+            } while ( (cursor.moveToNext()));
+        }
+        cursor.close();
+        return amenazas;
     }
 
 }

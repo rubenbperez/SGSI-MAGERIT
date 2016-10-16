@@ -136,6 +136,10 @@ public class EstimateAssetFragment extends Fragment {
 
 
     private void cargarDatosEdicion (Long idActivo, View view) {
+
+        if (idActivo == GlobalConstants.NULL_ID_ACTIVO)
+            return;
+
         Asset activo = null;
         try {
             activo = service.obtenerActivo(idActivo);

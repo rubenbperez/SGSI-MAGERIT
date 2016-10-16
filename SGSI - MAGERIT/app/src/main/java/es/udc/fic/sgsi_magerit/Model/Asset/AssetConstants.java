@@ -33,5 +33,4 @@ public class AssetConstants {
     public static final String ID_ACTIVO_TIPO_ACTIVO = "idActivoTipoActivo";
     public static final String ID_TIPO_ACTIVO = "idTipoActivo";
     public static final String ID_LISTA_TIPO_ACTIVO = "idListaTipoActivo";
-
 }

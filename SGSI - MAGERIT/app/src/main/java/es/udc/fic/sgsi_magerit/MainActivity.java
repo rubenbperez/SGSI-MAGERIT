@@ -12,7 +12,7 @@ import android.view.MenuItem;
 
 import es.udc.fic.sgsi_magerit.AssetsFragment.Assets;
 import es.udc.fic.sgsi_magerit.ProjectsFragment.Projects;
-import es.udc.fic.sgsi_magerit.Util.GlobalConstants;
+import es.udc.fic.sgsi_magerit.ThreatsFragment.Threats;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -60,6 +60,10 @@ public class MainActivity extends AppCompatActivity {
                                 fragmentTransaction = true;
                                 break;
 
+                            case R.id.menuAmenazas:
+                                fragment = new Threats();
+                                fragmentTransaction = true;
+                                break;
                         }
 
                         if(fragmentTransaction) {

@@ -8,6 +8,8 @@ import es.udc.fic.sgsi_magerit.Model.Asset.AssetAssetType;
 import es.udc.fic.sgsi_magerit.Model.Asset.AssetDTO;
 import es.udc.fic.sgsi_magerit.Model.ProjectSizing.ParametrizacionDTO;
 import es.udc.fic.sgsi_magerit.Model.Project.Project;
+import es.udc.fic.sgsi_magerit.Model.Threat.Threat;
+import es.udc.fic.sgsi_magerit.Model.Threat.ThreatDTO;
 
 /**
  * Created by err0r on 18/05/2016.
@@ -62,7 +64,7 @@ public interface ModelService {
 
     public ParametrizacionDTO obtenerParametrizacionDeProyecto(Long idProyecto);
 
-    public List<AssetDTO> obtenerActivos(long idProyecto) ;
+    public List<AssetDTO> obtenerActivos(long idProyecto);
 
     public long obtenerIdProyectoActivo();
 
@@ -84,4 +86,8 @@ public interface ModelService {
     public long editarActivo(Long idActivo, Integer idValoracionDisp, Integer idValoracionInt,
                              Integer idValoracionConf, Integer idValoracionAut, Integer idValoracionTraza,
                              String nombre, String codigo, String desc, String responsable, String ubicacion);
+
+    public boolean eliminarTiposActivoDeActivo(Long idActivo);
+
+    public List<ThreatDTO> obtenerAmenazas(long idProyecto);
 }

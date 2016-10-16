@@ -12,7 +12,7 @@ public class GlobalConstants {
     public final static Long NULL_ID_ACTIVO = (long) 0;
     public final static String[] ID_TIPOS = {"Muy alta", "Alta", "Media", "Baja", "Muy Baja"};
 
-
+    /********************************************************************************************/
     //LISTAS PARA TIPOS DE ACTIVOS
 
     public final static String[] TIPO_ESSENTIAL = {
@@ -136,4 +136,51 @@ public class GlobalConstants {
 
     public final static String[] TIPO_OTHER = {
             "[other] Otro"};
+
+    /********************************************************************************************/
+
+    //LISTAS PARA AMENAZAS
+    public final static String[] TIPO_AMENAZAS = {
+            "[N] Desastres Naturales", "[I] De Origen Industrial", "[E] Errores y fallos no intencionados",
+            "[A] Ataques Deliberados"
+    };
+
+    public final static String[] AMENAZAS_TIPO_DESASTRES_NATURALES = {
+            "[N.1] Fuego", "[N.2] Daños por agua", "[N.3] Tormentas", "[N.4] Tormentas eléctricas",
+            "[N.5] Huracanes", "[N.6] Terremotos", "[N.7] Tornados", "[N.8] Ciclones", "[N.9] Deslizamientos del terreno",
+            "[N.10] Meteoritos", "[N.11] Tsunamis", "[N.12] Tormentas de invierno y frío extremo",
+            "[N.13] Calor extremo", "[N.14] Volcanes"
+    };
+
+    public final static String[] AMENAZAS_TIPO_ORIGEN_INDUSTRIAL = {
+            "[I.1] Fuego", "[I.2] Daños por agua", "[I.*] Desastres industriales", "[I.3] Contaminación mecánica",
+            "[I.4] Contaminación electromagnética", "[I.5] Avería de origen físico o lógico",
+            "[I.6] Corte del suministro eléctrico", "[I.7] Condiciones inadecuadas de temperatura o humedad",
+            "[I.8] Fallo de servcios de comunicaciones", "[I.9] Interrupción de otros servicios y suministros esenciales",
+            "[I.10] Degradación de los soportes de almacenamiento de la información",
+            "[I.11] Emanaciones electromagnéticas"
+    };
+
+    public final static String[] AMENAZAS_TIPO_ERRORES_FALLOS_NO_INTENCIONADOS = {
+            "[E.1] Errores de los usuarios", "[E.2] Errores del administrador", "[E.3] Errores de monitorización (log)",
+            "[E.4] Errores de configuración", "[E.7] Deficiencias de la organización", "[E.8] Difusión de Software dañino",
+            "[E.9] Errores de [re-]encaminamiento", "[E.10] Errores de secuencia", "[E.14] Errores de información",
+            "[E.15] Alteración de la información", "[E.18] Destrucción de la información", "[E.19] Fugas de información",
+            "[E.20] Vulnerabilidades de los programas (sw)", "E.20] Vulnerabilidades de los programas (sw)",
+            "[E.23] Errores de mantenimiento / actualización de equipos (HW)", "[E.24] Caída del sistema por agotamiento de recursos",
+            "[E.25] Pérdida de equipos", "[E.28] Indisponibilidad del personal"
+    };
+
+    public final static String[] AMENAZAS_TIPO_ATAQUES_DELIBERADOS = {
+            "[A.3] Manipulación de los registros de actividad (log)", "[A.4] Manipulación de la configuración",
+            "[A.5] Suplantación de la identidad del usuario", "[A.6] Abuso de privilegios de acceso",
+            "[A.7] Uso no previsto", "[A.8] Difusión de Software Dañino", "[A.9] [RE-]encaminamiento de mensajes",
+            "[A.10] Alteración de secuencia", "[A.11] Acceso no autorizado", "[A.12] Análisis de tráfico",
+            "[A.13] Repudio", "[A.14] Interceptación de información", "[A.15] Modificación deliberada de la información",
+            "[A.18] Destrucción de información", "[A.19] Divulgación de información", "[A.22] anipulación de programas",
+            "[A.23] Manipulación de los equipos", "[A.24] Denegación de servicio", "[A.25] Robo", "[A.26] Ataque destructivo",
+            "[A.27] Ocupación enemiga", "[A.28] Indisponibilidad del personal", "[A.29] Extorsión",
+            "[A.30] Ingeniería social (picaresca)"
+    };
+
 }

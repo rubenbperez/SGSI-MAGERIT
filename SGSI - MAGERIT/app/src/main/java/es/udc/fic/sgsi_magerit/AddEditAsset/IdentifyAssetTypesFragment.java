@@ -227,6 +227,9 @@ public class IdentifyAssetTypesFragment extends Fragment {
 
     private void cargarDatosEdicion (Long idActivo, View view) {
 
+        if (idActivo == GlobalConstants.NULL_ID_ACTIVO)
+                return;
+
         List<AssetAssetType> tiposdeActivo = service.obtenerTiposDeActivo(idActivo);
 
         for (AssetAssetType at: tiposdeActivo)

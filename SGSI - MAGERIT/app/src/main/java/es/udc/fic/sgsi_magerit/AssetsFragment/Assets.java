@@ -95,6 +95,7 @@ public class Assets extends Fragment {
                 adaptador.notifyDataSetChanged();
             }
 
+            comprobarElementosNavView(data,navView);
             if (resultCode == 0)
                 return;
         }

@@ -218,7 +218,6 @@ public class AddEditAssetActivity extends AppCompatActivity {
             case -1:
                 //Creamos activo y los tipos
                 Long idActivoCreado = crearOEditarActivo();
-                //TODO: Es necesario añadir la opción de editar desde aquí.
                 crearOEditarTiposDeActivo(idActivoCreado);
                 flag = true;
                 break;
@@ -295,6 +294,9 @@ public class AddEditAssetActivity extends AppCompatActivity {
         lstOpcionesInstallations = (ListView) fr1.getView().findViewById(R.id.ListInstallations);
         lstOpcionesPersonal = (ListView) fr1.getView().findViewById(R.id.ListPersonal);
         lstOpcionesOther = (ListView) fr1.getView().findViewById(R.id.ListOther);
+
+        if (idActivo != GlobalConstants.NULL_ID_ACTIVO)
+            service.eliminarTiposActivoDeActivo(idActivo);
 
         crearActivoTipoActivo(lstOpcionesEssential, idActivo, 0);
         crearActivoTipoActivo(lstOpcionesArchSys, idActivo, 1);

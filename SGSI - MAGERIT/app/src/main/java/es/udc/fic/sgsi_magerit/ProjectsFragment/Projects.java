@@ -226,5 +226,4 @@ public class Projects extends Fragment {
                 return;
         }
     }
-
 }
