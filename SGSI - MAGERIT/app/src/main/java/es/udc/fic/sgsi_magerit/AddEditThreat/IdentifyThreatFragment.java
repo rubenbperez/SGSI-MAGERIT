@@ -87,9 +87,7 @@ public class IdentifyThreatFragment extends Fragment {
                 android.R.layout.simple_list_item_single_choice, GlobalConstants.AMENAZAS_TIPO_ATAQUES_DELIBERADOS);
         lstOpcionesAtaquesDeliberados.setAdapter(lstAtaquesDeliberados);
 
-        // Si estaba seleccionado el item lo deseleccionamos (limpiamos): PROBLEMA!
-
-
+        // Si estaba seleccionado el item lo deseleccionamos (limpiamos)
         //al seleccionar un elemento. Limpiamos las otras listas
         lstOpcionesDesastresNaturales.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
