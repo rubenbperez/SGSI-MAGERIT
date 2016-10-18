@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="Sizing_spinner_Threats">
+        <item>[N] Desastres Naturales</item>
+        <item>[I] De origen Industrial</item>
+        <item>[E] Errores y fallos no intencionados</item>
+        <item>[A] Ataques deliberados</item>
+    </string-array>
+</resources>
