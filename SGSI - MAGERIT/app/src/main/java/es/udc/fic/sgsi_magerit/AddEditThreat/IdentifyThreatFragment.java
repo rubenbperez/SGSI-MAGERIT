@@ -93,8 +93,11 @@ public class IdentifyThreatFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 lstOpcionesOrigenIndustrial.clearChoices();
+                itemCheckedOrigenIndustrial = null;
                 lstOpcionesErroresFallos.clearChoices();
+                itemCheckedErroresFallos = null;
                 lstOpcionesAtaquesDeliberados.clearChoices();
+                itemCheckedAtaquesDeliberados = null;
 
                 if (itemCheckedDesastresNaturales != null && position == itemCheckedDesastresNaturales) {
                     lstOpcionesDesastresNaturales.setItemChecked(position, false);
@@ -108,8 +111,11 @@ public class IdentifyThreatFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 lstOpcionesDesastresNaturales.clearChoices();
+                itemCheckedDesastresNaturales = null;
                 lstOpcionesErroresFallos.clearChoices();
+                itemCheckedErroresFallos = null;
                 lstOpcionesAtaquesDeliberados.clearChoices();
+                itemCheckedAtaquesDeliberados = null;
 
                 if (itemCheckedOrigenIndustrial!= null && position == itemCheckedOrigenIndustrial) {
                     lstOpcionesOrigenIndustrial.setItemChecked(position, false);
@@ -123,8 +129,11 @@ public class IdentifyThreatFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 lstOpcionesDesastresNaturales.clearChoices();
+                itemCheckedDesastresNaturales = null;
                 lstOpcionesOrigenIndustrial.clearChoices();
+                itemCheckedOrigenIndustrial = null;
                 lstOpcionesAtaquesDeliberados.clearChoices();
+                itemCheckedAtaquesDeliberados = null;
 
                 if (itemCheckedErroresFallos != null && position == itemCheckedErroresFallos) {
                     lstOpcionesErroresFallos.setItemChecked(position, false);
@@ -138,8 +147,11 @@ public class IdentifyThreatFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 lstOpcionesDesastresNaturales.clearChoices();
+                itemCheckedDesastresNaturales = null;
                 lstOpcionesOrigenIndustrial.clearChoices();
+                itemCheckedOrigenIndustrial = null;
                 lstOpcionesErroresFallos.clearChoices();
+                itemCheckedErroresFallos = null;
 
                 if (itemCheckedAtaquesDeliberados != null && position == itemCheckedAtaquesDeliberados) {
                     lstOpcionesAtaquesDeliberados.setItemChecked(position, false);
