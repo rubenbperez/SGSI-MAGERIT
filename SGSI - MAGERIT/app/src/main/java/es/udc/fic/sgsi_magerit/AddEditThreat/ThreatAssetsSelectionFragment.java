@@ -56,50 +56,18 @@ public class ThreatAssetsSelectionFragment extends Fragment {
         data = service.obtenerActivos(idProyecto);
         List<String> assetNames = new ArrayList<String>();
 
+        for (AssetDTO asset: data) {
+            assetNames.add("[" + asset.getCodigoActivo() + "]" + " "+ asset.getNombreActivo());
+        }
+
+
         lstOpcionesActivos = (ListView) view.findViewById(R.id.LstOpciones);
-        AssetAdapter adaptador =
-                new AssetAdapter(this.getContext(), data);
+        ArrayAdapter<String> adaptador = new ArrayAdapter<String>(this.getContext(),
+                android.R.layout.simple_list_item_multiple_choice, assetNames);
         lstOpcionesActivos.setAdapter(adaptador);
 
         return view;
     }
 
-    public class AssetAdapter extends ArrayAdapter<AssetDTO> {
 
-        public AssetAdapter(Context context, List<AssetDTO> data) {
-            super(context, android.R.layout.simple_list_item_single_choice, data);
-        }
-
-        public View getView(int position, View convertView, ViewGroup parent) {
-            LayoutInflater inflater = LayoutInflater.from(getContext());
-
-            View item = inflater.inflate(R.layout.listitem_threat_assets, null);
-            TextView lblAssetName = (TextView) item.findViewById(R.id.asset);
-            lblAssetName.setText("[" + data.get(position).getCodigoActivo() + "]" + " " + data.get(position).getNombreActivo());
-
-            final ImageButton rc = (ImageButton) item.findViewById(R.id.icon);
-            final CheckBox checkBox = (CheckBox) item.findViewById(R.id.checkBox);
-            final TableLayout tb = (TableLayout) item.findViewById(R.id.tabla);
-
-            rc.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (!checkBox.isChecked()) {
-                        return;
-                    }
-                    if (tb.getVisibility() == View.GONE) {
-                        rc.setImageResource(R.drawable.ic_less);
-                        tb.setVisibility(View.VISIBLE);
-                    } else {
-                        rc.setImageResource(R.drawable.ic_more);
-                        tb.setVisibility(View.GONE);
-                    }
-                }
-            });
-
-            return(item);
-        }
-
-
-    }
 }

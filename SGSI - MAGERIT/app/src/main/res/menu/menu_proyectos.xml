@@ -7,5 +7,4 @@
     <item android:id="@+id/menuOpcEditar"
         android:title="Editar"></item>
 
-
 </menu>
