@@ -14,11 +14,14 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 import es.udc.fic.sgsi_magerit.Model.Asset.AssetAssetType;
 import es.udc.fic.sgsi_magerit.Model.ModelService.ModelService;
 import es.udc.fic.sgsi_magerit.Model.ModelService.ModelServiceImpl;
+import es.udc.fic.sgsi_magerit.Model.Threat.ThreatDTO;
 import es.udc.fic.sgsi_magerit.R;
 import es.udc.fic.sgsi_magerit.Util.GlobalConstants;
 
@@ -36,6 +39,11 @@ public class IdentifyThreatFragment extends Fragment {
     Integer itemCheckedErroresFallos = null;
     private ListView lstOpcionesAtaquesDeliberados;
     Integer itemCheckedAtaquesDeliberados = null;
+
+    private List<String> listaAmenazasDesastresNaturales;
+    private List<String> listaAmenazasOrigenIndustrial;
+    private List<String> listaAmenazasErroresFallos;
+    private List<String> listaAmenazasAtaquesDeliberados;
 
     ModelService service;
 
@@ -58,6 +66,35 @@ public class IdentifyThreatFragment extends Fragment {
             this.idProyecto = args.getLong("idProyecto");
         }
 
+        List<ThreatDTO> listaAmenazasCreadas = service.obtenerAmenazas(idProyecto);
+        listaAmenazasDesastresNaturales = new LinkedList<String>(Arrays.asList(GlobalConstants.AMENAZAS_TIPO_DESASTRES_NATURALES));
+        listaAmenazasOrigenIndustrial = new LinkedList<String>(Arrays.asList(GlobalConstants.AMENAZAS_TIPO_ORIGEN_INDUSTRIAL));
+        listaAmenazasErroresFallos = new LinkedList<String>(Arrays.asList(GlobalConstants.AMENAZAS_TIPO_ERRORES_FALLOS_NO_INTENCIONADOS));
+        listaAmenazasAtaquesDeliberados = new LinkedList<String>(Arrays.asList(GlobalConstants.AMENAZAS_TIPO_ATAQUES_DELIBERADOS));
+        String codeName = null;
+
+        for (ThreatDTO threat : listaAmenazasCreadas) {
+
+            switch (threat.getIdListaTipo().intValue()) {
+                case 0:
+                    codeName = GlobalConstants.AMENAZAS_TIPO_DESASTRES_NATURALES[threat.getIdTipo().intValue()];
+                    listaAmenazasDesastresNaturales.remove(listaAmenazasDesastresNaturales.indexOf(codeName));
+                    break;
+                case 1:
+                    codeName = GlobalConstants.AMENAZAS_TIPO_ORIGEN_INDUSTRIAL[threat.getIdTipo().intValue()];
+                    listaAmenazasOrigenIndustrial.remove(listaAmenazasOrigenIndustrial.indexOf(codeName));
+                    break;
+                case 2:
+                    codeName = GlobalConstants.AMENAZAS_TIPO_ERRORES_FALLOS_NO_INTENCIONADOS[threat.getIdTipo().intValue()];
+                    listaAmenazasErroresFallos.remove(listaAmenazasErroresFallos.indexOf(codeName));
+                    break;
+                case 3:
+                    codeName = GlobalConstants.AMENAZAS_TIPO_ATAQUES_DELIBERADOS[threat.getIdTipo().intValue()];
+                    listaAmenazasAtaquesDeliberados.remove(listaAmenazasAtaquesDeliberados.indexOf(codeName));
+                    break;
+            }
+        }
+
         // Añadimos el Spinner
         spinner = (Spinner) view.findViewById(R.id.spnMySpinner);
         spinnerAdapter =  ArrayAdapter.createFromResource(getContext(), R.array.Sizing_spinner_Threats,
@@ -66,25 +103,25 @@ public class IdentifyThreatFragment extends Fragment {
         // Lista de Desastres Naturales
         lstOpcionesDesastresNaturales = (ListView) view.findViewById(R.id.ListDesastresNaturales);
         ArrayAdapter<String> lstDesastresNaturales = new ArrayAdapter<String>(this.getContext(),
-                android.R.layout.simple_list_item_single_choice, GlobalConstants.AMENAZAS_TIPO_DESASTRES_NATURALES);
+                android.R.layout.simple_list_item_single_choice, listaAmenazasDesastresNaturales);
         lstOpcionesDesastresNaturales.setAdapter(lstDesastresNaturales);
 
         // Lista de Origen Industrial
         lstOpcionesOrigenIndustrial = (ListView) view.findViewById(R.id.ListOrigenIndustrial);
         ArrayAdapter<String> lstOrigenIndustrial = new ArrayAdapter<String>(this.getContext(),
-                android.R.layout.simple_list_item_single_choice, GlobalConstants.AMENAZAS_TIPO_ORIGEN_INDUSTRIAL);
+                android.R.layout.simple_list_item_single_choice, listaAmenazasOrigenIndustrial);
         lstOpcionesOrigenIndustrial.setAdapter(lstOrigenIndustrial);
 
         // Lista de Errores y Fallos no intencionados
         lstOpcionesErroresFallos = (ListView) view.findViewById(R.id.ListErroresFallos);
         ArrayAdapter<String> lstErroresFallos = new ArrayAdapter<String>(this.getContext(),
-                android.R.layout.simple_list_item_single_choice, GlobalConstants.AMENAZAS_TIPO_ERRORES_FALLOS_NO_INTENCIONADOS);
+                android.R.layout.simple_list_item_single_choice, listaAmenazasErroresFallos);
         lstOpcionesErroresFallos.setAdapter(lstErroresFallos);
 
         // Lista de Ataques deliberados
         lstOpcionesAtaquesDeliberados = (ListView) view.findViewById(R.id.ListAtaquesDeliberados);
         final ArrayAdapter<String> lstAtaquesDeliberados = new ArrayAdapter<String>(this.getContext(),
-                android.R.layout.simple_list_item_single_choice, GlobalConstants.AMENAZAS_TIPO_ATAQUES_DELIBERADOS);
+                android.R.layout.simple_list_item_single_choice, listaAmenazasErroresFallos);
         lstOpcionesAtaquesDeliberados.setAdapter(lstAtaquesDeliberados);
 
         // Si estaba seleccionado el item lo deseleccionamos (limpiamos)

@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_more"
+            android:id="@id/icon"
+            android:clickable="true"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:background="@null" />
+        <TextView
+            android:id="@+id/asset"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="[A] Asset"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/icon"
+            android:layout_toEndOf="@id/icon"
+            android:clickable="true"
+            android:focusable="false"
+            android:focusableInTouchMode="false"/>
+
+        <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/checkBox"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:focusable="false"
+        android:focusableInTouchMode="false"/>
+
+    </RelativeLayout>
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:stretchColumns="0,1,2"
+        android:layout_weight="0.15"
+        android:id="@+id/tabla"
+        android:layout_marginTop="5dp"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:background="#ECEFF1"
+        android:visibility="visible">
+
+        <TableRow
+            android:id="@+id/tableRow1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="fill_vertical"
+            android:focusable="false"
+            android:focusableInTouchMode="false">
+
+            <android.widget.TextView
+                android:id="@+id/valorDisponibilidad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Disponibilidad"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:textSize="18sp"/>
+            <Spinner
+                android:id="@+id/spinnerDisponibilidad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                style="@android:style/Widget.Holo.Light.Spinner"
+                android:spinnerMode="dropdown" />
+            <Spinner
+                android:id="@+id/spinnerDisponibilidad2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                style="@android:style/Widget.Holo.Light.Spinner"
+                android:spinnerMode="dropdown" />
+            <CheckBox
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/disp"
+                android:focusable="false"
+                android:focusableInTouchMode="false"/>
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="fill_vertical"
+            android:focusable="false"
+            android:focusableInTouchMode="false">
+
+            <android.widget.TextView
+                android:id="@+id/valorIntegridad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Integridad"
+                android:textSize="18sp"
+                android:focusable="false"
+                android:focusableInTouchMode="false"/>
+            <Spinner
+                android:id="@+id/spinnerIntegridad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@android:style/Widget.Holo.Light.Spinner"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:spinnerMode="dropdown"/>
+            <Spinner
+                android:id="@+id/spinnerIntegridad2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                style="@android:style/Widget.Holo.Light.Spinner"
+                android:spinnerMode="dropdown"/>
+            <CheckBox
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:id="@+id/integ" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="fill_vertical"
+            android:focusable="false"
+            android:focusableInTouchMode="false">
+
+            <android.widget.TextView
+                android:id="@+id/valorConfidencialidad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:text="Confidencialidad"
+                android:textSize="18sp"/>
+            <Spinner
+                android:id="@+id/spinnerConfidencialidad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@android:style/Widget.Holo.Light.Spinner"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:spinnerMode="dropdown" />
+            <Spinner
+                android:id="@+id/spinnerConfidencialidad2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                style="@android:style/Widget.Holo.Light.Spinner" />
+            <CheckBox
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:id="@+id/confidenc" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow4"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="fill_vertical"
+            android:focusable="false"
+            android:focusableInTouchMode="false">
+
+            <android.widget.TextView
+                android:id="@+id/valorAutenticidad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:text="Autenticidad"
+                android:textSize="18sp"/>
+            <Spinner
+                android:id="@+id/spinnerAutenticidad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@android:style/Widget.Holo.Light.Spinner"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:spinnerMode="dropdown" />
+            <Spinner
+                android:id="@+id/spinnerAutenticidad2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                style="@android:style/Widget.Holo.Light.Spinner"
+                android:spinnerMode="dropdown" />
+            <CheckBox
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:id="@+id/autent" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow5"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="fill_vertical"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:gravity="center">
+
+            <android.widget.TextView
+                android:id="@+id/valorTrazabilidad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:text="Trazabilidad"
+                android:textSize="18sp"/>
+            <Spinner
+                android:id="@+id/spinnerTrazabilidad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                style="@android:style/Widget.Holo.Light.Spinner"
+                android:spinnerMode="dropdown" />
+
+            <Spinner
+                android:id="@+id/spinnerTrazabilidad2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                style="@android:style/Widget.Holo.Light.Spinner"
+                android:spinnerMode="dropdown" />
+
+            <CheckBox
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:id="@+id/traza" />
+        </TableRow>
+        </TableLayout>
+</LinearLayout>

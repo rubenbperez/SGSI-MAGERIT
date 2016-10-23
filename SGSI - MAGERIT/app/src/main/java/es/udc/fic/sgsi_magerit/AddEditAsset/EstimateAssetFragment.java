@@ -74,7 +74,7 @@ public class EstimateAssetFragment extends Fragment {
                 idProyecto, ProjectSizingConstants.TABLE_NAME_PARAMETRIZACION_ACTIVO);
         List<String> strParamActivo = new ArrayList<String>();
 
-        strParamActivo.add("Seleccione un elemento");
+        strParamActivo.add("Seleccione");
 
         for (Integer i:idsParamActivo) {
             strParamActivo.add(GlobalConstants.ID_TIPOS[i-1]);

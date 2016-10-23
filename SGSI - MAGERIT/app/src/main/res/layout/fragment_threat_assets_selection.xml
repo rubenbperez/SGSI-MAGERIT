@@ -3,9 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="es.udc.fic.sgsi_magerit.AddEditThreat.ThreatAssetsSelectionFragment">
+
     <ListView android:id="@+id/LstOpciones"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:choiceMode="multipleChoice"
-        android:clickable="true" />
+        android:descendantFocusability="blocksDescendants"
+        android:focusable="true"
+        android:focusableInTouchMode="true"/>
 </FrameLayout>
