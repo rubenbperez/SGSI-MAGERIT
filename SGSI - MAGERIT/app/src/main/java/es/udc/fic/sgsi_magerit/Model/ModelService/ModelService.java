@@ -90,4 +90,6 @@ public interface ModelService {
     public boolean eliminarTiposActivoDeActivo(Long idActivo);
 
     public List<ThreatDTO> obtenerAmenazas(long idProyecto);
+
+    public List<AssetDTO> obtenerActivosPorId(long idProyecto, List<Long> idsActivos);
 }

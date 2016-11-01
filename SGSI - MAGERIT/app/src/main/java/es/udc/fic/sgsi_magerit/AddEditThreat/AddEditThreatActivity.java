@@ -1,5 +1,6 @@
 package es.udc.fic.sgsi_magerit.AddEditThreat;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -9,8 +10,13 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 
 import es.udc.fic.sgsi_magerit.Model.ModelService.ModelService;
 import es.udc.fic.sgsi_magerit.Model.ModelService.ModelServiceImpl;
@@ -24,6 +30,10 @@ public class AddEditThreatActivity extends AppCompatActivity {
     private AddEditThreatFragmentPagerAdapter adapter;
     private Long idProyecto;
 
+    public ViewPager getViewPager() {
+        return viewPager;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +43,20 @@ public class AddEditThreatActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.appbar);
         setSupportActionBar(toolbar);
 
+       /*try
+        {
+            OutputStreamWriter fout=
+                    new OutputStreamWriter(
+                            openFileOutput("threats.tmp", Context.MODE_APPEND));
+            fout.close();
+        }
+        catch (Exception ex)
+        {
+            Log.e("Ficheros", "Error al escribir fichero a memoria interna");
+        }*/
+
         viewPager = (ViewPager) findViewById(R.id.viewpagerThreat);
+        viewPager.setOffscreenPageLimit(2);
         adapter = new AddEditThreatFragmentPagerAdapter(
                 getSupportFragmentManager(),idProyecto);
         viewPager.setAdapter(adapter);
@@ -52,6 +75,7 @@ public class AddEditThreatActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent resultIntent = new Intent();
+        deleteFile("threats.tmp");
         switch (item.getItemId()) {
             case android.R.id.home:
                 setResult(0, resultIntent);

@@ -840,4 +840,45 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
         return amenazas;
     }
 
+    @Override
+    public List<AssetDTO> obtenerActivosPorId(long idProyecto, List<Long> idsActivos) {
+        List <AssetDTO> activos = new ArrayList<AssetDTO>();
+
+        SQLiteDatabase db = getReadableDatabase();
+
+        String query = "SELECT " +
+                AssetConstants.ID_ACTIVO + ", " + AssetConstants.ID_PROYECTO + ", " +
+                AssetConstants.NOMBRE + ", " + AssetConstants.CODIGO + ", " +
+                AssetConstants.DESCRIPCION + ", " + AssetConstants.RESPONSABLE + ", " +
+                AssetConstants.UBICACION + " FROM " + AssetConstants.TABLE_NAME + " WHERE " +
+                AssetConstants.ID_PROYECTO + " = " + idProyecto;
+
+        if (!idsActivos.isEmpty())
+        {
+            query += " AND " +  AssetConstants.ID_ACTIVO + " IN (" + android.text.TextUtils.join(",", idsActivos)
+                + ")";
+        }
+
+
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.moveToFirst()){
+            do {
+                Long idActivo = cursor.getLong(0);
+                Long idProyectoBD = cursor.getLong(1);
+                String nombre = cursor.getString(2);
+                String codigo = cursor.getString(3);
+                String descripcion = cursor.getString(4);
+                String responsable = cursor.getString(5);
+                String ubicacion = cursor.getString(6);
+
+                AssetDTO asset = new AssetDTO(idActivo, idProyectoBD, nombre, codigo, descripcion,
+                        responsable, ubicacion);
+                activos.add(asset);
+            } while ( (cursor.moveToNext()));
+        }
+        cursor.close();
+        return activos;
+    }
+
 }

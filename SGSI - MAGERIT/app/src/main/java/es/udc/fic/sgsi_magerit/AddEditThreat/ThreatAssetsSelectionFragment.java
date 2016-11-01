@@ -1,10 +1,12 @@
 package es.udc.fic.sgsi_magerit.AddEditThreat;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +19,7 @@ import android.widget.ListView;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +37,7 @@ public class ThreatAssetsSelectionFragment extends Fragment {
     private List<AssetDTO> data;
     private ModelServiceImpl service;
     private Long idProyecto;
+    private ArrayList<Integer> listChecked;
 
     public ThreatAssetsSelectionFragment() {
     }
@@ -66,6 +70,40 @@ public class ThreatAssetsSelectionFragment extends Fragment {
                 android.R.layout.simple_list_item_multiple_choice, assetNames);
         lstOpcionesActivos.setAdapter(adaptador);
 
+        listChecked = new ArrayList<Integer>();
+
+        lstOpcionesActivos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                SparseBooleanArray checked = lstOpcionesActivos.getCheckedItemPositions();
+                listChecked.clear();
+                for (int i = 0; i < lstOpcionesActivos.getAdapter().getCount(); i++) {
+                    if (checked.get(i)) {
+                        listChecked.add(data.get(i).getIdActivo().intValue());
+                        Log.d("checked: ", data.get(i).getNombreActivo());
+                    }
+                }
+
+                try {
+                    OutputStreamWriter fout =
+                            new OutputStreamWriter(
+                                    getActivity().openFileOutput("threats.tmp", Context.MODE_PRIVATE));
+
+                    fout.write("");
+                    for (int i=0; i<listChecked.size(); i++)
+                    {
+                        fout.write(listChecked.get(i).toString());
+                        if (i != listChecked.size()-1)
+                            fout.write(",");
+                    }
+                    fout.close();
+
+                } catch (Exception ex) {
+                    Log.e("Ficheros", "Error al escribir fichero a memoria interna");
+                }
+
+            }
+        });
         return view;
     }
 
