@@ -127,7 +127,7 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
         db.execSQL(sqlCreateTableActivos);
         db.execSQL(sqlCreateTableActivoTipoActivo);
         db.execSQL(sqlCreateTableAmenazas);
-
+        db.close();
     }
 
     @Override
@@ -147,7 +147,7 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
         db.execSQL(sqlCreateParametrizacionImpacto);
         db.execSQL(sqlCreateParametrizacionControlSeguridad);
         db.execSQL(sqlCreateTableActivos);
-
+        db.close();
     }
 
     @Override
@@ -172,7 +172,9 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
         nuevoProyecto.put(ProjectConstants.ACTIVADO,(activado)?1:0);
 
         //Insertamos el registro en la base de datos
-        return db.insert(ProjectConstants.TABLE_NAME, null, nuevoProyecto);
+        long id = db.insert(ProjectConstants.TABLE_NAME, null, nuevoProyecto);
+        db.close();
+        return id;
     }
 
     @Override
@@ -183,6 +185,7 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
         db.delete(ProjectSizingConstants.TABLE_NAME_PARAMETRIZACION_VULNERABILIDAD, ProjectSizingConstants.ID_PROYECTO + "=" + idProyecto,null);
         db.delete(ProjectSizingConstants.TABLE_NAME_PARAMETRIZACION_IMPACTO, ProjectSizingConstants.ID_PROYECTO + "=" + idProyecto,null);
         db.delete(ProjectSizingConstants.TABLE_NAME_PARAMETRIZACION_CONTROLSEGURIDAD, ProjectSizingConstants.ID_PROYECTO + "=" + idProyecto,null);
+        db.close();
         return true;
 
     }
@@ -208,8 +211,10 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
         nuevoProyecto.put(ProjectConstants.ACTIVADO,(activado)?1:0);
 
         //Insertamos el registro en la base de datos
-        return db.update(ProjectConstants.TABLE_NAME, nuevoProyecto, ProjectConstants.ID_PROYECTO
+        long id = db.update(ProjectConstants.TABLE_NAME, nuevoProyecto, ProjectConstants.ID_PROYECTO
                 + "=" + idProyecto, null);
+        db.close();
+        return id;
     }
 
     @Override
@@ -238,8 +243,10 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
             cal.setTime(dateFormat.parse(fechaCreacion));
             Log.w("wii", fechaCreacion);
             pr = new Project(id, nombre, cal, director, descripcion, version, ac);
-            cursor.close();
+
         }
+        cursor.close();
+        db.close();
         return pr;
     }
 
@@ -274,6 +281,7 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
             } while ( (cursor.moveToNext()));
         }
         cursor.close();
+        db.close();
         return proyectos;
     }
 
@@ -292,6 +300,7 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
         //Actualizamos el registro en la base de datos
         db.update(ProjectConstants.TABLE_NAME, valores, ProjectConstants.ID_PROYECTO + "="+
                 proyectoADesmarcar, null);
+        db.close();
 
     }
 
@@ -313,6 +322,7 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
         //Insertamos el registro en la base de datos
         db.insert(ProjectSizingConstants.TABLE_NAME_PARAMETRIZACION_ACTIVO, null,
                 nuevoParametrizacionActivo);
+        db.close();
     }
 
     @Override
@@ -330,6 +340,7 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
             } while ((cursor.moveToNext()));
         }
         cursor.close();
+        db.close();
         return idsTipos;
     }
 
@@ -450,7 +461,7 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
             } while ( (cursor.moveToNext()));
         }
         cursor.close();
-
+        db.close();
         return new ParametrizacionDTO(parametrizacionActivos, parametrizacionVulnerabilidad,
                 parametrizacionImpacto, parametrizacionControlSeguridad);
     }
@@ -473,6 +484,8 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
         //Insertamos el registro en la base de datos
         db.insert(ProjectSizingConstants.TABLE_NAME_PARAMETRIZACION_VULNERABILIDAD, null,
                 nuevoParametrizacionVulnerabilidad);
+
+        db.close();
     }
 
     @Override
@@ -489,6 +502,8 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
         //Insertamos el registro en la base de datos
         db.insert(ProjectSizingConstants.TABLE_NAME_PARAMETRIZACION_IMPACTO, null,
                 nuevoParametrizacionImpacto);
+
+        db.close();
     }
 
     @Override
@@ -505,6 +520,8 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
         //Insertamos el registro en la base de datos
         db.insert(ProjectSizingConstants.TABLE_NAME_PARAMETRIZACION_CONTROLSEGURIDAD, null,
                 nuevoParametrizacionControlSeguridad);
+
+        db.close();
     }
 
     @Override
@@ -520,6 +537,8 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
         //Editamos el registro en la base de datos
         db.update(ProjectSizingConstants.TABLE_NAME_PARAMETRIZACION_ACTIVO, editarParametrizacionActivo,
                 ProjectSizingConstants.ID_PARAMETRIZACION_ACTIVO + "=" + idParametrizacion, null);
+
+        db.close();
     }
 
     @Override
@@ -537,6 +556,8 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
                 editarParametrizacionVulnerabilidad,
                 ProjectSizingConstants.ID_PARAMETRIZACION_VULNERABILIDAD + "=" + idParametrizacion,
                 null);
+
+        db.close();
     }
 
     @Override
@@ -551,6 +572,8 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
         db.update(ProjectSizingConstants.TABLE_NAME_PARAMETRIZACION_IMPACTO,
                 editarParametrizacionImpacto,
                 ProjectSizingConstants.ID_PARAMETRIZACION_IMPACTO + "=" + idParametrizacion, null);
+
+        db.close();
     }
 
     @Override
@@ -567,6 +590,8 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
                 editarParametrizacionControlSeguridad,
                 ProjectSizingConstants.ID_PARAMETRIZACION_CONTROLSEGURIDAD + "=" + idParametrizacion,
                 null);
+
+        db.close();
     }
 
     @Override
@@ -597,6 +622,7 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
             } while ( (cursor.moveToNext()));
         }
         cursor.close();
+        db.close();
         return activos;
     }
 
@@ -615,6 +641,7 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
             } while(cursor.moveToNext());
         }
         cursor.close();
+        db.close();
         return idProyecto;
     }
 
@@ -642,7 +669,9 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
         nuevoActivo.put(AssetConstants.FECHA_CREACION,fechaCreacion);
 
         //Insertamos el registro en la base de datos
-        return db.insert(AssetConstants.TABLE_NAME, null, nuevoActivo);
+        long id = db.insert(AssetConstants.TABLE_NAME, null, nuevoActivo);
+        db.close();
+        return id;
     }
 
     @Override
@@ -664,6 +693,7 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
 
         if ((cursor.moveToFirst()) || cursor.getCount() > 0){
             cursor.close();
+            db.close();
             return 1;
         }
 
@@ -679,11 +709,13 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
 
         if ((cursor.moveToFirst()) || cursor.getCount() > 0){
             cursor.close();
+            db.close();
             return 2;
         }
 
         //Devuelvo -1 si OK, 1 si Nombre repetido, 2 si codigo repetido.
         cursor.close();
+        db.close();
         return returnValue;
     }
 
@@ -701,7 +733,9 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
         nuevoActivoTipoActivo.put(AssetConstants.ID_TIPO_ACTIVO,idTipoActivo);
 
         //Insertamos el registro en la base de datos
-        return db.insert(AssetConstants.TABLE_NAME_ACTIVO_TIPO_ACTIVO, null, nuevoActivoTipoActivo);
+        long id = db.insert(AssetConstants.TABLE_NAME_ACTIVO_TIPO_ACTIVO, null, nuevoActivoTipoActivo);
+        db.close();
+        return id;
     }
 
     @Override
@@ -710,7 +744,9 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
         db.delete(AssetConstants.TABLE_NAME, AssetConstants.ID_ACTIVO + "=" + idActivo, null);
         db.delete(AssetConstants.TABLE_NAME_ACTIVO_TIPO_ACTIVO, AssetConstants.ID_ACTIVO_TABLA_TIPO_ACTIVO
                 + "=" + idActivo, null);
+        db.close();
         return true;
+
     }
 
     @Override
@@ -755,8 +791,9 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
 
             as = new Asset(idActivoDB, idProyecto, idValoracionDisp, idValoracionInt, idValoracionConf,
             idValoracionAut, idValoracionTraz, nombre, codigo, desc, resp, ubicacion, cal);
-            cursor.close();
         }
+        cursor.close();
+        db.close();
         return as;
     }
 
@@ -782,6 +819,9 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
                 tiposActivo.add(assetType);
             } while ( (cursor.moveToNext()));
         }
+
+        cursor.close();
+        db.close();
         return  tiposActivo;
     }
 
@@ -806,8 +846,10 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
         nuevoActivo.put(AssetConstants.UBICACION,ubicacion);
 
         //Insertamos el registro en la base de datos
-        return db.update(AssetConstants.TABLE_NAME, nuevoActivo, AssetConstants.ID_ACTIVO
+        long id = db.update(AssetConstants.TABLE_NAME, nuevoActivo, AssetConstants.ID_ACTIVO
                 + "=" + idActivo, null);
+        db.close();
+        return id;
     }
 
     @Override
@@ -816,6 +858,7 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
         SQLiteDatabase db = getReadableDatabase();
         db.delete(AssetConstants.TABLE_NAME_ACTIVO_TIPO_ACTIVO, AssetConstants.ID_ACTIVO_TABLA_TIPO_ACTIVO
                 + "=" + idActivo, null);
+        db.close();
         return true;
     }
 
@@ -837,6 +880,7 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
             } while ( (cursor.moveToNext()));
         }
         cursor.close();
+        db.close();
         return amenazas;
     }
 
@@ -878,6 +922,7 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
             } while ( (cursor.moveToNext()));
         }
         cursor.close();
+        db.close();
         return activos;
     }
 

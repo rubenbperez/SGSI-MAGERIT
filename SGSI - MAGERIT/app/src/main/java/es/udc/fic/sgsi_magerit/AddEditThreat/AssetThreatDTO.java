@@ -24,6 +24,7 @@ public class AssetThreatDTO {
     private Integer idDegradaciónTrazabilidad;
     private Integer idProbabilidadTrazabilidad;
     private Boolean activadoTrazabilidad;
+    private Boolean visible;
 
     public AssetThreatDTO(Long idActivo, Long idProyecto, String codigoActivo, String nombreActivo,
                           Integer idDegradaciónDisponibilidad, Integer idProbabilidadDisponibilidad,
@@ -33,7 +34,7 @@ public class AssetThreatDTO {
                           Boolean activadoConfidencialidad, Integer idDegradaciónAutenticidad,
                           Integer idProbabilidadAutenticidad, Boolean activadoAutenticidad,
                           Integer idDegradaciónTrazabilidad, Integer idProbabilidadTrazabilidad,
-                          Boolean activadoTrazabilidad) {
+                          Boolean activadoTrazabilidad, Boolean visible) {
         this.idActivo = idActivo;
         this.idProyecto = idProyecto;
         this.codigoActivo = codigoActivo;
@@ -53,6 +54,7 @@ public class AssetThreatDTO {
         this.idDegradaciónTrazabilidad = idDegradaciónTrazabilidad;
         this.idProbabilidadTrazabilidad = idProbabilidadTrazabilidad;
         this.activadoTrazabilidad = activadoTrazabilidad;
+        this.visible = visible;
     }
 
     public Long getIdActivo() {
@@ -205,5 +207,13 @@ public class AssetThreatDTO {
 
     public void setActivadoTrazabilidad(Boolean activadoTrazabilidad) {
         this.activadoTrazabilidad = activadoTrazabilidad;
+    }
+
+    public Boolean getVisible() {
+        return visible;
+    }
+
+    public void setVisible(Boolean visible) {
+        this.visible = visible;
     }
 }
