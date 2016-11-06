@@ -6,7 +6,10 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:clickable="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false">
 
         <ImageButton
             android:layout_width="wrap_content"
@@ -25,23 +28,61 @@
             android:layout_centerVertical="true"
             android:layout_toRightOf="@id/icon"
             android:layout_toEndOf="@id/icon"
-            android:clickable="true"
-            android:focusable="false"
-            android:focusableInTouchMode="false"/>
+            android:onClick="onClick"
+            android:clickable="true"/>
 
     </RelativeLayout>
 
 
     <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:stretchColumns="0,1,2"
+        android:layout_height="wrap_content"
+        android:stretchColumns="1,2"
         android:layout_weight="0.15"
         android:id="@+id/tabla"
         android:layout_marginTop="5dp"
         android:focusable="false"
         android:focusableInTouchMode="false">
 
+        <TableRow
+            android:id="@+id/tableRow0"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="fill_vertical"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:background="#CFD8DC">
+
+            <android.widget.TextView
+                android:id="@+id/header1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Dimensión"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:textSize="12sp"
+                android:textAlignment="center"/>
+
+            <android.widget.TextView
+                android:id="@+id/header2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Degradación"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:textSize="12sp"
+                android:textAlignment="center"/>
+
+            <android.widget.TextView
+                android:id="@+id/header3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Probabilidad"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:textSize="12sp"
+                android:textAlignment="center"/>
+        </TableRow>
         <TableRow
             android:id="@+id/tableRow1"
             android:layout_width="match_parent"
@@ -74,12 +115,6 @@
                 android:focusableInTouchMode="false"
                 style="@android:style/Widget.Holo.Light.Spinner"
                 android:spinnerMode="dropdown" />
-            <CheckBox
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/disp"
-                android:focusable="false"
-                android:focusableInTouchMode="false"/>
         </TableRow>
 
         <TableRow
@@ -114,12 +149,6 @@
                 android:focusableInTouchMode="false"
                 style="@android:style/Widget.Holo.Light.Spinner"
                 android:spinnerMode="dropdown"/>
-            <CheckBox
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:focusable="false"
-                android:focusableInTouchMode="false"
-                android:id="@+id/integ" />
         </TableRow>
 
         <TableRow
@@ -153,12 +182,6 @@
                 android:focusable="false"
                 android:focusableInTouchMode="false"
                 style="@android:style/Widget.Holo.Light.Spinner" />
-            <CheckBox
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:focusable="false"
-                android:focusableInTouchMode="false"
-                android:id="@+id/confidenc" />
         </TableRow>
 
         <TableRow
@@ -193,12 +216,6 @@
                 android:focusableInTouchMode="false"
                 style="@android:style/Widget.Holo.Light.Spinner"
                 android:spinnerMode="dropdown" />
-            <CheckBox
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:focusable="false"
-                android:focusableInTouchMode="false"
-                android:id="@+id/autent" />
         </TableRow>
 
         <TableRow
@@ -235,13 +252,6 @@
                 android:focusableInTouchMode="false"
                 style="@android:style/Widget.Holo.Light.Spinner"
                 android:spinnerMode="dropdown" />
-
-            <CheckBox
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:focusable="false"
-                android:focusableInTouchMode="false"
-                android:id="@+id/traza" />
         </TableRow>
     </TableLayout>
 </LinearLayout>

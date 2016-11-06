@@ -17,7 +17,8 @@
         </activity>
         <activity android:name=".AddEditProject.AddProjectActivity" />
         <activity android:name=".AddEditAsset.AddEditAssetActivity" />
-        <activity android:name=".AddEditThreat.AddEditThreatActivity"></activity>
+        <activity android:name=".AddEditThreat.AddEditThreatActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"></activity>
     </application>
 
 </manifest>

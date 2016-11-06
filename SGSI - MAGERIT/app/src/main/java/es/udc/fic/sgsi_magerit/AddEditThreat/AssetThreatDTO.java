@@ -11,49 +11,37 @@ public class AssetThreatDTO {
     private String nombreActivo;
     private Integer idDegradaciónDisponibilidad;
     private Integer idProbabilidadDisponibilidad;
-    private Boolean activadoDisponibilidad;
     private Integer idDegradaciónIntegridad;
     private Integer idProbabilidadIntegridad;
-    private Boolean activadoIntegridad;
     private Integer idDegradaciónConfidencialidad;
     private Integer idProbabilidadConfidencialidad;
-    private Boolean activadoConfidencialidad;
     private Integer idDegradaciónAutenticidad;
     private Integer idProbabilidadAutenticidad;
-    private Boolean activadoAutenticidad;
     private Integer idDegradaciónTrazabilidad;
     private Integer idProbabilidadTrazabilidad;
-    private Boolean activadoTrazabilidad;
     private Boolean visible;
 
     public AssetThreatDTO(Long idActivo, Long idProyecto, String codigoActivo, String nombreActivo,
                           Integer idDegradaciónDisponibilidad, Integer idProbabilidadDisponibilidad,
-                          Boolean activadoDisponibilidad, Integer idDegradaciónIntegridad,
-                          Integer idProbabilidadIntegridad, Boolean activadoIntegridad,
+                          Integer idDegradaciónIntegridad, Integer idProbabilidadIntegridad,
                           Integer idDegradaciónConfidencialidad, Integer idProbabilidadConfidencialidad,
-                          Boolean activadoConfidencialidad, Integer idDegradaciónAutenticidad,
-                          Integer idProbabilidadAutenticidad, Boolean activadoAutenticidad,
+                          Integer idDegradaciónAutenticidad, Integer idProbabilidadAutenticidad,
                           Integer idDegradaciónTrazabilidad, Integer idProbabilidadTrazabilidad,
-                          Boolean activadoTrazabilidad, Boolean visible) {
+                          Boolean visible) {
         this.idActivo = idActivo;
         this.idProyecto = idProyecto;
         this.codigoActivo = codigoActivo;
         this.nombreActivo = nombreActivo;
         this.idDegradaciónDisponibilidad = idDegradaciónDisponibilidad;
         this.idProbabilidadDisponibilidad = idProbabilidadDisponibilidad;
-        this.activadoDisponibilidad = activadoDisponibilidad;
         this.idDegradaciónIntegridad = idDegradaciónIntegridad;
         this.idProbabilidadIntegridad = idProbabilidadIntegridad;
-        this.activadoIntegridad = activadoIntegridad;
         this.idDegradaciónConfidencialidad = idDegradaciónConfidencialidad;
         this.idProbabilidadConfidencialidad = idProbabilidadConfidencialidad;
-        this.activadoConfidencialidad = activadoConfidencialidad;
         this.idDegradaciónAutenticidad = idDegradaciónAutenticidad;
         this.idProbabilidadAutenticidad = idProbabilidadAutenticidad;
-        this.activadoAutenticidad = activadoAutenticidad;
         this.idDegradaciónTrazabilidad = idDegradaciónTrazabilidad;
         this.idProbabilidadTrazabilidad = idProbabilidadTrazabilidad;
-        this.activadoTrazabilidad = activadoTrazabilidad;
         this.visible = visible;
     }
 
@@ -105,14 +93,6 @@ public class AssetThreatDTO {
         this.idProbabilidadDisponibilidad = idProbabilidadDisponibilidad;
     }
 
-    public Boolean getActivadoDisponibilidad() {
-        return activadoDisponibilidad;
-    }
-
-    public void setActivadoDisponibilidad(Boolean activadoDisponibilidad) {
-        this.activadoDisponibilidad = activadoDisponibilidad;
-    }
-
     public Integer getIdDegradaciónIntegridad() {
         return idDegradaciónIntegridad;
     }
@@ -127,14 +107,6 @@ public class AssetThreatDTO {
 
     public void setIdProbabilidadIntegridad(Integer idProbabilidadIntegridad) {
         this.idProbabilidadIntegridad = idProbabilidadIntegridad;
-    }
-
-    public Boolean getActivadoIntegridad() {
-        return activadoIntegridad;
-    }
-
-    public void setActivadoIntegridad(Boolean activadoIntegridad) {
-        this.activadoIntegridad = activadoIntegridad;
     }
 
     public Integer getIdDegradaciónConfidencialidad() {
@@ -153,14 +125,6 @@ public class AssetThreatDTO {
         this.idProbabilidadConfidencialidad = idProbabilidadConfidencialidad;
     }
 
-    public Boolean getActivadoConfidencialidad() {
-        return activadoConfidencialidad;
-    }
-
-    public void setActivadoConfidencialidad(Boolean activadoConfidencialidad) {
-        this.activadoConfidencialidad = activadoConfidencialidad;
-    }
-
     public Integer getIdDegradaciónAutenticidad() {
         return idDegradaciónAutenticidad;
     }
@@ -177,14 +141,6 @@ public class AssetThreatDTO {
         this.idProbabilidadAutenticidad = idProbabilidadAutenticidad;
     }
 
-    public Boolean getActivadoAutenticidad() {
-        return activadoAutenticidad;
-    }
-
-    public void setActivadoAutenticidad(Boolean activadoAutenticidad) {
-        this.activadoAutenticidad = activadoAutenticidad;
-    }
-
     public Integer getIdDegradaciónTrazabilidad() {
         return idDegradaciónTrazabilidad;
     }
@@ -199,14 +155,6 @@ public class AssetThreatDTO {
 
     public void setIdProbabilidadTrazabilidad(Integer idProbabilidadTrazabilidad) {
         this.idProbabilidadTrazabilidad = idProbabilidadTrazabilidad;
-    }
-
-    public Boolean getActivadoTrazabilidad() {
-        return activadoTrazabilidad;
-    }
-
-    public void setActivadoTrazabilidad(Boolean activadoTrazabilidad) {
-        this.activadoTrazabilidad = activadoTrazabilidad;
     }
 
     public Boolean getVisible() {

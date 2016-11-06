@@ -13,11 +13,14 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 
+import es.udc.fic.sgsi_magerit.AddEditAsset.AddEditAssetActivityConstants;
 import es.udc.fic.sgsi_magerit.Model.ModelService.ModelService;
 import es.udc.fic.sgsi_magerit.Model.ModelService.ModelServiceImpl;
 import es.udc.fic.sgsi_magerit.R;
@@ -37,6 +40,7 @@ public class AddEditThreatActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        deleteFile("threats.tmp");
         service = new ModelServiceImpl(this, GlobalConstants.DATABASE_NAME,1);
         idProyecto = getIntent().getLongExtra("idProyecto", GlobalConstants.NULL_ID_PROYECTO);
         setContentView(R.layout.activity_add_edit_threat);
@@ -80,15 +84,20 @@ public class AddEditThreatActivity extends AppCompatActivity {
             case android.R.id.home:
                 setResult(0, resultIntent);
                 finish();
+                deleteFile("threats.tmp");
                 return true;
             case R.id.action_aceptar:
+                if (!comprobardatos())
+                    return false;
                 /*item.setEnabled(false);
                 setResult(3, resultIntent);
                 item.setEnabled(true);*/
                 return false;
+            //deleteFile("threats.tmp");
             case R.id.action_cancelar:
                 setResult(0, resultIntent);
                 finish();
+                deleteFile("threats.tmp");
                 return true;
         }
         return false;
@@ -142,6 +151,47 @@ public class AddEditThreatActivity extends AppCompatActivity {
             // Generate title based on item position
             return AddEditThreatActivityConstants.tabTitles[position];
         }
+    }
+
+    private boolean comprobardatos() {
+        Fragment fr1 = (Fragment) adapter.instantiateItem(viewPager, 0);
+        Fragment fr2 = (Fragment) adapter.instantiateItem(viewPager, 1);
+
+        boolean flag = false;
+
+        ListView lstAmenazas = (ListView) fr1.getView().findViewById(R.id.ListDesastresNaturales);
+        if (lstAmenazas.getSelectedItem() != null) {
+            flag = true;
+        }
+
+        lstAmenazas = (ListView) fr1.getView().findViewById(R.id.ListOrigenIndustrial);
+        if (lstAmenazas.getSelectedItem() != null) {
+            flag = true;
+        }
+
+        lstAmenazas = (ListView) fr1.getView().findViewById(R.id.ListErroresFallos);
+        if (lstAmenazas.getSelectedItem() != null) {
+            flag = true;
+        }
+
+        lstAmenazas = (ListView) fr1.getView().findViewById(R.id.ListAtaquesDeliberados);
+        if (lstAmenazas.getSelectedItem() != null) {
+            flag = true;
+        }
+
+        if (flag) {
+            viewPager.setCurrentItem(AddEditThreatActivityConstants.TAB_INDENTIFICACION);
+            Toast.makeText(this, AddEditThreatActivityConstants.ERROR_AMENAZA_NO_SELECCIONADA, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        ListView lstAssets = (ListView) fr2.getView().findViewById(R.id.LstOpciones);
+        if (lstAssets.getCheckedItemCount() == 0) {
+            viewPager.setCurrentItem(AddEditThreatActivityConstants.TAB_SELECCION);
+            Toast.makeText(this, AddEditThreatActivityConstants.ERROR_ACTIVO_NO_SELECCIONADO, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return false;
     }
 
 }

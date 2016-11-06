@@ -73,6 +73,8 @@ public class AddProjectDetailsFragment extends Fragment {
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus && etNombreProyecto.getText().toString().isEmpty()) {
                     tilNombreProyecto.setError(AddProjectActivityConstants.ERROR_NOMBRE_PROYECTO);
+                } else {
+                    tilNombreProyecto.setError(null);
                 }
             }
         });
@@ -86,6 +88,8 @@ public class AddProjectDetailsFragment extends Fragment {
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus && etDirectorProyecto.getText().toString().isEmpty()) {
                     tilDirectorProyecto.setError(AddProjectActivityConstants.ERROR_DIRECTOR_PROYECTO);
+                } else {
+                    tilDirectorProyecto.setError(null);
                 }
             }
         });
@@ -99,6 +103,8 @@ public class AddProjectDetailsFragment extends Fragment {
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus && etDescripcionProyecto.getText().toString().isEmpty()) {
                     tilDescripcionProyecto.setError(AddProjectActivityConstants.ERROR_DESC_PROYECTO);
+                } else {
+                    tilDescripcionProyecto.setError(null);
                 }
             }
         });
@@ -112,6 +118,8 @@ public class AddProjectDetailsFragment extends Fragment {
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus && etVersionProyecto.getText().toString().isEmpty()) {
                     tilVersionProyecto.setError(AddProjectActivityConstants.ERROR_VERSION_PROYECTO);
+                } else {
+                    tilVersionProyecto.setError(null);
                 }
             }
         });

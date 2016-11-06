@@ -12,4 +12,6 @@ public class AddEditThreatActivityConstants {
     public final static int TAB_VALORACION = 2;
     public final static String ACTIVITY_TITLE_CREAR = "Añadir amenaza";
     public final static String ACTIVITY_TITLE_EDITAR = "Editar amenaza";
+    public final static String ERROR_ACTIVO_NO_SELECCIONADO = "Error: No hay ningún activo seleccionado";
+    public final static String ERROR_AMENAZA_NO_SELECCIONADA = "Error: No hay ninguna amenaza seleccionada";
 }

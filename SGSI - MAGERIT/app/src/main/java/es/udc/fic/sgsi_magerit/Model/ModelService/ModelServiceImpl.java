@@ -104,13 +104,21 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
             AssetConstants.ID_TIPO_ACTIVO + " " + AssetConstants.INT_TYPE + " NOT NULL);";
 
     String sqlCreateTableAmenazas = "CREATE TABLE " + ThreatConstants.TABLE_NAME + "(" +
-            ThreatConstants.ID_AMENAZA + " " + ThreatConstants.INT_TYPE + " PRIMARY KEY AUTOINCREMENT, " +
+            ThreatConstants.ID_AMENAZA_ACTIVO + " " + ThreatConstants.INT_TYPE + " PRIMARY KEY AUTOINCREMENT, " +
             ThreatConstants.ID_ACTIVO + " " + ThreatConstants.INT_TYPE + " NOT NULL, " +
             ThreatConstants.ID_PROYECTO + " " + ThreatConstants.INT_TYPE + " NOT NULL, " +
             ThreatConstants.ID_LISTA_TIPO_AMENAZA + " " + ThreatConstants.INT_TYPE + " NOT NULL, " +
             ThreatConstants.ID_TIPO_AMENAZA + " " + ThreatConstants.INT_TYPE + " NOT NULL, " +
-            ThreatConstants.ID_FRECUENCIA + " " + ThreatConstants.INT_TYPE + ", " +
-            ThreatConstants.ID_IMPACTO + " " + ThreatConstants.INT_TYPE + ", " +
+            ThreatConstants.ID_VALORACION_DEGRADACION_DISPONIBILIDAD + " " + ThreatConstants.INT_TYPE + ", " +
+            ThreatConstants.ID_VALORACION_PROBABILIDAD_DISPONIBILIDAD + " " + ThreatConstants.INT_TYPE + ", " +
+            ThreatConstants.ID_VALORACION_DEGRADACION_INTEGRIDAD + " " + ThreatConstants.INT_TYPE + ", " +
+            ThreatConstants.ID_VALORACION_PROBABILIDAD_INTEGRIDAD + " " + ThreatConstants.INT_TYPE + ", " +
+            ThreatConstants.ID_VALORACION_DEGRADACION_CONFIDENCIALIDAD + " " + ThreatConstants.INT_TYPE + ", " +
+            ThreatConstants.ID_VALORACION_PROBABILIDAD_CONFIDENCIALIDAD + " " + ThreatConstants.INT_TYPE + ", " +
+            ThreatConstants.ID_VALORACION_DEGRADACION_AUTENTICIDAD + " " + ThreatConstants.INT_TYPE + ", " +
+            ThreatConstants.ID_VALORACION_PROBABILIDAD_AUTENTICIDAD + " " + ThreatConstants.INT_TYPE + ", " +
+            ThreatConstants.ID_VALORACION_DEGRADACION_TRAZABILIDAD + " " + ThreatConstants.INT_TYPE + ", " +
+            ThreatConstants.ID_VALORACION_PROBABILIDAD_TRAZABILIDAD + " " + ThreatConstants.INT_TYPE + ", " +
             ThreatConstants.FECHA_CREACION + " " + AssetConstants.STRING_TYPE  + " NOT NULL);";
 
     public ModelServiceImpl(Context contexto, String nombre, int version) {
@@ -127,7 +135,7 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
         db.execSQL(sqlCreateTableActivos);
         db.execSQL(sqlCreateTableActivoTipoActivo);
         db.execSQL(sqlCreateTableAmenazas);
-        db.close();
+
     }
 
     @Override
@@ -147,7 +155,6 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
         db.execSQL(sqlCreateParametrizacionImpacto);
         db.execSQL(sqlCreateParametrizacionControlSeguridad);
         db.execSQL(sqlCreateTableActivos);
-        db.close();
     }
 
     @Override
@@ -704,7 +711,7 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
         if (idActivo != GlobalConstants.NULL_ID_ACTIVO.intValue()) {
             query += " AND " + AssetConstants.ID_ACTIVO + "!=" + idActivo;
         }
-
+        cursor.close();
         cursor = db.rawQuery(query, null);
 
         if ((cursor.moveToFirst()) || cursor.getCount() > 0){
