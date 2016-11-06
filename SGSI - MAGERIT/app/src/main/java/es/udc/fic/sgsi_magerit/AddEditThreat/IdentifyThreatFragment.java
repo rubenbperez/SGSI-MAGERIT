@@ -47,6 +47,7 @@ public class IdentifyThreatFragment extends Fragment {
 
     ModelService service;
 
+
     public IdentifyThreatFragment() {
     }
 
@@ -210,6 +211,10 @@ public class IdentifyThreatFragment extends Fragment {
                     }
                 });
         return view;
+    }
+
+    protected  void prueba() {
+
     }
 
     private void ocultarListasMostrarLista(int valor) {

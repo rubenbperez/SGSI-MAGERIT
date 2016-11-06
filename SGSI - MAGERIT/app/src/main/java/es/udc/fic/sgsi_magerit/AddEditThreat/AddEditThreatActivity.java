@@ -1,5 +1,6 @@
 package es.udc.fic.sgsi_magerit.AddEditThreat;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.util.List;
 
 import es.udc.fic.sgsi_magerit.AddEditAsset.AddEditAssetActivityConstants;
 import es.udc.fic.sgsi_magerit.Model.ModelService.ModelService;
@@ -32,11 +34,15 @@ public class AddEditThreatActivity extends AppCompatActivity {
     private ModelService service;
     private AddEditThreatFragmentPagerAdapter adapter;
     private Long idProyecto;
+    List<AssetThreatDTO> dataFragment;
+
+    public interface OnDataPass {
+        public void onDataPass();
+    }
 
     public ViewPager getViewPager() {
         return viewPager;
     }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,7 +85,6 @@ public class AddEditThreatActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent resultIntent = new Intent();
-        deleteFile("threats.tmp");
         switch (item.getItemId()) {
             case android.R.id.home:
                 setResult(0, resultIntent);
@@ -87,13 +92,14 @@ public class AddEditThreatActivity extends AppCompatActivity {
                 deleteFile("threats.tmp");
                 return true;
             case R.id.action_aceptar:
-                if (!comprobardatos())
+                item.setEnabled(false);
+                if (!comprobarDatos())
                     return false;
-                /*item.setEnabled(false);
-                setResult(3, resultIntent);
-                item.setEnabled(true);*/
+                //setResult(3, resultIntent);
+                //deleteFile("threats.tmp");
+                item.setEnabled(true);
                 return false;
-            //deleteFile("threats.tmp");
+
             case R.id.action_cancelar:
                 setResult(0, resultIntent);
                 finish();
@@ -153,29 +159,18 @@ public class AddEditThreatActivity extends AppCompatActivity {
         }
     }
 
-    private boolean comprobardatos() {
+    private boolean comprobarDatos() {
         Fragment fr1 = (Fragment) adapter.instantiateItem(viewPager, 0);
         Fragment fr2 = (Fragment) adapter.instantiateItem(viewPager, 1);
-
         boolean flag = false;
 
-        ListView lstAmenazas = (ListView) fr1.getView().findViewById(R.id.ListDesastresNaturales);
-        if (lstAmenazas.getSelectedItem() != null) {
-            flag = true;
-        }
+        ListView lstAmenazasDN = (ListView) fr1.getView().findViewById(R.id.ListDesastresNaturales);
+        ListView lstAmenazasOI = (ListView) fr1.getView().findViewById(R.id.ListOrigenIndustrial);
+        ListView lstAmenazasEF = (ListView) fr1.getView().findViewById(R.id.ListErroresFallos);
+        ListView lstAmenazasAD = (ListView) fr1.getView().findViewById(R.id.ListAtaquesDeliberados);
 
-        lstAmenazas = (ListView) fr1.getView().findViewById(R.id.ListOrigenIndustrial);
-        if (lstAmenazas.getSelectedItem() != null) {
-            flag = true;
-        }
-
-        lstAmenazas = (ListView) fr1.getView().findViewById(R.id.ListErroresFallos);
-        if (lstAmenazas.getSelectedItem() != null) {
-            flag = true;
-        }
-
-        lstAmenazas = (ListView) fr1.getView().findViewById(R.id.ListAtaquesDeliberados);
-        if (lstAmenazas.getSelectedItem() != null) {
+        if (lstAmenazasDN.getCheckedItemCount() == 0 && lstAmenazasOI.getCheckedItemCount() == 0 &&
+                lstAmenazasEF.getCheckedItemCount() == 0 && lstAmenazasAD.getCheckedItemCount() == 0) {
             flag = true;
         }
 

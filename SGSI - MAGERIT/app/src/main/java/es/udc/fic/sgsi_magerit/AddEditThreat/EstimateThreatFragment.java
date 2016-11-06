@@ -1,5 +1,6 @@
 package es.udc.fic.sgsi_magerit.AddEditThreat;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -48,10 +50,6 @@ public class EstimateThreatFragment extends Fragment {
     List<Integer> idsParamProbabilidad;
     List<String> strParamDegradacion;
     List<String> strParamProbabilidad;
-
-
-    public EstimateThreatFragment() {
-    }
 
     public static EstimateThreatFragment newInstance() {
         EstimateThreatFragment fragment = new EstimateThreatFragment();
