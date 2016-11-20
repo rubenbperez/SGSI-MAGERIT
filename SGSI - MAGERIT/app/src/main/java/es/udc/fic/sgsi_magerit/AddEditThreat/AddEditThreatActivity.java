@@ -1,7 +1,5 @@
 package es.udc.fic.sgsi_magerit.AddEditThreat;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -11,20 +9,23 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
-import es.udc.fic.sgsi_magerit.AddEditAsset.AddEditAssetActivityConstants;
 import es.udc.fic.sgsi_magerit.Model.ModelService.ModelService;
 import es.udc.fic.sgsi_magerit.Model.ModelService.ModelServiceImpl;
+import es.udc.fic.sgsi_magerit.Model.Project.ProjectConstants;
+import es.udc.fic.sgsi_magerit.Model.Threat.AssetThreatDTO;
+import es.udc.fic.sgsi_magerit.Model.Threat.Threat;
+import es.udc.fic.sgsi_magerit.Model.Threat.ThreatDTO;
 import es.udc.fic.sgsi_magerit.R;
 import es.udc.fic.sgsi_magerit.Util.GlobalConstants;
 
@@ -34,11 +35,8 @@ public class AddEditThreatActivity extends AppCompatActivity {
     private ModelService service;
     private AddEditThreatFragmentPagerAdapter adapter;
     private Long idProyecto;
-    List<AssetThreatDTO> dataFragment;
-
-    public interface OnDataPass {
-        public void onDataPass();
-    }
+    private Long idListaTipoAmenazaRecibido;
+    private Long idTipoAmenazaRecibido;
 
     public ViewPager getViewPager() {
         return viewPager;
@@ -49,26 +47,16 @@ public class AddEditThreatActivity extends AppCompatActivity {
         deleteFile("threats.tmp");
         service = new ModelServiceImpl(this, GlobalConstants.DATABASE_NAME,1);
         idProyecto = getIntent().getLongExtra("idProyecto", GlobalConstants.NULL_ID_PROYECTO);
+        idListaTipoAmenazaRecibido = getIntent().getLongExtra("idListaTipoAmenaza", GlobalConstants.NULL_ID_LISTA_TIPO_AMENAZA);
+        idTipoAmenazaRecibido = getIntent().getLongExtra("idTipoAmenaza", GlobalConstants.NULL_ID_LISTA_TIPO_AMENAZA);
         setContentView(R.layout.activity_add_edit_threat);
         Toolbar toolbar = (Toolbar) findViewById(R.id.appbar);
         setSupportActionBar(toolbar);
 
-       /*try
-        {
-            OutputStreamWriter fout=
-                    new OutputStreamWriter(
-                            openFileOutput("threats.tmp", Context.MODE_APPEND));
-            fout.close();
-        }
-        catch (Exception ex)
-        {
-            Log.e("Ficheros", "Error al escribir fichero a memoria interna");
-        }*/
-
         viewPager = (ViewPager) findViewById(R.id.viewpagerThreat);
         viewPager.setOffscreenPageLimit(2);
         adapter = new AddEditThreatFragmentPagerAdapter(
-                getSupportFragmentManager(),idProyecto);
+                getSupportFragmentManager(),idProyecto, idListaTipoAmenazaRecibido, idTipoAmenazaRecibido);
         viewPager.setAdapter(adapter);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.appbartabs);
@@ -79,7 +67,12 @@ public class AddEditThreatActivity extends AppCompatActivity {
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_return);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        getSupportActionBar().setTitle(AddEditThreatActivityConstants.ACTIVITY_TITLE_CREAR);
+        if (idListaTipoAmenazaRecibido != GlobalConstants.NULL_ID_LISTA_TIPO_AMENAZA &&
+                idTipoAmenazaRecibido != GlobalConstants.NULL_ID_LISTA_TIPO_AMENAZA) {
+            getSupportActionBar().setTitle(AddEditThreatActivityConstants.ACTIVITY_TITLE_EDITAR);
+        } else {
+            getSupportActionBar().setTitle(AddEditThreatActivityConstants.ACTIVITY_TITLE_CREAR);
+        }
     }
 
     @Override
@@ -93,13 +86,16 @@ public class AddEditThreatActivity extends AppCompatActivity {
                 return true;
             case R.id.action_aceptar:
                 item.setEnabled(false);
-                if (!comprobarDatos())
+                if (!comprobarDatos()) {
+                    item.setEnabled(true);
                     return false;
-                //setResult(3, resultIntent);
-                //deleteFile("threats.tmp");
+                }
+                crearAmenaza();
+                setResult(1, resultIntent);
+                deleteFile("threats.tmp");
                 item.setEnabled(true);
-                return false;
-
+                finish();
+                return true;
             case R.id.action_cancelar:
                 setResult(0, resultIntent);
                 finish();
@@ -118,10 +114,16 @@ public class AddEditThreatActivity extends AppCompatActivity {
     public class AddEditThreatFragmentPagerAdapter extends FragmentPagerAdapter {
 
         Long idProyecto;
+        Long idListaTipoAmenazaRecibido;
+        Long idTipoAmenazaRecibido;
 
-        public AddEditThreatFragmentPagerAdapter(FragmentManager fm, Long idProyecto) {
+        public AddEditThreatFragmentPagerAdapter(FragmentManager fm, Long idProyecto,
+                                                 Long idListaTipoAmenazaRecibido,
+                                                 Long idTipoAmenazaRecibido) {
             super(fm);
             this.idProyecto = idProyecto;
+            this.idListaTipoAmenazaRecibido = idListaTipoAmenazaRecibido;
+            this.idTipoAmenazaRecibido = idTipoAmenazaRecibido;
         }
 
         @Override
@@ -135,6 +137,8 @@ public class AddEditThreatActivity extends AppCompatActivity {
             Fragment f = null;
             Bundle args = new Bundle();
             args.putLong("idProyecto", idProyecto);
+            args.putLong("idListaTipoAmenaza", idListaTipoAmenazaRecibido);
+            args.putLong("idTipoAmenaza",idTipoAmenazaRecibido);
             switch (position) {
                 case AddEditThreatActivityConstants.TAB_INDENTIFICACION:
                     f = IdentifyThreatFragment.newInstance();
@@ -164,6 +168,10 @@ public class AddEditThreatActivity extends AppCompatActivity {
         Fragment fr2 = (Fragment) adapter.instantiateItem(viewPager, 1);
         boolean flag = false;
 
+        EstimateThreatFragment fr = (EstimateThreatFragment) adapter.instantiateItem(viewPager, 2);
+        fr.recargarInfo();
+        List<AssetThreatDTO> data = fr.getdata();
+
         ListView lstAmenazasDN = (ListView) fr1.getView().findViewById(R.id.ListDesastresNaturales);
         ListView lstAmenazasOI = (ListView) fr1.getView().findViewById(R.id.ListOrigenIndustrial);
         ListView lstAmenazasEF = (ListView) fr1.getView().findViewById(R.id.ListErroresFallos);
@@ -186,7 +194,72 @@ public class AddEditThreatActivity extends AppCompatActivity {
             Toast.makeText(this, AddEditThreatActivityConstants.ERROR_ACTIVO_NO_SELECCIONADO, Toast.LENGTH_SHORT).show();
             return false;
         }
-        return false;
+        return true;
+    }
+
+    public boolean crearAmenaza() {
+        IdentifyThreatFragment fr1 = (IdentifyThreatFragment) adapter.instantiateItem(viewPager, 0);
+
+        Long idListaAmenaza = null;
+        Long idTipoAmenaza = null;
+
+        //Obtenemos la amenaza seleccionada. Se identidica por lista y por valor dentro de la lista
+        ListView lstAmenazasDN = (ListView) fr1.getView().findViewById(R.id.ListDesastresNaturales);
+        ListView lstAmenazasOI = (ListView) fr1.getView().findViewById(R.id.ListOrigenIndustrial);
+        ListView lstAmenazasEF = (ListView) fr1.getView().findViewById(R.id.ListErroresFallos);
+        ListView lstAmenazasAD = (ListView) fr1.getView().findViewById(R.id.ListAtaquesDeliberados);
+
+        if (lstAmenazasDN.getCheckedItemCount() != 0)
+        {
+            idListaAmenaza = (long)0;
+            idTipoAmenaza = (long) Arrays.asList(GlobalConstants.AMENAZAS_TIPO_DESASTRES_NATURALES).indexOf(
+            fr1.getListaAmenazasDesastresNaturales().get(lstAmenazasDN.getCheckedItemPosition()));
+        }
+
+        if (lstAmenazasOI.getCheckedItemCount() != 0)
+        {
+            idListaAmenaza = (long)1;
+            idTipoAmenaza = (long) Arrays.asList(GlobalConstants.AMENAZAS_TIPO_ORIGEN_INDUSTRIAL).indexOf(
+                    fr1.getListaAmenazasOrigenIndustrial().get(lstAmenazasOI.getCheckedItemPosition()));
+        }
+
+        if (lstAmenazasEF.getCheckedItemCount() != 0)
+        {
+            idListaAmenaza = (long)2;
+            idTipoAmenaza = (long) Arrays.asList(GlobalConstants.AMENAZAS_TIPO_ERRORES_FALLOS_NO_INTENCIONADOS).indexOf(
+                    fr1.getListaAmenazasErroresFallos().get(lstAmenazasEF.getCheckedItemPosition()));
+        }
+
+        if (lstAmenazasAD.getCheckedItemCount() != 0)
+        {
+            idListaAmenaza = (long)3;
+            idTipoAmenaza = (long) Arrays.asList(GlobalConstants.AMENAZAS_TIPO_ATAQUES_DELIBERADOS).indexOf(
+                    fr1.getListaAmenazasAtaquesDeliberados().get(lstAmenazasAD.getCheckedItemPosition()));
+        }
+
+
+        //Obtenemos la lista que hay en el fragmento de valoracion
+        EstimateThreatFragment fr3 = (EstimateThreatFragment) adapter.instantiateItem(viewPager, 2);
+        List<AssetThreatDTO> listaAmenazas = fr3.getdata();
+        List<Threat> listaAmenzasCompleta = new ArrayList<>();
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat(GlobalConstants.DATE_FORMAT);
+        Calendar fechaActual = Calendar.getInstance();
+        String fechaActualStr = dateFormat.format(fechaActual.getTime());
+
+        if (!listaAmenazas.isEmpty()) {
+
+            for (AssetThreatDTO at: listaAmenazas) {
+                service.crearAmenaza(at.getIdActivo(),at.getIdProyecto(),idListaAmenaza, idTipoAmenaza,
+                        at.getIdDegradacionDisponibilidad(), at.getIdProbabilidadDisponibilidad(),
+                        at.getIdDegradacionIntegridad(), at.getIdProbabilidadIntegridad(),
+                        at.getIdDegradacionConfidencialidad(),at.getIdProbabilidadConfidencialidad(),
+                        at.getIdDegradacionAutenticidad(), at.getIdDegradacionAutenticidad(),
+                        at.getIdDegradacionTrazabilidad(), at.getIdDegradacionTrazabilidad(),
+                        fechaActualStr);
+            }
+        }
+        return true;
     }
 
 }

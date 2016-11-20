@@ -1,29 +1,21 @@
 package es.udc.fic.sgsi_magerit.AddEditThreat;
 
-import android.app.Activity;
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TableLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -33,8 +25,8 @@ import java.util.List;
 
 import es.udc.fic.sgsi_magerit.Model.Asset.AssetDTO;
 import es.udc.fic.sgsi_magerit.Model.ModelService.ModelServiceImpl;
-import es.udc.fic.sgsi_magerit.Model.ProjectSizing.ParametrizacionDTO;
 import es.udc.fic.sgsi_magerit.Model.ProjectSizing.ProjectSizingConstants;
+import es.udc.fic.sgsi_magerit.Model.Threat.AssetThreatDTO;
 import es.udc.fic.sgsi_magerit.R;
 import es.udc.fic.sgsi_magerit.Util.GlobalConstants;
 
@@ -50,6 +42,10 @@ public class EstimateThreatFragment extends Fragment {
     List<Integer> idsParamProbabilidad;
     List<String> strParamDegradacion;
     List<String> strParamProbabilidad;
+
+    public List<AssetThreatDTO> getdata() {
+        return data;
+    }
 
     public static EstimateThreatFragment newInstance() {
         EstimateThreatFragment fragment = new EstimateThreatFragment();
@@ -178,12 +174,12 @@ public class EstimateThreatFragment extends Fragment {
                     android.R.layout.simple_spinner_item, strParamDegradacion);
             spinnerAdapterDisp1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinnerDisp1.setAdapter((SpinnerAdapter) spinnerAdapterDisp1);
-            spinnerDisp1.setSelection(data.get(position).getIdDegradaciónDisponibilidad());
+            spinnerDisp1.setSelection(data.get(position).getIdDegradacionDisponibilidad());
             spinnerDisp1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                     int index = parent.getSelectedItemPosition();
-                    data.get(position).setIdDegradaciónDisponibilidad(index);
+                    data.get(position).setIdDegradacionDisponibilidad(index);
                 }
 
                 @Override
@@ -218,12 +214,12 @@ public class EstimateThreatFragment extends Fragment {
                     android.R.layout.simple_spinner_item, strParamDegradacion);
             spinnerAdapterInt1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinnerInt1.setAdapter((SpinnerAdapter) spinnerAdapterInt1);
-            spinnerInt1.setSelection(data.get(position).getIdDegradaciónIntegridad());
+            spinnerInt1.setSelection(data.get(position).getIdDegradacionIntegridad());
             spinnerInt1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                     int index = parent.getSelectedItemPosition();
-                    data.get(position).setIdDegradaciónIntegridad(index);
+                    data.get(position).setIdDegradacionIntegridad(index);
                 }
 
                 @Override
@@ -258,12 +254,12 @@ public class EstimateThreatFragment extends Fragment {
                     android.R.layout.simple_spinner_item, strParamDegradacion);
             spinnerAdapterConf1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinnerConf1.setAdapter((SpinnerAdapter) spinnerAdapterConf1);
-            spinnerConf1.setSelection(data.get(position).getIdDegradaciónConfidencialidad());
+            spinnerConf1.setSelection(data.get(position).getIdDegradacionConfidencialidad());
             spinnerConf1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                     int index = parent.getSelectedItemPosition();
-                    data.get(position).setIdDegradaciónConfidencialidad(index);
+                    data.get(position).setIdDegradacionConfidencialidad(index);
                 }
 
                 @Override
@@ -297,12 +293,12 @@ public class EstimateThreatFragment extends Fragment {
                     android.R.layout.simple_spinner_item, strParamDegradacion);
             spinnerAdapterAut1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinnerAut1.setAdapter((SpinnerAdapter) spinnerAdapterAut1);
-            spinnerAut1.setSelection(data.get(position).getIdDegradaciónAutenticidad());
+            spinnerAut1.setSelection(data.get(position).getIdDegradacionAutenticidad());
             spinnerAut1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                     int index = parent.getSelectedItemPosition();
-                    data.get(position).setIdDegradaciónAutenticidad(index);
+                    data.get(position).setIdDegradacionAutenticidad(index);
                 }
 
                 @Override
@@ -337,12 +333,12 @@ public class EstimateThreatFragment extends Fragment {
                     android.R.layout.simple_spinner_item, strParamDegradacion);
             spinnerAdapterTraz1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinnerTraz1.setAdapter((SpinnerAdapter) spinnerAdapterTraz1);
-            spinnerTraz1.setSelection(data.get(position).getIdDegradaciónTrazabilidad());
+            spinnerTraz1.setSelection(data.get(position).getIdDegradacionTrazabilidad());
             spinnerTraz1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                     int index = parent.getSelectedItemPosition();
-                    data.get(position).setIdDegradaciónTrazabilidad(index);
+                    data.get(position).setIdDegradacionTrazabilidad(index);
                 }
 
                 @Override
@@ -371,9 +367,6 @@ public class EstimateThreatFragment extends Fragment {
 
             return (item);
         }
-
-
-
     }
 
     @Override
@@ -381,58 +374,63 @@ public class EstimateThreatFragment extends Fragment {
         super.setUserVisibleHint(isVisibleToUser);
 
         if (isVisibleToUser) {
-            Log.d("MyFragment", "Fragment is visible.");
-            List<AssetThreatDTO> listaFichero = leerFichero();
-
-            if (listaFichero.isEmpty()) {
-                data.clear();
-                assetAdapter.notifyDataSetChanged();
-                return;
-            }
-
-            if (data.isEmpty()) {
-                data.addAll(listaFichero);
-                assetAdapter.notifyDataSetChanged();
-                return;
-            }
-
-            List<AssetThreatDTO> listaBorrar = new ArrayList<AssetThreatDTO>();
-
-            Boolean flag = false;
-            for (AssetThreatDTO asset: data)
-            {
-                flag = false;
-                for (AssetThreatDTO asset2: listaFichero) {
-
-                    if (asset.getIdActivo() == asset2.getIdActivo()) {
-                        flag = true;
-                        break;
-                    }
-                }
-                if (!flag) {
-                    listaBorrar.add(asset);
-                }
-            }
-
-            data.removeAll(listaBorrar);
-
-            for (AssetThreatDTO asset2: listaFichero)
-            {
-                flag = false;
-                for (AssetThreatDTO asset: data) {
-
-                    if (asset.getIdActivo() == asset2.getIdActivo()) {
-                        flag = true;
-                        break;
-                    }
-                }
-                if (!flag) {
-                    data.add(asset2);
-                }
-            }
-            assetAdapter.notifyDataSetChanged();
+          recargarInfo();
         } else
             Log.d("MyFragment", "Fragment is not visible.");
+    }
+
+
+    protected void recargarInfo() {
+        Log.d("MyFragment", "Fragment is visible.");
+        List<AssetThreatDTO> listaFichero = leerFichero();
+
+        if (listaFichero.isEmpty()) {
+            data.clear();
+            assetAdapter.notifyDataSetChanged();
+            return;
+        }
+
+        if (data.isEmpty()) {
+            data.addAll(listaFichero);
+            assetAdapter.notifyDataSetChanged();
+            return;
+        }
+
+        List<AssetThreatDTO> listaBorrar = new ArrayList<AssetThreatDTO>();
+
+        Boolean flag = false;
+        for (AssetThreatDTO asset: data)
+        {
+            flag = false;
+            for (AssetThreatDTO asset2: listaFichero) {
+
+                if (asset.getIdActivo() == asset2.getIdActivo()) {
+                    flag = true;
+                    break;
+                }
+            }
+            if (!flag) {
+                listaBorrar.add(asset);
+            }
+        }
+
+        data.removeAll(listaBorrar);
+
+        for (AssetThreatDTO asset2: listaFichero)
+        {
+            flag = false;
+            for (AssetThreatDTO asset: data) {
+
+                if (asset.getIdActivo() == asset2.getIdActivo()) {
+                    flag = true;
+                    break;
+                }
+            }
+            if (!flag) {
+                data.add(asset2);
+            }
+        }
+        assetAdapter.notifyDataSetChanged();
     }
 
     private List<AssetThreatDTO> leerFichero() {
@@ -452,7 +450,7 @@ public class EstimateThreatFragment extends Fragment {
 
             for (AssetDTO a : datos)
             {
-                AssetThreatDTO assetThreat = new AssetThreatDTO(a.getIdActivo(), a.getIdProyecto(), a.getCodigoActivo(),
+                AssetThreatDTO assetThreat = new AssetThreatDTO(null, a.getIdActivo(), a.getIdProyecto(), a.getCodigoActivo(),
                         a.getNombreActivo(), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, false);
                 datosValidos.add(assetThreat);
             }

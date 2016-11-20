@@ -140,7 +140,7 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-       //Se elimina la versión anterior de la tabla
+       //Se elimina la version anterior de la tabla
         db.execSQL("DROP TABLE IF EXISTS " + ProjectConstants.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " +  ProjectSizingConstants.TABLE_NAME_PARAMETRIZACION_ACTIVO);
         db.execSQL("DROP TABLE IF EXISTS " +  ProjectSizingConstants.TABLE_NAME_PARAMETRIZACION_VULNERABILIDAD);
@@ -148,7 +148,7 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
         db.execSQL("DROP TABLE IF EXISTS " +  ProjectSizingConstants.TABLE_NAME_PARAMETRIZACION_CONTROLSEGURIDAD);
         db.execSQL("DROP TABLE IF EXISTS " +  AssetConstants.TABLE_NAME);
 
-        //Se crea la nueva versión de la tabla
+        //Se crea la nueva version de la tabla
         db.execSQL(sqlCreateTableProyectos);
         db.execSQL(sqlCreateParametrizacionActivo);
         db.execSQL(sqlCreateParametrizacionVulnerabilidad);
@@ -931,6 +931,51 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
         cursor.close();
         db.close();
         return activos;
+    }
+
+    @Override
+    public long crearAmenaza(Long idActivo, Long idProyecto, Long idListaTipoAmenaza,
+                             Long idTipoAmenaza, Integer idDegradacionDisponibilidad,
+                             Integer idProbabilidadDisponibilidad, Integer idDegradacionIntegridad,
+                             Integer idProbabilidadIntegridad, Integer idDegradacionConfidencialidad,
+                             Integer idProbabilidadConfidencialidad, Integer idDegradacionAutenticidad,
+                             Integer idProbabilidadAutenticidad, Integer idDegradacionTrazabilidad,
+                             Integer idProbabilidadTrazabilidad, String fechaCreacion) {
+
+        SQLiteDatabase db = getReadableDatabase();
+
+        //Creamos el registro a insertar como objeto ContentValues
+        ContentValues nuevaAmenaza = new ContentValues();
+        nuevaAmenaza.put(ThreatConstants.ID_ACTIVO,idActivo);
+        nuevaAmenaza.put(ThreatConstants.ID_PROYECTO, idProyecto);
+        nuevaAmenaza.put(ThreatConstants.ID_LISTA_TIPO_AMENAZA, idListaTipoAmenaza);
+        nuevaAmenaza.put(ThreatConstants.ID_TIPO_AMENAZA, idTipoAmenaza);
+        nuevaAmenaza.put(ThreatConstants.ID_VALORACION_DEGRADACION_DISPONIBILIDAD, idDegradacionDisponibilidad);
+        nuevaAmenaza.put(ThreatConstants.ID_VALORACION_PROBABILIDAD_DISPONIBILIDAD, idProbabilidadDisponibilidad);
+        nuevaAmenaza.put(ThreatConstants.ID_VALORACION_DEGRADACION_INTEGRIDAD, idDegradacionIntegridad);
+        nuevaAmenaza.put(ThreatConstants.ID_VALORACION_PROBABILIDAD_INTEGRIDAD, idProbabilidadIntegridad);
+        nuevaAmenaza.put(ThreatConstants.ID_VALORACION_DEGRADACION_CONFIDENCIALIDAD, idDegradacionConfidencialidad);
+        nuevaAmenaza.put(ThreatConstants.ID_VALORACION_PROBABILIDAD_CONFIDENCIALIDAD, idProbabilidadConfidencialidad);
+        nuevaAmenaza.put(ThreatConstants.ID_VALORACION_DEGRADACION_AUTENTICIDAD, idDegradacionAutenticidad);
+        nuevaAmenaza.put(ThreatConstants.ID_VALORACION_PROBABILIDAD_AUTENTICIDAD, idProbabilidadAutenticidad);
+        nuevaAmenaza.put(ThreatConstants.ID_VALORACION_DEGRADACION_TRAZABILIDAD, idDegradacionTrazabilidad);
+        nuevaAmenaza.put(ThreatConstants.ID_VALORACION_PROBABILIDAD_TRAZABILIDAD, idProbabilidadTrazabilidad);
+        nuevaAmenaza.put(ThreatConstants.FECHA_CREACION,fechaCreacion);
+        //Insertamos el registro en la base de datos
+        long id = db.insert(ThreatConstants.TABLE_NAME, null, nuevaAmenaza);
+        db.close();
+        return id;
+    }
+
+    @Override
+    public boolean eliminarAmenaza(Long idListaTipoAmenaza, Long idTipoAmenaza, Long idProyecto) {
+        SQLiteDatabase db = getReadableDatabase();
+        db.delete(ThreatConstants.TABLE_NAME, ThreatConstants.ID_PROYECTO
+                + "=" + idProyecto + " AND " + ThreatConstants.ID_LISTA_TIPO_AMENAZA + "=" +
+                idListaTipoAmenaza + " AND " + ThreatConstants.ID_TIPO_AMENAZA + "=" + idTipoAmenaza, null);
+        db.close();
+        return true;
+
     }
 
 }

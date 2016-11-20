@@ -1,48 +1,57 @@
-package es.udc.fic.sgsi_magerit.AddEditThreat;
+package es.udc.fic.sgsi_magerit.Model.Threat;
 
 /**
  * Created by err0r on 02/11/2016.
  */
 public class AssetThreatDTO {
-
+    private Long idThreat;
     private Long idActivo;
     private Long idProyecto;
     private String codigoActivo;
     private String nombreActivo;
-    private Integer idDegradaciónDisponibilidad;
+    private Integer idDegradacionDisponibilidad;
     private Integer idProbabilidadDisponibilidad;
-    private Integer idDegradaciónIntegridad;
+    private Integer idDegradacionIntegridad;
     private Integer idProbabilidadIntegridad;
-    private Integer idDegradaciónConfidencialidad;
+    private Integer idDegradacionConfidencialidad;
     private Integer idProbabilidadConfidencialidad;
-    private Integer idDegradaciónAutenticidad;
+    private Integer idDegradacionAutenticidad;
     private Integer idProbabilidadAutenticidad;
-    private Integer idDegradaciónTrazabilidad;
+    private Integer idDegradacionTrazabilidad;
     private Integer idProbabilidadTrazabilidad;
     private Boolean visible;
 
-    public AssetThreatDTO(Long idActivo, Long idProyecto, String codigoActivo, String nombreActivo,
-                          Integer idDegradaciónDisponibilidad, Integer idProbabilidadDisponibilidad,
-                          Integer idDegradaciónIntegridad, Integer idProbabilidadIntegridad,
-                          Integer idDegradaciónConfidencialidad, Integer idProbabilidadConfidencialidad,
-                          Integer idDegradaciónAutenticidad, Integer idProbabilidadAutenticidad,
-                          Integer idDegradaciónTrazabilidad, Integer idProbabilidadTrazabilidad,
+    public AssetThreatDTO(Long idThreat, Long idActivo, Long idProyecto, String codigoActivo, String nombreActivo,
+                          Integer idDegradacionDisponibilidad, Integer idProbabilidadDisponibilidad,
+                          Integer idDegradacionIntegridad, Integer idProbabilidadIntegridad,
+                          Integer idDegradacionConfidencialidad, Integer idProbabilidadConfidencialidad,
+                          Integer idDegradacionAutenticidad, Integer idProbabilidadAutenticidad,
+                          Integer idDegradacionTrazabilidad, Integer idProbabilidadTrazabilidad,
                           Boolean visible) {
+        this.idThreat = idThreat;
         this.idActivo = idActivo;
         this.idProyecto = idProyecto;
         this.codigoActivo = codigoActivo;
         this.nombreActivo = nombreActivo;
-        this.idDegradaciónDisponibilidad = idDegradaciónDisponibilidad;
+        this.idDegradacionDisponibilidad = idDegradacionDisponibilidad;
         this.idProbabilidadDisponibilidad = idProbabilidadDisponibilidad;
-        this.idDegradaciónIntegridad = idDegradaciónIntegridad;
+        this.idDegradacionIntegridad = idDegradacionIntegridad;
         this.idProbabilidadIntegridad = idProbabilidadIntegridad;
-        this.idDegradaciónConfidencialidad = idDegradaciónConfidencialidad;
+        this.idDegradacionConfidencialidad = idDegradacionConfidencialidad;
         this.idProbabilidadConfidencialidad = idProbabilidadConfidencialidad;
-        this.idDegradaciónAutenticidad = idDegradaciónAutenticidad;
+        this.idDegradacionAutenticidad = idDegradacionAutenticidad;
         this.idProbabilidadAutenticidad = idProbabilidadAutenticidad;
-        this.idDegradaciónTrazabilidad = idDegradaciónTrazabilidad;
+        this.idDegradacionTrazabilidad = idDegradacionTrazabilidad;
         this.idProbabilidadTrazabilidad = idProbabilidadTrazabilidad;
         this.visible = visible;
+    }
+
+    public Long getIdThreat() {
+        return idThreat;
+    }
+
+    public void setIdThreat(Long idThreat) {
+        this.idThreat = idThreat;
     }
 
     public Long getIdActivo() {
@@ -77,12 +86,12 @@ public class AssetThreatDTO {
         this.nombreActivo = nombreActivo;
     }
 
-    public Integer getIdDegradaciónDisponibilidad() {
-        return idDegradaciónDisponibilidad;
+    public Integer getIdDegradacionDisponibilidad() {
+        return idDegradacionDisponibilidad;
     }
 
-    public void setIdDegradaciónDisponibilidad(Integer idDegradaciónDisponibilidad) {
-        this.idDegradaciónDisponibilidad = idDegradaciónDisponibilidad;
+    public void setIdDegradacionDisponibilidad(Integer idDegradacionDisponibilidad) {
+        this.idDegradacionDisponibilidad = idDegradacionDisponibilidad;
     }
 
     public Integer getIdProbabilidadDisponibilidad() {
@@ -93,12 +102,12 @@ public class AssetThreatDTO {
         this.idProbabilidadDisponibilidad = idProbabilidadDisponibilidad;
     }
 
-    public Integer getIdDegradaciónIntegridad() {
-        return idDegradaciónIntegridad;
+    public Integer getIdDegradacionIntegridad() {
+        return idDegradacionIntegridad;
     }
 
-    public void setIdDegradaciónIntegridad(Integer idDegradaciónIntegridad) {
-        this.idDegradaciónIntegridad = idDegradaciónIntegridad;
+    public void setIdDegradacionIntegridad(Integer idDegradacionIntegridad) {
+        this.idDegradacionIntegridad = idDegradacionIntegridad;
     }
 
     public Integer getIdProbabilidadIntegridad() {
@@ -109,12 +118,12 @@ public class AssetThreatDTO {
         this.idProbabilidadIntegridad = idProbabilidadIntegridad;
     }
 
-    public Integer getIdDegradaciónConfidencialidad() {
-        return idDegradaciónConfidencialidad;
+    public Integer getIdDegradacionConfidencialidad() {
+        return idDegradacionConfidencialidad;
     }
 
-    public void setIdDegradaciónConfidencialidad(Integer idDegradaciónConfidencialidad) {
-        this.idDegradaciónConfidencialidad = idDegradaciónConfidencialidad;
+    public void setIdDegradacionConfidencialidad(Integer idDegradacionConfidencialidad) {
+        this.idDegradacionConfidencialidad = idDegradacionConfidencialidad;
     }
 
     public Integer getIdProbabilidadConfidencialidad() {
@@ -125,12 +134,12 @@ public class AssetThreatDTO {
         this.idProbabilidadConfidencialidad = idProbabilidadConfidencialidad;
     }
 
-    public Integer getIdDegradaciónAutenticidad() {
-        return idDegradaciónAutenticidad;
+    public Integer getIdDegradacionAutenticidad() {
+        return idDegradacionAutenticidad;
     }
 
-    public void setIdDegradaciónAutenticidad(Integer idDegradaciónAutenticidad) {
-        this.idDegradaciónAutenticidad = idDegradaciónAutenticidad;
+    public void setIdDegradacionAutenticidad(Integer idDegradacionAutenticidad) {
+        this.idDegradacionAutenticidad = idDegradacionAutenticidad;
     }
 
     public Integer getIdProbabilidadAutenticidad() {
@@ -141,12 +150,12 @@ public class AssetThreatDTO {
         this.idProbabilidadAutenticidad = idProbabilidadAutenticidad;
     }
 
-    public Integer getIdDegradaciónTrazabilidad() {
-        return idDegradaciónTrazabilidad;
+    public Integer getIdDegradacionTrazabilidad() {
+        return idDegradacionTrazabilidad;
     }
 
-    public void setIdDegradaciónTrazabilidad(Integer idDegradaciónTrazabilidad) {
-        this.idDegradaciónTrazabilidad = idDegradaciónTrazabilidad;
+    public void setIdDegradacionTrazabilidad(Integer idDegradacionTrazabilidad) {
+        this.idDegradacionTrazabilidad = idDegradacionTrazabilidad;
     }
 
     public Integer getIdProbabilidadTrazabilidad() {

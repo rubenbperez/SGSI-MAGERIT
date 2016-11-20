@@ -74,9 +74,10 @@ public class Threats extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(),AddEditThreatActivity.class);
                 intent.putExtra("idProyecto", idProyectoActivo);
-                startActivityForResult(intent, GlobalConstants.REQUEST_CODE_ADD_THREAT);
+                startActivityForResult(intent, GlobalConstants.REQUEST_CODE_ADD_ACTIVITY);
             }
         });
+        registerForContextMenu(lstOpciones);
         return  view;
     }
 
@@ -122,5 +123,78 @@ public class Threats extends Fragment {
             return(item);
         }
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent datas) {
+        super.onActivityResult(requestCode, resultCode, datas);
+
+        if (GlobalConstants.REQUEST_CODE_ADD_ACTIVITY == requestCode)  {
+
+            if (resultCode == 1) {
+                data.clear();
+                data.addAll(service.obtenerAmenazas(idProyectoActivo));
+                adaptador.notifyDataSetChanged();
+            }
+
+            if (resultCode == 0)
+                return;
+        }
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v,
+                                    ContextMenu.ContextMenuInfo menuInfo)
+    {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getActivity().getMenuInflater();
+
+        AdapterView.AdapterContextMenuInfo info =
+                (AdapterView.AdapterContextMenuInfo)menuInfo;
+
+        String title = "";
+        switch(data.get(info.position).getIdListaTipo().intValue()) {
+            case 0:
+                title = GlobalConstants.AMENAZAS_TIPO_DESASTRES_NATURALES[data.get(info.position).getIdTipo().intValue()];
+                break;
+            case 1:
+                title = GlobalConstants.AMENAZAS_TIPO_ORIGEN_INDUSTRIAL[data.get(info.position).getIdTipo().intValue()];
+                break;
+            case 2:
+                title = GlobalConstants.AMENAZAS_TIPO_ERRORES_FALLOS_NO_INTENCIONADOS[data.get(info.position).getIdTipo().intValue()];
+                break;
+            case 3:
+                title = GlobalConstants.AMENAZAS_TIPO_ATAQUES_DELIBERADOS[data.get(info.position).getIdTipo().intValue()];
+                break;
+        }
+        menu.setHeaderTitle(title);
+        inflater.inflate(R.menu.menu_editar_borrar, menu);
+    }
+
+    //TODO
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info;
+        info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
+        int index = info.position;
+        switch (item.getItemId()) {
+            case R.id.menuOpcBorrar:
+                Log.d("Posicion", Integer.toString(index));
+                service.eliminarAmenaza(data.get(index).getIdListaTipo(), data.get(index).getIdTipo(), idProyectoActivo);
+                data.remove(index);
+                adaptador.notifyDataSetChanged();
+                //comprobarElementosNavView(data,navView);
+                break;
+            case R.id.menuOpcEditar:
+                Intent intent = new Intent(getActivity(), AddEditThreatActivity.class);
+                intent.putExtra("idListaTipoAmenaza", data.get(index).getIdListaTipo()); //Optional parameters
+                intent.putExtra("idTipoAmenaza", data.get(index).getIdTipo()); //Optional parameters
+                intent.putExtra("idProyecto", idProyectoActivo);
+                startActivityForResult(intent, GlobalConstants.REQUEST_CODE_EDIT_ACTIVITY);
+                break;
+        }
+
+        return true;
+    }
+
 
 }

@@ -2,7 +2,6 @@ package es.udc.fic.sgsi_magerit.AssetsFragment;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -19,17 +18,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import es.udc.fic.sgsi_magerit.AddEditAsset.AddEditAssetActivity;
-import es.udc.fic.sgsi_magerit.AddEditProject.AddProjectActivity;
-import es.udc.fic.sgsi_magerit.Model.Asset.Asset;
 import es.udc.fic.sgsi_magerit.Model.Asset.AssetDTO;
 import es.udc.fic.sgsi_magerit.Model.ModelService.ModelServiceImpl;
-import es.udc.fic.sgsi_magerit.Model.Project.Project;
 import es.udc.fic.sgsi_magerit.R;
 import es.udc.fic.sgsi_magerit.Util.GlobalConstants;
 
@@ -113,13 +106,13 @@ public class Assets extends Fragment {
                 (AdapterView.AdapterContextMenuInfo)menuInfo;
 
         menu.setHeaderTitle(data.get(info.position).getNombreActivo());
-        inflater.inflate(R.menu.menu_proyectos, menu);
+        inflater.inflate(R.menu.menu_editar_borrar, menu);
     }
 
     //TODO
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        AdapterView.AdapterContextMenuInfo info;
         info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
         int index = info.position;
         switch (item.getItemId()) {

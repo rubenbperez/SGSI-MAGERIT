@@ -14,6 +14,7 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -29,23 +30,45 @@ import es.udc.fic.sgsi_magerit.Util.GlobalConstants;
 public class IdentifyThreatFragment extends Fragment {
 
     private Long idProyecto;
+    private Long idListaTipoAmenazaRecibido;
+    private Long idTipoAmenazaRecibido;
     private Spinner spinner;
     private ArrayAdapter<CharSequence> spinnerAdapter;
     private ListView lstOpcionesDesastresNaturales;
-    Integer itemCheckedDesastresNaturales = null;
+    private Integer itemCheckedDesastresNaturales = null;
     private ListView lstOpcionesOrigenIndustrial;
-    Integer itemCheckedOrigenIndustrial = null;
+    private Integer itemCheckedOrigenIndustrial = null;
     private ListView lstOpcionesErroresFallos;
-    Integer itemCheckedErroresFallos = null;
+    private Integer itemCheckedErroresFallos = null;
     private ListView lstOpcionesAtaquesDeliberados;
-    Integer itemCheckedAtaquesDeliberados = null;
+    private Integer itemCheckedAtaquesDeliberados = null;
+
+    private ListView lstOpcionesEdicion;
 
     private List<String> listaAmenazasDesastresNaturales;
     private List<String> listaAmenazasOrigenIndustrial;
     private List<String> listaAmenazasErroresFallos;
     private List<String> listaAmenazasAtaquesDeliberados;
 
+    private List<String> listaEdicion;
+
     ModelService service;
+
+    protected List<String> getListaAmenazasDesastresNaturales() {
+        return listaAmenazasDesastresNaturales;
+    }
+
+    protected List<String> getListaAmenazasOrigenIndustrial() {
+        return listaAmenazasOrigenIndustrial;
+    }
+
+    protected List<String> getListaAmenazasErroresFallos() {
+        return listaAmenazasErroresFallos;
+    }
+
+    protected List<String> getListaAmenazasAtaquesDeliberados() {
+        return listaAmenazasAtaquesDeliberados;
+    }
 
 
     public IdentifyThreatFragment() {
@@ -65,7 +88,45 @@ public class IdentifyThreatFragment extends Fragment {
         Bundle args = getArguments();
         if(args != null){
             this.idProyecto = args.getLong("idProyecto");
+            this.idListaTipoAmenazaRecibido = args.getLong("idListaAmenaza", GlobalConstants.NULL_ID_PROYECTO);
+            idListaTipoAmenazaRecibido = args.getLong("idListaTipoAmenaza", GlobalConstants.NULL_ID_LISTA_TIPO_AMENAZA);
+            idTipoAmenazaRecibido = args.getLong("idTipoAmenaza", GlobalConstants.NULL_ID_LISTA_TIPO_AMENAZA);
         }
+
+        // Añadimos el Spinner
+        spinner = (Spinner) view.findViewById(R.id.spnMySpinner);
+        spinnerAdapter =  ArrayAdapter.createFromResource(getContext(), R.array.Sizing_spinner_Threats,
+                android.R.layout.simple_spinner_item);
+
+        if (idListaTipoAmenazaRecibido != GlobalConstants.NULL_ID_LISTA_TIPO_AMENAZA
+                && idListaTipoAmenazaRecibido != GlobalConstants.NULL_ID_LISTA_TIPO_AMENAZA) {
+
+            listaEdicion = new ArrayList<>();
+            switch(idListaTipoAmenazaRecibido.intValue()) {
+                case 0:
+                    listaEdicion.add(GlobalConstants.AMENAZAS_TIPO_DESASTRES_NATURALES[idTipoAmenazaRecibido.intValue()]);
+                    break;
+                case 1:
+                    listaEdicion.add(GlobalConstants.AMENAZAS_TIPO_ORIGEN_INDUSTRIAL[idTipoAmenazaRecibido.intValue()]);
+                    break;
+                case 2:
+                    listaEdicion.add(GlobalConstants.AMENAZAS_TIPO_ERRORES_FALLOS_NO_INTENCIONADOS[idTipoAmenazaRecibido.intValue()]);
+                    break;
+                case 3:
+                    listaEdicion.add(GlobalConstants.AMENAZAS_TIPO_ATAQUES_DELIBERADOS[idTipoAmenazaRecibido.intValue()]);
+                    break;
+            }
+
+            lstOpcionesEdicion = (ListView) view.findViewById(R.id.ListEdicion);
+            lstOpcionesEdicion.setVisibility(View.VISIBLE);
+            spinner.setVisibility(View.GONE);
+            ArrayAdapter<String> lstEdicion = new ArrayAdapter<String>(this.getContext(),
+                    android.R.layout.simple_list_item_single_choice, listaEdicion);
+            lstOpcionesEdicion.setAdapter(lstEdicion);
+            lstOpcionesEdicion.setItemChecked(0,true);
+            return view;
+        }
+
 
         List<ThreatDTO> listaAmenazasCreadas = service.obtenerAmenazas(idProyecto);
         listaAmenazasDesastresNaturales = new LinkedList<String>(Arrays.asList(GlobalConstants.AMENAZAS_TIPO_DESASTRES_NATURALES));
@@ -96,11 +157,6 @@ public class IdentifyThreatFragment extends Fragment {
             }
         }
 
-        // Añadimos el Spinner
-        spinner = (Spinner) view.findViewById(R.id.spnMySpinner);
-        spinnerAdapter =  ArrayAdapter.createFromResource(getContext(), R.array.Sizing_spinner_Threats,
-                android.R.layout.simple_spinner_item);
-
         // Lista de Desastres Naturales
         lstOpcionesDesastresNaturales = (ListView) view.findViewById(R.id.ListDesastresNaturales);
         ArrayAdapter<String> lstDesastresNaturales = new ArrayAdapter<String>(this.getContext(),
@@ -122,7 +178,7 @@ public class IdentifyThreatFragment extends Fragment {
         // Lista de Ataques deliberados
         lstOpcionesAtaquesDeliberados = (ListView) view.findViewById(R.id.ListAtaquesDeliberados);
         final ArrayAdapter<String> lstAtaquesDeliberados = new ArrayAdapter<String>(this.getContext(),
-                android.R.layout.simple_list_item_single_choice, listaAmenazasErroresFallos);
+                android.R.layout.simple_list_item_single_choice, listaAmenazasAtaquesDeliberados);
         lstOpcionesAtaquesDeliberados.setAdapter(lstAtaquesDeliberados);
 
         // Si estaba seleccionado el item lo deseleccionamos (limpiamos)
@@ -211,10 +267,6 @@ public class IdentifyThreatFragment extends Fragment {
                     }
                 });
         return view;
-    }
-
-    protected  void prueba() {
-
     }
 
     private void ocultarListasMostrarLista(int valor) {

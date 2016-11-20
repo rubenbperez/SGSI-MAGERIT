@@ -176,13 +176,13 @@ public class Projects extends Fragment {
                 (AdapterView.AdapterContextMenuInfo)menuInfo;
 
         menu.setHeaderTitle(data.get(info.position).getNombre());
-        inflater.inflate(R.menu.menu_proyectos, menu);
+        inflater.inflate(R.menu.menu_editar_borrar, menu);
     }
 
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        AdapterView.AdapterContextMenuInfo info;
         info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
         int index = info.position;
         switch (item.getItemId()) {

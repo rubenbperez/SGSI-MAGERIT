@@ -92,4 +92,14 @@ public interface ModelService {
     public List<ThreatDTO> obtenerAmenazas(long idProyecto);
 
     public List<AssetDTO> obtenerActivosPorId(long idProyecto, List<Long> idsActivos);
+
+    public long crearAmenaza(Long idActivo, Long idProyecto, Long idListaTipoAmenaza,
+                             Long idTipoAmenaza, Integer idDegradacionDisponibilidad,
+                             Integer idProbabilidadDisponibilidad, Integer idDegradacionIntegridad,
+                             Integer idProbabilidadIntegridad, Integer idDegradacionConfidencialidad,
+                             Integer idProbabilidadConfidencialidad, Integer idDegradacionAutenticidad,
+                             Integer idProbabilidadAutenticidad, Integer idDegradacionTrazabilidad,
+                             Integer idProbabilidadTrazabilidad, String fechaCreacion);
+
+    public boolean eliminarAmenaza(Long idListaTipoAmenaza, Long idTipoAmenaza, Long idProyecto);
 }
