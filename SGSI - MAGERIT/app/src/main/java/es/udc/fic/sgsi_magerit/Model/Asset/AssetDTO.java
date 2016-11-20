@@ -13,10 +13,12 @@ public class AssetDTO {
     private String descripcionActivo;
     private String responsableActivo;
     private String ubicacionActivo;
+    private Boolean checked;
 
 
     public AssetDTO(Long idActivo, Long idProyecto, String nombreActivo, String codigoActivo,
-                    String descripcionActivo, String responsableActivo, String ubicacionActivo) {
+                    String descripcionActivo, String responsableActivo, String ubicacionActivo,
+                    Boolean checked) {
         this.idActivo = idActivo;
         this.idProyecto = idProyecto;
         this.nombreActivo = nombreActivo;
@@ -24,6 +26,7 @@ public class AssetDTO {
         this.descripcionActivo = descripcionActivo;
         this.responsableActivo = responsableActivo;
         this.ubicacionActivo = ubicacionActivo;
+        this.checked = checked;
     }
 
     public Long getIdActivo() {
@@ -80,5 +83,13 @@ public class AssetDTO {
 
     public void setUbicacionActivo(String ubicacionActivo) {
         this.ubicacionActivo = ubicacionActivo;
+    }
+
+    public Boolean getChecked() {
+        return checked;
+    }
+
+    public void setChecked(Boolean checked) {
+        this.checked = checked;
     }
 }

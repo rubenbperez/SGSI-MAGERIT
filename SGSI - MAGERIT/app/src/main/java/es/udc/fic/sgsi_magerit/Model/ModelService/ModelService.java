@@ -102,4 +102,6 @@ public interface ModelService {
                              Integer idProbabilidadTrazabilidad, String fechaCreacion);
 
     public boolean eliminarAmenaza(Long idListaTipoAmenaza, Long idTipoAmenaza, Long idProyecto);
+
+    public List<AssetDTO> obtenerActivosConIdAmenaza (Long idListaTipoAmenaza, Long idTipoAmenaza, Long idProyecto);
 }

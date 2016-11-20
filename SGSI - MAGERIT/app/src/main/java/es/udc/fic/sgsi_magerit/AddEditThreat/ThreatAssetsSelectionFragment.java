@@ -37,7 +37,8 @@ public class ThreatAssetsSelectionFragment extends Fragment {
     private List<AssetDTO> data;
     private ModelServiceImpl service;
     private Long idProyecto;
-    private ArrayList<Integer> listChecked;
+    private Long idListaTipoAmenazaRecibido;
+    private Long idTipoAmenazaRecibido;
 
     public ThreatAssetsSelectionFragment() {
     }
@@ -55,9 +56,17 @@ public class ThreatAssetsSelectionFragment extends Fragment {
         Bundle args = getArguments();
         if (args != null) {
             this.idProyecto = args.getLong("idProyecto");
+            this.idListaTipoAmenazaRecibido = args.getLong("idListaTipoAmenaza", GlobalConstants.NULL_ID_LISTA_TIPO_AMENAZA);
+            this.idTipoAmenazaRecibido = args.getLong("idTipoAmenaza", GlobalConstants.NULL_ID_LISTA_TIPO_AMENAZA);
         }
 
-        data = service.obtenerActivos(idProyecto);
+        if (idListaTipoAmenazaRecibido != GlobalConstants.NULL_ID_LISTA_TIPO_AMENAZA
+                && idListaTipoAmenazaRecibido != GlobalConstants.NULL_ID_LISTA_TIPO_AMENAZA) {
+            data = service.obtenerActivosConIdAmenaza(idListaTipoAmenazaRecibido,idTipoAmenazaRecibido,idProyecto);
+
+        } else {
+            data = service.obtenerActivos(idProyecto);
+        }
         List<String> assetNames = new ArrayList<String>();
 
         for (AssetDTO asset: data) {
@@ -70,19 +79,17 @@ public class ThreatAssetsSelectionFragment extends Fragment {
                 android.R.layout.simple_list_item_multiple_choice, assetNames);
         lstOpcionesActivos.setAdapter(adaptador);
 
-        listChecked = new ArrayList<Integer>();
+
+        //Marcamos los elementos que tienen que estar marcados
+        for (int i=0; i<data.size(); i++) {
+            lstOpcionesActivos.setItemChecked(i,data.get(i).getChecked());
+        }
 
         lstOpcionesActivos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                SparseBooleanArray checked = lstOpcionesActivos.getCheckedItemPositions();
-                listChecked.clear();
-                for (int i = 0; i < lstOpcionesActivos.getAdapter().getCount(); i++) {
-                    if (checked.get(i)) {
-                        listChecked.add(data.get(i).getIdActivo().intValue());
-                        Log.d("checked: ", data.get(i).getNombreActivo());
-                    }
-                }
+
+                data.get(position).setChecked(lstOpcionesActivos.isItemChecked(position));
 
                 try {
                     OutputStreamWriter fout =
@@ -90,12 +97,15 @@ public class ThreatAssetsSelectionFragment extends Fragment {
                                     getActivity().openFileOutput("threats.tmp", Context.MODE_PRIVATE));
 
                     fout.write("");
-                    for (int i=0; i<listChecked.size(); i++)
+                    String aux = "";
+                    for (int i=0; i<data.size(); i++)
                     {
-                        fout.write(listChecked.get(i).toString());
-                        if (i != listChecked.size()-1)
-                            fout.write(",");
+                        if (data.get(i).getChecked())
+                            aux += (data.get(i).getIdActivo().toString()) + ",";
                     }
+                    if (aux.endsWith(","))
+                        aux = aux.substring(0, aux.length()-1);
+                    fout.write(aux);
                     fout.close();
 
                 } catch (Exception ex) {

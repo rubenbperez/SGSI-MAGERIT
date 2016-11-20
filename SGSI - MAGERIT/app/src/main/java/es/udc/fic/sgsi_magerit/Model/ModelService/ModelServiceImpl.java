@@ -25,6 +25,7 @@ import es.udc.fic.sgsi_magerit.Model.ProjectSizing.ParametrizacionVulnerabilidad
 import es.udc.fic.sgsi_magerit.Model.ProjectSizing.ProjectSizingConstants;
 import es.udc.fic.sgsi_magerit.Model.Project.Project;
 import es.udc.fic.sgsi_magerit.Model.Project.ProjectConstants;
+import es.udc.fic.sgsi_magerit.Model.Threat.AssetThreatDTO;
 import es.udc.fic.sgsi_magerit.Model.Threat.Threat;
 import es.udc.fic.sgsi_magerit.Model.Threat.ThreatConstants;
 import es.udc.fic.sgsi_magerit.Model.Threat.ThreatDTO;
@@ -624,7 +625,7 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
                 String ubicacion = cursor.getString(6);
 
                 AssetDTO asset = new AssetDTO(idActivo, idProyectoBD, nombre, codigo, descripcion,
-                        responsable, ubicacion);
+                        responsable, ubicacion,false);
                 activos.add(asset);
             } while ( (cursor.moveToNext()));
         }
@@ -924,7 +925,7 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
                 String ubicacion = cursor.getString(6);
 
                 AssetDTO asset = new AssetDTO(idActivo, idProyectoBD, nombre, codigo, descripcion,
-                        responsable, ubicacion);
+                        responsable, ubicacion, null);
                 activos.add(asset);
             } while ( (cursor.moveToNext()));
         }
@@ -976,6 +977,57 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
         db.close();
         return true;
 
+    }
+
+    @Override
+    public List<AssetDTO> obtenerActivosConIdAmenaza (Long idListaTipoAmenaza, Long idTipoAmenaza, Long idProyecto)
+    {
+        List <AssetDTO> activos = new ArrayList<AssetDTO>();
+        SQLiteDatabase db = getReadableDatabase();
+
+        List<Long> activosChecked = new ArrayList<>();
+
+        Cursor cursor = db.rawQuery("SELECT " +
+                ThreatConstants.ID_ACTIVO + " FROM " + ThreatConstants.TABLE_NAME + " WHERE " +
+                AssetConstants.ID_PROYECTO + " = " + idProyecto  + " AND " + ThreatConstants.ID_LISTA_TIPO_AMENAZA + "=" +
+                idListaTipoAmenaza + " AND " + ThreatConstants.ID_TIPO_AMENAZA + "=" + idTipoAmenaza, null);
+
+        if (cursor.moveToFirst()){
+            do {
+                Long idActivo = cursor.getLong(0);
+                activosChecked.add(idActivo);
+            } while ( (cursor.moveToNext()));
+        }
+
+        String query = "SELECT " +
+            AssetConstants.ID_ACTIVO + ", " + AssetConstants.ID_PROYECTO + ", " +
+            AssetConstants.NOMBRE + ", " + AssetConstants.CODIGO + ", " +
+            AssetConstants.DESCRIPCION + ", " + AssetConstants.RESPONSABLE + ", " +
+            AssetConstants.UBICACION + " FROM " + AssetConstants.TABLE_NAME + " WHERE " +
+            AssetConstants.ID_PROYECTO + " = " + idProyecto;
+
+        cursor.close();
+
+        cursor = db.rawQuery(query, null);
+        if (cursor.moveToFirst()){
+            do {
+                Long idActivo = cursor.getLong(0);
+                Long idProyectoBD = cursor.getLong(1);
+                String nombre = cursor.getString(2);
+                String codigo = cursor.getString(3);
+                String descripcion = cursor.getString(4);
+                String responsable = cursor.getString(5);
+                String ubicacion = cursor.getString(6);
+
+                Boolean tieneAmenaza = activosChecked.contains(idActivo);
+                AssetDTO asset = new AssetDTO(idActivo, idProyectoBD, nombre, codigo, descripcion,
+                        responsable, ubicacion, tieneAmenaza);
+                activos.add(asset);
+            } while ( (cursor.moveToNext()));
+        }
+        cursor.close();
+        db.close();
+        return activos;
     }
 
 }

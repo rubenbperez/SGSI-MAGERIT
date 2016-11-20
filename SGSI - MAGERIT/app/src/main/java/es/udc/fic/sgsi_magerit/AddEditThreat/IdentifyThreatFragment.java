@@ -88,9 +88,8 @@ public class IdentifyThreatFragment extends Fragment {
         Bundle args = getArguments();
         if(args != null){
             this.idProyecto = args.getLong("idProyecto");
-            this.idListaTipoAmenazaRecibido = args.getLong("idListaAmenaza", GlobalConstants.NULL_ID_PROYECTO);
-            idListaTipoAmenazaRecibido = args.getLong("idListaTipoAmenaza", GlobalConstants.NULL_ID_LISTA_TIPO_AMENAZA);
-            idTipoAmenazaRecibido = args.getLong("idTipoAmenaza", GlobalConstants.NULL_ID_LISTA_TIPO_AMENAZA);
+            this.idListaTipoAmenazaRecibido = args.getLong("idListaTipoAmenaza", GlobalConstants.NULL_ID_LISTA_TIPO_AMENAZA);
+            this.idTipoAmenazaRecibido = args.getLong("idTipoAmenaza", GlobalConstants.NULL_ID_LISTA_TIPO_AMENAZA);
         }
 
         // Añadimos el Spinner
