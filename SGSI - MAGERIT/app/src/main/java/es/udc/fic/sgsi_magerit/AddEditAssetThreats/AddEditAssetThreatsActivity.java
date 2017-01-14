@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import es.udc.fic.sgsi_magerit.AddEditThreat.IdentifyThreatFragment;
 import es.udc.fic.sgsi_magerit.Model.ModelService.ModelService;
 import es.udc.fic.sgsi_magerit.Model.ModelService.ModelServiceImpl;
 import es.udc.fic.sgsi_magerit.R;
@@ -22,6 +23,8 @@ public class AddEditAssetThreatsActivity extends AppCompatActivity {
     private ViewPager viewPager;
     private ModelService service;
     private AddEditAssetThreatsFragmentPagerAdapter adapter;
+    private Long idProyecto;
+    private Long idActivoRecibido;
 
     public ViewPager getViewPager() {
         return viewPager;
@@ -29,14 +32,12 @@ public class AddEditAssetThreatsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        deleteFile("threats.tmp");
+        idProyecto = getIntent().getLongExtra("idProyecto", GlobalConstants.NULL_ID_PROYECTO);
+        idActivoRecibido = getIntent().getLongExtra("idActivo",GlobalConstants.NULL_ID_ACTIVO);
         service = new ModelServiceImpl(this, GlobalConstants.DATABASE_NAME,1);
         setContentView(R.layout.activity_add_edit_asset_threats);
         Toolbar toolbar = (Toolbar) findViewById(R.id.appbar);
         setSupportActionBar(toolbar);
-
-        //TODO: idProyecto
-        Long idProyecto = (long) 0;
 
         viewPager = (ViewPager) findViewById(R.id.viewpagerAssetThreats);
         adapter = new AddEditAssetThreatsFragmentPagerAdapter(
@@ -105,7 +106,8 @@ public class AddEditAssetThreatsActivity extends AppCompatActivity {
             Bundle args = new Bundle();
             switch (position) {
                 case AddEditAssetThreatsActivityConstants.TAB_IDENTIFICACION:
-                    f = IdentifyAssetThreatsFragment.newInstance();
+                    f = IdentifyThreatsAssetFragment.newInstance();
+                    args.putLong("idProyecto",idProyecto);
                     f.setArguments(args);
                     break;
                 case AddEditAssetThreatsActivityConstants.TAB_VALORACION:

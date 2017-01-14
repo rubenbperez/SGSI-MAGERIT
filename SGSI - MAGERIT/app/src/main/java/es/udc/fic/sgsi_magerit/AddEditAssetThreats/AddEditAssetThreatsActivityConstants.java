@@ -9,5 +9,4 @@ public class AddEditAssetThreatsActivityConstants {
     public final static int TAB_IDENTIFICACION = 0;
     public final static int TAB_VALORACION = 1;
     public final static String ACTIVITY_TITLE_EDITAR = "Editar Amenazas";
-    public final static int SPINNERSIZE = 2;
 }
