@@ -90,8 +90,14 @@ public class AddEditThreatActivity extends AppCompatActivity {
                     item.setEnabled(true);
                     return false;
                 }
-                crearAmenaza();
-                setResult(1, resultIntent);
+                if (idListaTipoAmenazaRecibido != GlobalConstants.NULL_ID_LISTA_TIPO_AMENAZA
+                        && idListaTipoAmenazaRecibido != GlobalConstants.NULL_ID_LISTA_TIPO_AMENAZA) {
+                    editarAmenaza();
+                    setResult(0,resultIntent);
+                } else {
+                    crearAmenaza();
+                    setResult(1, resultIntent);
+                }
                 deleteFile("threats.tmp");
                 item.setEnabled(true);
                 finish();
@@ -176,9 +182,11 @@ public class AddEditThreatActivity extends AppCompatActivity {
         ListView lstAmenazasOI = (ListView) fr1.getView().findViewById(R.id.ListOrigenIndustrial);
         ListView lstAmenazasEF = (ListView) fr1.getView().findViewById(R.id.ListErroresFallos);
         ListView lstAmenazasAD = (ListView) fr1.getView().findViewById(R.id.ListAtaquesDeliberados);
+        ListView lstAmenazasEdit = (ListView) fr1.getView().findViewById(R.id.ListEdicion);
 
         if (lstAmenazasDN.getCheckedItemCount() == 0 && lstAmenazasOI.getCheckedItemCount() == 0 &&
-                lstAmenazasEF.getCheckedItemCount() == 0 && lstAmenazasAD.getCheckedItemCount() == 0) {
+                lstAmenazasEF.getCheckedItemCount() == 0 && lstAmenazasAD.getCheckedItemCount() == 0
+                && lstAmenazasEdit.getCheckedItemCount() == 0) {
             flag = true;
         }
 
@@ -197,7 +205,7 @@ public class AddEditThreatActivity extends AppCompatActivity {
         return true;
     }
 
-    public boolean crearAmenaza() {
+    private boolean crearAmenaza() {
         IdentifyThreatFragment fr1 = (IdentifyThreatFragment) adapter.instantiateItem(viewPager, 0);
 
         Long idListaAmenaza = null;
@@ -241,7 +249,6 @@ public class AddEditThreatActivity extends AppCompatActivity {
         //Obtenemos la lista que hay en el fragmento de valoracion
         EstimateThreatFragment fr3 = (EstimateThreatFragment) adapter.instantiateItem(viewPager, 2);
         List<AssetThreatDTO> listaAmenazas = fr3.getdata();
-        List<Threat> listaAmenzasCompleta = new ArrayList<>();
 
         SimpleDateFormat dateFormat = new SimpleDateFormat(GlobalConstants.DATE_FORMAT);
         Calendar fechaActual = Calendar.getInstance();
@@ -261,5 +268,56 @@ public class AddEditThreatActivity extends AppCompatActivity {
         }
         return true;
     }
+
+    private boolean editarAmenaza() {
+
+        //Obtenemos la lista que hay en el fragmento de valoracion
+        EstimateThreatFragment fr3 = (EstimateThreatFragment) adapter.instantiateItem(viewPager, 2);
+        List<AssetThreatDTO> listaAmenazasFr3 = fr3.getdata();
+        List<Long> listaAmenazasBD = service.obtenerIdsAmenazaActivoPorTipoAmenaza
+                (idListaTipoAmenazaRecibido, idTipoAmenazaRecibido, idProyecto);
+
+        //Sabemos lo que hay en base de datos y lo que hay en el fragmento 3.
+
+        if (listaAmenazasFr3.isEmpty())
+            return false;
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat(GlobalConstants.DATE_FORMAT);
+        Calendar fechaActual = Calendar.getInstance();
+        String fechaActualStr = dateFormat.format(fechaActual.getTime());
+
+        List<Integer> elementosComprobados = new ArrayList<>();
+
+        for (AssetThreatDTO at : listaAmenazasFr3) {
+
+            if (listaAmenazasBD.contains(at.getIdThreat())) {
+                service.editarAmenaza(at.getIdThreat(),
+                        at.getIdDegradacionDisponibilidad(), at.getIdProbabilidadDisponibilidad(),
+                        at.getIdDegradacionIntegridad(), at.getIdProbabilidadIntegridad(),
+                        at.getIdDegradacionConfidencialidad(),at.getIdProbabilidadConfidencialidad(),
+                        at.getIdDegradacionAutenticidad(), at.getIdDegradacionAutenticidad(),
+                        at.getIdDegradacionTrazabilidad(), at.getIdDegradacionTrazabilidad());
+            } else {
+                service.crearAmenaza(at.getIdActivo(),at.getIdProyecto(),idListaTipoAmenazaRecibido, idTipoAmenazaRecibido,
+                        at.getIdDegradacionDisponibilidad(), at.getIdProbabilidadDisponibilidad(),
+                        at.getIdDegradacionIntegridad(), at.getIdProbabilidadIntegridad(),
+                        at.getIdDegradacionConfidencialidad(),at.getIdProbabilidadConfidencialidad(),
+                        at.getIdDegradacionAutenticidad(), at.getIdDegradacionAutenticidad(),
+                        at.getIdDegradacionTrazabilidad(), at.getIdDegradacionTrazabilidad(),
+                        fechaActualStr);
+            }
+            elementosComprobados.add(listaAmenazasBD.indexOf(at.getIdThreat()));
+        }
+        //Eliminamos los elementos que estan en Fr3 pero no en BBDD
+        // ahora eliminamos de BD las que no estén en la otra lista
+
+        for (int i=0; i<listaAmenazasBD.size(); i++) {
+            if (!elementosComprobados.contains(i)) {
+                service.eliminarAmenazaActivo(listaAmenazasBD.get(i));
+            }
+        }
+        return true;
+    }
+
 
 }

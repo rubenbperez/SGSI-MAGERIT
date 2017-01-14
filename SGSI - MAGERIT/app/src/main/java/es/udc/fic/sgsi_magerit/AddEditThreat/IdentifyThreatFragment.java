@@ -90,6 +90,7 @@ public class IdentifyThreatFragment extends Fragment {
             this.idProyecto = args.getLong("idProyecto");
             this.idListaTipoAmenazaRecibido = args.getLong("idListaTipoAmenaza", GlobalConstants.NULL_ID_LISTA_TIPO_AMENAZA);
             this.idTipoAmenazaRecibido = args.getLong("idTipoAmenaza", GlobalConstants.NULL_ID_LISTA_TIPO_AMENAZA);
+        //EN caso de ser una edición, existe una lista extra donde se muestran las amenazas.
         }
 
         // Añadimos el Spinner

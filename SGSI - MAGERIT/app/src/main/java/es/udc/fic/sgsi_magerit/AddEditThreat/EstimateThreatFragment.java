@@ -42,6 +42,8 @@ public class EstimateThreatFragment extends Fragment {
     List<Integer> idsParamProbabilidad;
     List<String> strParamDegradacion;
     List<String> strParamProbabilidad;
+    private Long idListaTipoAmenazaRecibido;
+    private Long idTipoAmenazaRecibido;
 
     public List<AssetThreatDTO> getdata() {
         return data;
@@ -61,6 +63,8 @@ public class EstimateThreatFragment extends Fragment {
         Bundle args = getArguments();
         if (args != null) {
             this.idProyecto = args.getLong("idProyecto");
+            this.idListaTipoAmenazaRecibido = args.getLong("idListaTipoAmenaza", GlobalConstants.NULL_ID_LISTA_TIPO_AMENAZA);
+            this.idTipoAmenazaRecibido = args.getLong("idTipoAmenaza", GlobalConstants.NULL_ID_LISTA_TIPO_AMENAZA);
         }
 
         idsParamDegradacion = service.obtenerParametrizacionesActivadas(
@@ -81,8 +85,24 @@ public class EstimateThreatFragment extends Fragment {
             strParamProbabilidad.add(GlobalConstants.ID_TIPOS[i-1]);
         }
 
-        data = new ArrayList<AssetThreatDTO>();
-        data.addAll(leerFichero());
+
+
+        if (idListaTipoAmenazaRecibido != GlobalConstants.NULL_ID_LISTA_TIPO_AMENAZA &&
+                idTipoAmenazaRecibido != GlobalConstants.NULL_ID_LISTA_TIPO_AMENAZA) {
+            /*List<AssetDTO> activosSeleccionados= service.obtenerActivosConIdAmenaza(idListaTipoAmenazaRecibido,idTipoAmenazaRecibido,idProyecto);
+            List<Long> idsActivosSeleccionados = new ArrayList<Long>();
+            for(AssetDTO asset : activosSeleccionados ) {
+                idsActivosSeleccionados.add(asset.getIdActivo());
+            }*/
+            data = service.obtenerAmenazasConIdAmenaza(idListaTipoAmenazaRecibido, idTipoAmenazaRecibido, idProyecto);
+
+        } else {
+            data = new ArrayList<AssetThreatDTO>();
+            data.addAll(leerFichero());
+        }
+
+
+
         assetAdapter = new AssetAdapter(this.getContext(), data);
         lstOpcionesActivos = (ListView) view.findViewById(R.id.LstOpciones);
         lstOpcionesActivos.setAdapter(assetAdapter);

@@ -84,37 +84,41 @@ public class ThreatAssetsSelectionFragment extends Fragment {
         for (int i=0; i<data.size(); i++) {
             lstOpcionesActivos.setItemChecked(i,data.get(i).getChecked());
         }
+        actualizarFichero();
 
         lstOpcionesActivos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 data.get(position).setChecked(lstOpcionesActivos.isItemChecked(position));
-
-                try {
-                    OutputStreamWriter fout =
-                            new OutputStreamWriter(
-                                    getActivity().openFileOutput("threats.tmp", Context.MODE_PRIVATE));
-
-                    fout.write("");
-                    String aux = "";
-                    for (int i=0; i<data.size(); i++)
-                    {
-                        if (data.get(i).getChecked())
-                            aux += (data.get(i).getIdActivo().toString()) + ",";
-                    }
-                    if (aux.endsWith(","))
-                        aux = aux.substring(0, aux.length()-1);
-                    fout.write(aux);
-                    fout.close();
-
-                } catch (Exception ex) {
-                    Log.e("Ficheros", "Error al escribir fichero a memoria interna");
-                }
-
+                actualizarFichero();
             }
         });
         return view;
+    }
+
+    private void actualizarFichero() {
+        try {
+            OutputStreamWriter fout =
+                    new OutputStreamWriter(
+                            getActivity().openFileOutput("threats.tmp", Context.MODE_PRIVATE));
+
+            fout.write("");
+            String aux = "";
+            for (int i=0; i<data.size(); i++)
+            {
+                if (data.get(i).getChecked())
+                    aux += (data.get(i).getIdActivo().toString()) + ",";
+            }
+            if (aux.endsWith(","))
+                aux = aux.substring(0, aux.length()-1);
+            fout.write(aux);
+            fout.close();
+
+        } catch (Exception ex) {
+            Log.e("Ficheros", "Error al escribir fichero a memoria interna");
+        }
+
     }
 
 

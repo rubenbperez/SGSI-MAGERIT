@@ -8,6 +8,7 @@ import es.udc.fic.sgsi_magerit.Model.Asset.AssetAssetType;
 import es.udc.fic.sgsi_magerit.Model.Asset.AssetDTO;
 import es.udc.fic.sgsi_magerit.Model.ProjectSizing.ParametrizacionDTO;
 import es.udc.fic.sgsi_magerit.Model.Project.Project;
+import es.udc.fic.sgsi_magerit.Model.Threat.AssetThreatDTO;
 import es.udc.fic.sgsi_magerit.Model.Threat.Threat;
 import es.udc.fic.sgsi_magerit.Model.Threat.ThreatDTO;
 
@@ -104,4 +105,17 @@ public interface ModelService {
     public boolean eliminarAmenaza(Long idListaTipoAmenaza, Long idTipoAmenaza, Long idProyecto);
 
     public List<AssetDTO> obtenerActivosConIdAmenaza (Long idListaTipoAmenaza, Long idTipoAmenaza, Long idProyecto);
+
+    public List<AssetThreatDTO> obtenerAmenazasConIdAmenaza (Long idListaTipoAmenaza, Long idTipoAmenaza, Long idProyecto);
+
+    public List<Long> obtenerIdsAmenazaActivoPorTipoAmenaza(Long idListaTipoAmenaza, Long idTipoAmenaza, Long idProyecto);
+
+    public void editarAmenaza(Long idAmenaza, Integer idDegradacionDisponibilidad,
+                              Integer idProbabilidadDisponibilidad, Integer idDegradacionIntegridad,
+                              Integer idProbabilidadIntegridad, Integer idDegradacionConfidencialidad,
+                              Integer idProbabilidadConfidencialidad, Integer idDegradacionAutenticidad,
+                              Integer idProbabilidadAutenticidad, Integer idDegradacionTrazabilidad,
+                              Integer idProbabilidadTrazabilidad);
+
+    public boolean eliminarAmenazaActivo(Long idThreat);
 }
