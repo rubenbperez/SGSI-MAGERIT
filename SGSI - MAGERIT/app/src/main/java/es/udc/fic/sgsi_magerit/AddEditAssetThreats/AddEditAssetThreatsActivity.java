@@ -52,7 +52,6 @@ public class AddEditAssetThreatsActivity extends AppCompatActivity {
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_return);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
         getSupportActionBar().setTitle(AddEditAssetThreatsActivityConstants.ACTIVITY_TITLE_EDITAR);
 
     }
@@ -108,10 +107,13 @@ public class AddEditAssetThreatsActivity extends AppCompatActivity {
                 case AddEditAssetThreatsActivityConstants.TAB_IDENTIFICACION:
                     f = IdentifyThreatsAssetFragment.newInstance();
                     args.putLong("idProyecto",idProyecto);
+                    args.putLong("idActivo",idActivoRecibido);
                     f.setArguments(args);
                     break;
                 case AddEditAssetThreatsActivityConstants.TAB_VALORACION:
                     f = EstimateAssetThreatsFragment.newInstance();
+                    args.putLong("idProyecto",idProyecto);
+                    args.putLong("idActivo",idActivoRecibido);
                     f.setArguments(args);
                     break;
             }

@@ -35,7 +35,6 @@ public class EstimateThreatFragment extends Fragment {
     private ListView lstOpcionesActivos;
     private List<AssetThreatDTO> data;
     private ModelServiceImpl service;
-    private ViewPager viewPager;
     private Long idProyecto;
     private AssetAdapter assetAdapter;
     List<Integer> idsParamDegradacion;
@@ -470,8 +469,8 @@ public class EstimateThreatFragment extends Fragment {
 
             for (AssetDTO a : datos)
             {
-                AssetThreatDTO assetThreat = new AssetThreatDTO(null, a.getIdActivo(), a.getIdProyecto(), a.getCodigoActivo(),
-                        a.getNombreActivo(), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, false);
+                AssetThreatDTO assetThreat = new AssetThreatDTO(null, a.getIdActivo(), a.getIdProyecto(),
+                        a.getCodigoActivo(), a.getNombreActivo(), null, null, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, false);
                 datosValidos.add(assetThreat);
             }
 

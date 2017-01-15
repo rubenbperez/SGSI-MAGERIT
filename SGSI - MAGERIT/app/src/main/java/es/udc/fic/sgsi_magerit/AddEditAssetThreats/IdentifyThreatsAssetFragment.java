@@ -27,45 +27,39 @@ import es.udc.fic.sgsi_magerit.Util.GlobalConstants;
 public class IdentifyThreatsAssetFragment extends Fragment {
 
     private Long idProyecto;
+    private Long idActivo;
 
     private Spinner spinner;
     private ArrayAdapter<CharSequence> spinnerAdapter;
     private ListView lstOpcionesDesastresNaturales;
-    private Integer itemCheckedDesastresNaturales = null;
     private ListView lstOpcionesOrigenIndustrial;
-    private Integer itemCheckedOrigenIndustrial = null;
     private ListView lstOpcionesErroresFallos;
-    private Integer itemCheckedErroresFallos = null;
     private ListView lstOpcionesAtaquesDeliberados;
-    private Integer itemCheckedAtaquesDeliberados = null;
-
-    private ListView lstOpcionesEdicion;
 
     private List<String> listaAmenazasDesastresNaturales;
     private List<String> listaAmenazasOrigenIndustrial;
     private List<String> listaAmenazasErroresFallos;
     private List<String> listaAmenazasAtaquesDeliberados;
 
-    private List<String> listaEdicion;
+    private List<ThreatDTO> data;
 
     ModelService service;
 
-    protected List<String> getListaAmenazasDesastresNaturales() {
-        return listaAmenazasDesastresNaturales;
+    public ListView getLstOpcionesDesastresNaturales() {
+        return lstOpcionesDesastresNaturales;
     }
 
-    protected List<String> getListaAmenazasOrigenIndustrial() {
-        return listaAmenazasOrigenIndustrial;
+    public ListView getLstOpcionesOrigenIndustrial() {
+        return lstOpcionesOrigenIndustrial;
     }
 
-    protected List<String> getListaAmenazasErroresFallos() {
-        return listaAmenazasErroresFallos;
+    public ListView getLstOpcionesErroresFallos() {
+        return lstOpcionesErroresFallos;
     }
 
-    protected List<String> getListaAmenazasAtaquesDeliberados() {
-        return listaAmenazasAtaquesDeliberados;
+    public ListView getLstOpcionesAtaquesDeliberados() {
+        return lstOpcionesAtaquesDeliberados;
     }
-
 
     public IdentifyThreatsAssetFragment() {
     }
@@ -84,6 +78,7 @@ public class IdentifyThreatsAssetFragment extends Fragment {
         Bundle args = getArguments();
         if(args != null){
             this.idProyecto = args.getLong("idProyecto");
+            this.idActivo = args.getLong("idActivo");
         }
 
         // Añadimos el Spinner
@@ -120,6 +115,27 @@ public class IdentifyThreatsAssetFragment extends Fragment {
         final ArrayAdapter<String> lstAtaquesDeliberados = new ArrayAdapter<String>(this.getContext(),
                 android.R.layout.simple_list_item_multiple_choice, listaAmenazasAtaquesDeliberados);
         lstOpcionesAtaquesDeliberados.setAdapter(lstAtaquesDeliberados);
+
+        //CargarDatos
+        data = service.obtenerTiposAmenazasDeActivo(idActivo, idProyecto);
+
+        for (ThreatDTO threat : data) {
+
+            switch (threat.getIdListaTipo().intValue()) {
+                case 0:
+                    lstOpcionesDesastresNaturales.setItemChecked(threat.getIdTipo().intValue(),true);
+                    break;
+                case 1:
+                    lstOpcionesOrigenIndustrial.setItemChecked(threat.getIdTipo().intValue(),true);
+                    break;
+                case 2:
+                    lstOpcionesErroresFallos.setItemChecked(threat.getIdTipo().intValue(),true);
+                    break;
+                case 3:
+                    lstOpcionesAtaquesDeliberados.setItemChecked(threat.getIdTipo().intValue(),true);
+                    break;
+            }
+        }
 
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter((SpinnerAdapter) spinnerAdapter);

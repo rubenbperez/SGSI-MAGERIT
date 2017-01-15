@@ -9,6 +9,8 @@ public class AssetThreatDTO {
     private Long idProyecto;
     private String codigoActivo;
     private String nombreActivo;
+    private Long idListaTipoAmenaza;
+    private Long idTipoAmenaza;
     private Integer idDegradacionDisponibilidad;
     private Integer idProbabilidadDisponibilidad;
     private Integer idDegradacionIntegridad;
@@ -21,7 +23,9 @@ public class AssetThreatDTO {
     private Integer idProbabilidadTrazabilidad;
     private Boolean visible;
 
-    public AssetThreatDTO(Long idThreat, Long idActivo, Long idProyecto, String codigoActivo, String nombreActivo,
+
+    public AssetThreatDTO(Long idThreat, Long idActivo, Long idProyecto, String codigoActivo,
+                          String nombreActivo, Long idListaTipoAmenaza, Long idTipoAmenaza,
                           Integer idDegradacionDisponibilidad, Integer idProbabilidadDisponibilidad,
                           Integer idDegradacionIntegridad, Integer idProbabilidadIntegridad,
                           Integer idDegradacionConfidencialidad, Integer idProbabilidadConfidencialidad,
@@ -33,6 +37,9 @@ public class AssetThreatDTO {
         this.idProyecto = idProyecto;
         this.codigoActivo = codigoActivo;
         this.nombreActivo = nombreActivo;
+
+        this.idListaTipoAmenaza = idListaTipoAmenaza;
+        this.idTipoAmenaza = idTipoAmenaza;
         this.idDegradacionDisponibilidad = idDegradacionDisponibilidad;
         this.idProbabilidadDisponibilidad = idProbabilidadDisponibilidad;
         this.idDegradacionIntegridad = idDegradacionIntegridad;
@@ -84,6 +91,22 @@ public class AssetThreatDTO {
 
     public void setNombreActivo(String nombreActivo) {
         this.nombreActivo = nombreActivo;
+    }
+
+    public Long getIdListaTipoAmenaza() {
+        return idListaTipoAmenaza;
+    }
+
+    public void setIdListaTipoAmenaza(Long idListaTipoAmenaza) {
+        this.idListaTipoAmenaza = idListaTipoAmenaza;
+    }
+
+    public Long getIdTipoAmenaza() {
+        return idTipoAmenaza;
+    }
+
+    public void setIdTipoAmenaza(Long idTipoAmenaza) {
+        this.idTipoAmenaza = idTipoAmenaza;
     }
 
     public Integer getIdDegradacionDisponibilidad() {

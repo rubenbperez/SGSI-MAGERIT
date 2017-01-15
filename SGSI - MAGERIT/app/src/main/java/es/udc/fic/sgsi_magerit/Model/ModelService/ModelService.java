@@ -118,4 +118,7 @@ public interface ModelService {
                               Integer idProbabilidadTrazabilidad);
 
     public boolean eliminarAmenazaActivo(Long idThreat);
+
+    public List<AssetThreatDTO> obtenerAmenazasDeActivo(Long idActivo, Long idProyecto);
+    public List<ThreatDTO> obtenerTiposAmenazasDeActivo(Long idActivo, Long idProyecto);
 }

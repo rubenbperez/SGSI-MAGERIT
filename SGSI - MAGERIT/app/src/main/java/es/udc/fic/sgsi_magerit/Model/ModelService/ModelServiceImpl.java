@@ -1072,9 +1072,9 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
                 Integer idProbabilidadTraz = cursor.getInt(13);
 
                 AssetThreatDTO threat = new AssetThreatDTO(idAmenaza,idActivo,idProyecto,codigo,nombre,
-                        idDegradacionDisp, idProbabilidadDisp, idDegradacionInt, idProbabilidadInt,
-                        idDegradacionConf, idProbabilidadConf, idDegradacionAut, idProbabilidadAut,
-                        idDegradacionTraz, idProbabilidadTraz, false);
+                        idListaTipoAmenaza, idTipoAmenaza, idDegradacionDisp, idProbabilidadDisp,
+                        idDegradacionInt, idProbabilidadInt, idDegradacionConf, idProbabilidadConf,
+                        idDegradacionAut, idProbabilidadAut, idDegradacionTraz, idProbabilidadTraz, false);
 
                 amenazas.add(threat);
 
@@ -1145,6 +1145,87 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
         db.close();
         return true;
     }
+
+    @Override
+    public List<AssetThreatDTO> obtenerAmenazasDeActivo(Long idActivo, Long idProyecto) {
+
+        SQLiteDatabase db = getReadableDatabase();
+        List<AssetThreatDTO> amenazas = new ArrayList<>();
+
+        Cursor cursor = db.rawQuery("SELECT " + ThreatConstants.ID_AMENAZA_ACTIVO + ", " +
+                ThreatConstants.ID_LISTA_TIPO_AMENAZA + ", " +
+                ThreatConstants.ID_TIPO_AMENAZA + ", " +
+                ThreatConstants.ID_VALORACION_DEGRADACION_DISPONIBILIDAD + ", " +
+                ThreatConstants.ID_VALORACION_PROBABILIDAD_DISPONIBILIDAD + ", " +
+                ThreatConstants.ID_VALORACION_DEGRADACION_INTEGRIDAD + ", " +
+                ThreatConstants.ID_VALORACION_PROBABILIDAD_INTEGRIDAD + ", " +
+                ThreatConstants.ID_VALORACION_DEGRADACION_CONFIDENCIALIDAD + ", " +
+                ThreatConstants.ID_VALORACION_PROBABILIDAD_CONFIDENCIALIDAD + ", " +
+                ThreatConstants.ID_VALORACION_DEGRADACION_AUTENTICIDAD + ", " +
+                ThreatConstants.ID_VALORACION_PROBABILIDAD_AUTENTICIDAD + ", " +
+                ThreatConstants.ID_VALORACION_DEGRADACION_TRAZABILIDAD + ", " +
+                ThreatConstants.ID_VALORACION_PROBABILIDAD_TRAZABILIDAD + " " +
+                "FROM " + ThreatConstants.TABLE_NAME + " WHERE " +
+                ThreatConstants.ID_PROYECTO + " = " + idProyecto  + " AND " + ThreatConstants.ID_ACTIVO + "=" +
+                idActivo, null);
+
+
+        if (cursor.moveToFirst()){
+            do {
+                Long idAmenaza = cursor.getLong(0);
+                Long idListaTipoAmenaza = cursor.getLong(1);
+                Long idTipoAmenaza = cursor.getLong(2);
+                Integer idDegradacionDisp = cursor.getInt(3);
+                Integer idProbabilidadDisp = cursor.getInt(4);
+                Integer idDegradacionInt = cursor.getInt(5);
+                Integer idProbabilidadInt = cursor.getInt(6);
+                Integer idDegradacionConf = cursor.getInt(7);
+                Integer idProbabilidadConf = cursor.getInt(8);
+                Integer idDegradacionAut = cursor.getInt(9);
+                Integer idProbabilidadAut = cursor.getInt(10);
+                Integer idDegradacionTraz = cursor.getInt(11);
+                Integer idProbabilidadTraz = cursor.getInt(12);
+
+                AssetThreatDTO threat = new AssetThreatDTO(idAmenaza,idActivo,idProyecto,null,null,
+                        idListaTipoAmenaza, idTipoAmenaza, idDegradacionDisp, idProbabilidadDisp,
+                        idDegradacionInt, idProbabilidadInt, idDegradacionConf, idProbabilidadConf,
+                        idDegradacionAut, idProbabilidadAut, idDegradacionTraz, idProbabilidadTraz, false);
+
+                amenazas.add(threat);
+            } while ( (cursor.moveToNext()));
+        }
+
+        cursor.close();
+        db.close();
+        return amenazas;
+    }
+
+
+    @Override
+    public List<ThreatDTO> obtenerTiposAmenazasDeActivo(Long idActivo, Long idProyecto) {
+
+        SQLiteDatabase db = getReadableDatabase();
+        List<ThreatDTO> amenazas = new ArrayList<>();
+
+        Cursor cursor = db.rawQuery("SELECT " + ThreatConstants.ID_LISTA_TIPO_AMENAZA + ", " +
+                ThreatConstants.ID_TIPO_AMENAZA + " " +
+                "FROM " + ThreatConstants.TABLE_NAME + " WHERE " +
+                ThreatConstants.ID_PROYECTO + " = " + idProyecto  + " AND " + ThreatConstants.ID_ACTIVO + "=" +
+                idActivo, null);
+
+        if (cursor.moveToFirst()){
+            do {
+                Long idListaTipoAmenaza = cursor.getLong(0);
+                Long idTipoAmenaza = cursor.getLong(1);
+                ThreatDTO threat = new ThreatDTO(idListaTipoAmenaza, idTipoAmenaza);
+                amenazas.add(threat);
+            } while ( (cursor.moveToNext()));
+        }
+        cursor.close();
+        db.close();
+        return amenazas;
+    }
+
 
 
 }
