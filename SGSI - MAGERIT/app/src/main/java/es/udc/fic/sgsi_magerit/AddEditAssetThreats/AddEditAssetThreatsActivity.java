@@ -12,9 +12,16 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+
 import es.udc.fic.sgsi_magerit.AddEditThreat.IdentifyThreatFragment;
 import es.udc.fic.sgsi_magerit.Model.ModelService.ModelService;
 import es.udc.fic.sgsi_magerit.Model.ModelService.ModelServiceImpl;
+import es.udc.fic.sgsi_magerit.Model.Threat.AssetThreatDTO;
+import es.udc.fic.sgsi_magerit.Model.Threat.ThreatDTO;
 import es.udc.fic.sgsi_magerit.R;
 import es.udc.fic.sgsi_magerit.Util.GlobalConstants;
 
@@ -66,6 +73,7 @@ public class AddEditAssetThreatsActivity extends AppCompatActivity {
                 return true;
             case R.id.action_aceptar:
                 item.setEnabled(false);
+                editarAmenazas();
                 item.setEnabled(true);
                 finish();
                 return true;
@@ -126,5 +134,50 @@ public class AddEditAssetThreatsActivity extends AppCompatActivity {
             return AddEditAssetThreatsActivityConstants.tabTitles[position];
         }
     }
+
+    private boolean editarAmenazas() {
+
+        //Obtenemos la lista que hay en el fragmento de valoracion
+        EstimateAssetThreatsFragment fr2 = (EstimateAssetThreatsFragment) adapter.instantiateItem(viewPager, 1);
+        List<AssetThreatDTO> listaAmenazasFr2 = fr2.getData();
+        List<Long> listaAmenazasBD = service.obtenerIdsAmenazasDeActivo(idActivoRecibido, idProyecto);
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat(GlobalConstants.DATE_FORMAT);
+        Calendar fechaActual = Calendar.getInstance();
+        String fechaActualStr = dateFormat.format(fechaActual.getTime());
+
+        List<Integer> elementosComprobados = new ArrayList<>();
+
+        for (AssetThreatDTO at : listaAmenazasFr2) {
+
+            if (at.getIdThreat() == null) {
+                service.crearAmenaza(at.getIdActivo(),at.getIdProyecto(),at.getIdListaTipoAmenaza(),
+                        at.getIdTipoAmenaza(), at.getIdDegradacionDisponibilidad(),
+                        at.getIdProbabilidadDisponibilidad(), at.getIdDegradacionIntegridad(),
+                        at.getIdProbabilidadIntegridad(), at.getIdDegradacionConfidencialidad(),
+                        at.getIdProbabilidadConfidencialidad(), at.getIdDegradacionAutenticidad(),
+                        at.getIdDegradacionAutenticidad(), at.getIdDegradacionTrazabilidad(),
+                        at.getIdDegradacionTrazabilidad(), fechaActualStr);
+            } else {
+                service.editarAmenaza(at.getIdThreat(),
+                        at.getIdDegradacionDisponibilidad(), at.getIdProbabilidadDisponibilidad(),
+                        at.getIdDegradacionIntegridad(), at.getIdProbabilidadIntegridad(),
+                        at.getIdDegradacionConfidencialidad(),at.getIdProbabilidadConfidencialidad(),
+                        at.getIdDegradacionAutenticidad(), at.getIdDegradacionAutenticidad(),
+                        at.getIdDegradacionTrazabilidad(), at.getIdDegradacionTrazabilidad());
+            }
+            elementosComprobados.add(listaAmenazasBD.indexOf(at.getIdThreat()));
+        }
+        //Eliminamos los elementos que estan en Fr3 pero no en BBDD
+        // ahora eliminamos de BD las que no estén en la otra lista
+
+        for (int i=0; i<listaAmenazasBD.size(); i++) {
+            if (!elementosComprobados.contains(i)) {
+                service.eliminarAmenazaActivo(listaAmenazasBD.get(i));
+            }
+        }
+        return true;
+    }
+
 
 }

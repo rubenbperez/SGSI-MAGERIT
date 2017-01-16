@@ -120,5 +120,6 @@ public interface ModelService {
     public boolean eliminarAmenazaActivo(Long idThreat);
 
     public List<AssetThreatDTO> obtenerAmenazasDeActivo(Long idActivo, Long idProyecto);
+    public List<Long> obtenerIdsAmenazasDeActivo(Long idActivo, Long idProyecto);
     public List<ThreatDTO> obtenerTiposAmenazasDeActivo(Long idActivo, Long idProyecto);
 }

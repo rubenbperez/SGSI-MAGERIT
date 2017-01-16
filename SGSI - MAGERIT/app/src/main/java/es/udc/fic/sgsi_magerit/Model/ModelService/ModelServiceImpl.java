@@ -1202,6 +1202,29 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
 
 
     @Override
+    public List<Long> obtenerIdsAmenazasDeActivo(Long idActivo, Long idProyecto) {
+
+        SQLiteDatabase db = getReadableDatabase();
+        List<Long> amenazas = new ArrayList<>();
+
+        Cursor cursor = db.rawQuery("SELECT " + ThreatConstants.ID_AMENAZA_ACTIVO +
+                " FROM " + ThreatConstants.TABLE_NAME + " WHERE " +
+                ThreatConstants.ID_PROYECTO + " = " + idProyecto  + " AND " + ThreatConstants.ID_ACTIVO + "=" +
+                idActivo, null);
+
+        if (cursor.moveToFirst()){
+            do {
+                Long idAmenaza = cursor.getLong(0);
+                amenazas.add(idAmenaza);
+            } while ( (cursor.moveToNext()));
+        }
+        cursor.close();
+        db.close();
+        return amenazas;
+    }
+
+
+    @Override
     public List<ThreatDTO> obtenerTiposAmenazasDeActivo(Long idActivo, Long idProyecto) {
 
         SQLiteDatabase db = getReadableDatabase();

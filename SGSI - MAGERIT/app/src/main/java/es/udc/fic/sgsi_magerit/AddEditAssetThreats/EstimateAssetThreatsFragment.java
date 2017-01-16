@@ -54,6 +54,10 @@ public class EstimateAssetThreatsFragment extends Fragment {
     }
 
 
+    protected List<AssetThreatDTO> getData() {
+        return data;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -83,7 +87,7 @@ public class EstimateAssetThreatsFragment extends Fragment {
         for (Integer i:idsParamProbabilidad) {
             strParamProbabilidad.add(GlobalConstants.ID_TIPOS[i-1]);
         }
-        
+
         data = service.obtenerAmenazasDeActivo(idActivo, idProyecto);
         threatAssetAdapter = new ThreatAssetAdapter(this.getContext(), data);
         lstOpcionesActivos = (ListView) view.findViewById(R.id.LstOpciones);
