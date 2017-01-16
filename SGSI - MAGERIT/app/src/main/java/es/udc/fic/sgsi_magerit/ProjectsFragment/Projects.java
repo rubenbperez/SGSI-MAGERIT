@@ -18,6 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.ParseException;
 import java.util.List;
@@ -54,7 +55,8 @@ public class Projects extends Fragment {
             data = service.obtenerProyectos();
             comprobarElementosNavView(data,navView);
         } catch (ParseException e) {
-            //TODO
+            //NO debería saltar nunca
+            Toast.makeText(getContext(), GlobalConstants.DATE_ERROR, Toast.LENGTH_LONG).show();
         }
 
         adaptador =
@@ -216,7 +218,8 @@ public class Projects extends Fragment {
                 try {
                     data.addAll(service.obtenerProyectos());
                 } catch (ParseException e) {
-                    //TODO
+                    //NO debería saltar nunca
+                    Toast.makeText(getContext(), GlobalConstants.DATE_ERROR, Toast.LENGTH_LONG).show();
                 }
                 adaptador.notifyDataSetChanged();
                 comprobarElementosNavView(data,navView);

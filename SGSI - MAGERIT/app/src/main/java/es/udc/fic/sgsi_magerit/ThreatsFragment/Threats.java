@@ -170,7 +170,6 @@ public class Threats extends Fragment {
         inflater.inflate(R.menu.menu_editar_borrar, menu);
     }
 
-    //TODO
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info;

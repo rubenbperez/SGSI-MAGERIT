@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ScrollView;
+import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -147,7 +148,8 @@ public class AddProjectDetailsFragment extends Fragment {
                     proyectoActivado.setChecked(project.getActivated());
                 }
             } catch (ParseException e) {
-                e.printStackTrace(); //TODO
+                //NO debería saltar nunca
+                Toast.makeText(getContext(), GlobalConstants.DATE_ERROR, Toast.LENGTH_LONG).show();
             }
         } else {
 

@@ -110,7 +110,6 @@ public class Assets extends Fragment {
         inflater.inflate(R.menu.menu_editar_borrar_editaramenazas, menu);
     }
 
-    //TODO
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info;

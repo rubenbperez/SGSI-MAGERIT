@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
+import android.widget.Toast;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -144,7 +145,8 @@ public class EstimateAssetFragment extends Fragment {
         try {
             activo = service.obtenerActivo(idActivo);
         } catch (ParseException e) {
-            //TODO
+            //NO debería saltar nunca
+            Toast.makeText(getContext(), GlobalConstants.DATE_ERROR, Toast.LENGTH_LONG).show();
         }
 
         if (activo != null) {
