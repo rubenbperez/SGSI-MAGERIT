@@ -16,5 +16,11 @@
             android:id="@+id/menuAmenazas"
             android:icon="@drawable/ic_menu"
             android:title="Amenazas"/>
+
+        <item
+            android:id="@+id/menuSalvaguardas"
+            android:icon="@drawable/ic_menu"
+            android:title="Salvaguardas"/>
+
     </group>
 </menu>

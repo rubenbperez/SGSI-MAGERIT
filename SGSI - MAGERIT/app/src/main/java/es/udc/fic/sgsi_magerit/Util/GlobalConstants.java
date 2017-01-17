@@ -185,4 +185,10 @@ public class GlobalConstants {
             "[A.30] Ingeniería social (picaresca)"
     };
 
+
+    /********************************************************************************************/
+
+    //LISTAS PARA SALVAGUARDAS
+
+
 }
