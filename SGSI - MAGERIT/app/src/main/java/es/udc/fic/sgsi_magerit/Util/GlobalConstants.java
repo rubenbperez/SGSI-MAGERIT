@@ -190,5 +190,94 @@ public class GlobalConstants {
 
     //LISTAS PARA SALVAGUARDAS
 
+    public final static String[] TIPO_SALVAGUARDAS = {"[H] Protecciones generales u horizontales",
+            "[D] Protección de datos e Información", "[K] Protección de las claves criptográficas",
+            "[S] Protección de Servicios", "[SW] Protección de las applicaciones (SW)",
+            "[HW] Protección de los equipos (HW)", "[COM] Protección de las comunicaciones",
+            "[IP] Protección en los puntos de interconexión con otros sistemas",
+            "[MP] Protección de los soportes de información", "[AUX] Protección de los elementos auxiliares",
+            "[L] Seguridad física - Protección de instalaciones", "[PS] Salvaguardas relativas al personal",
+            "[G] Salvaguardas de tipo organizativo", "[BC] Continuidad de operaciones", "[E] Externalización",
+            "[NEW] Adquisición y desarrollo"};
 
+    public final static String[] TIPO_PROTECCIONES_GENERALES = {"[H.IA] Identificación y autenticación",
+            "[H.AC] Control de Acceso lógico", "[H.ST] Segregación de tareas",
+            "[H.IR] Gestión de incidencias", "[H.tools.AV] Herramienta contra código dañino",
+            "[H.tools.IDS] IDS/IPS: Herramienta detección/prevención intrusión",
+            "[H.tools.CC] Herramienta de chequeo de configuración",
+            "[H.tools.VA] Herramienta de análisis de vulnerabilidades",
+            "[H.tools.TM] Herramienta de monitorización de tráfico",
+            "[H.tools.DLP] DLP: Herramienta de monitorización de contenidos",
+            "[H.tools.LA] Herramienta de análisis de Logs", "[H.toos.HP] Honey net / honey pot",
+            "[H.tools.SFV] Verificación de las funciones de seguridad]",
+            "[H.VM] gestión de vulnerabilidades", "[H.AU] Registro y auditoría"};
+
+    public final static String[] SALVAGUARDA_TIPO_PROTECCION_DATOS = {"[D.A] Copias de seguridad de los datos (backup)",
+            "[D.I] Aseguramiento de la integridad", "[D.C] Cifrado de la información",
+            "[D.DS] Uso de firmas electrónicas", "[D.TS] Uso de servisios de fechado electrónico (time stamping)"};
+
+    public final static String[] SALVAGUARDA_TIPO_CLAVES_CRIPTO = {"[K.IC] Gestión de claves de cifra de información",
+            "[K.DS] Gestión de claves de cifra de información",
+            "[K.disk] Gestión de claves para contenedores criptográficos",
+            "[K.comms] Gestión de claves de comunicaciones", "[K.509] Gestión de certificados"};
+
+    public final static String[] SALVAGUARDA_TIPO_PROTECCION_SERVICIOS = {"[S.A] Aseguramiento de la disponibilidad",
+            "[S.start] Aceptación y puerta en operación", "[S.SC] Se aplican perfiles de seguridad",
+            "[S.op] Explotación", "[S.CM] Gestión de cambios (mejoras y sustituciones)",
+            "[S.end] Terminación", "[S.www] Protección de los servicios y aplicaciones web",
+            "[s.email] Protección del correo electrónico", "[S.dir] Protección del directorio",
+            "[S.dns] Protección del servidor de nombres de dominios (DNS)", "[S.TW] Teletrabajo",
+            "[s.voip] Voz sobre IP"};
+
+    public final static String[] SALVAGUARDA_TIPO_PROTECCION_SW = {"[SW.A] Copias de seguridad (backups)",
+            "[SW.start] Puesta en producción", "[SW.SC] Se aplican perfiles de seguridad",
+            "[SW.op] Explotación / Producción", "[SW.CM] Cambios (actualizaciones y mantenimiento)",
+            "[SW.end] Terminación"};
+
+    public final static String[] SALVAGUARDA_TIPO_PROTECCION_HW = {"[HW.start] Puesta en producción",
+            "[HW.SC] Se aplican perfiles de seguridad", "[HW.A] Aseguramiento de la disponibilidad",
+            "[HW.op] Operación", "[HW.CM] Cambios (actualizaciones y mantenimiento)",
+            "[HW.end] Terminación", "[HW.PCD] Informática móvil", "[HW.print] Reproducción de documentos",
+            "[HW.pabx] Protección de la centralita telefónica (PABX)"};
+
+    public final static String[] SALVAGUARDA_TIPO_PROTECCION_COMS = {"[COM.start] Entrada en servicio",
+            "[COM.SC] Se aplican periles de seguridad", "[COM.A] Aseguramiento de la disponibilidad",
+            "[COM.aut] Autenticación del canal", "[COM.I] Protección de la integridad de los datos intercambiados",
+            "[COM.C] Protección criptográfica de la confidencialidad de los datos intercambiados",
+            "[COM.op] Operación", "[COM.CM] Cambios (actualizaciones y mantenimiento)", "[COM.end] Terminación",
+            "[COM.internet] Internet uso de ? acceso a", "[COM.wifi] Seguridad Wireless (WIFI)",
+            "[COM.mobile] Telefonía móvil", "[COM.DS] Segregación de las redes en dominios"};
+
+    public final static String[] SALVAGUARDA_TIPO_PROTECCION_INTERCONEXION = {
+            "[IP.SPP] Sistema de protección perimetral", "[IP.BS] Protección de los equipos de frontera"};
+
+    public final static String[] SALVAGUARDA_TIPO_PROTECCION_SOPORTES = {"[MP.A] Aseguramiento de la disponibilidad",
+            "[MP.IC] Protección criptográfica del contenido", "[MP.clean] Limpieza de contenidos",
+            "[MP.end] Destrucción de los soportes"};
+
+    public final static String[] SALVAGUARDA_TIPO_PROTECCION_AUXILIAR = {"[AUX.A] Aseguramiento de la disponibilidad",
+            "[AUX.start] Instalación", "[AUX.power] Suministro eléctrico", "[AUX.AC] Climatización",
+            "[AUX.wires] Protección del cableado"};
+
+    public final static String[] SALVAGUARDA_TIPO_PROTECCION_INSTALACIONES = {"", "[L.design] Diseño",
+            "[L.depth] Defensa en profundidad", "[L.AC] Control de los accesos físicos",
+            "[L.A] Aseguramiento de la disponibilidad", "[L.end] Terminación"};
+
+    public final static String[] SALVAGUARDA_TIPO_PROTECCION_PERSONAL = {"[PS.AT] Formación y concienciación",
+            "[PS.A] Aseguramiento de la disponibilidad"};
+
+    public final static String[] SALVAGUARDA_TIPO_ORGANIZATIVO = {"[G.RM] Gestión de riesgos",
+            "[G.plan] Planificación de la seguridad", "[G.exam] Inspecciones de seguridad"};
+
+    public final static String[] SALVAGUARDA_TIPO_CONTINUIDAD_OPERACIONES = {"[BC.BIA] Análisis de impacto (BIA)",
+            "[BC.DRP] Plan de Recuperación de desastres (DRP)"};
+
+    public final static String[] SALVAGUARDA_TIPO_EXTERNALIZACION = {
+            "[E.1] Acuerdos para intercambio de información y software", "[E.2] Acceso externo",
+            "[E.3] Servicios proporcionados por otras organizaciones", "[E.4] Personal subcontratado"};
+
+    public final static String[] SALVAGUARDA_TIPO_ADQUISICION_DESARROLLO = {
+            "[NEW.S] Servicios: Adquisición o desarrollo", "[NEW.SW] Aplicaciones: Adquisición o desarrollo",
+            "[NEW.HW] Equipos: Adquisición o desarrollo", "[NEW.COM] Comunicación: Adquisición o contratación",
+            "[NEW.MP] Soportes de Información: Adquisición", "[NEW.C] Productos certificados o acreditados"};
 }
