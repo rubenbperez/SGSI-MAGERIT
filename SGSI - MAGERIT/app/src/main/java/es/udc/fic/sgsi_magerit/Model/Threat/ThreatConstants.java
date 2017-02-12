@@ -29,5 +29,6 @@ public class ThreatConstants {
     public static final String ID_VALORACION_PROBABILIDAD_AUTENTICIDAD = "idValoracionProbabilidadAutenticidad";
     public static final String ID_VALORACION_DEGRADACION_TRAZABILIDAD = "idValoracionDegradacionTrazabilidad";
     public static final String ID_VALORACION_PROBABILIDAD_TRAZABILIDAD = "idValoracionProbabilidadTrazabilidad";
+
     public static final String FECHA_CREACION = "fechaCreacion";
 }

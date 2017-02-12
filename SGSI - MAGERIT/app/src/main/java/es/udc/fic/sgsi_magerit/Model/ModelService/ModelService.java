@@ -8,6 +8,7 @@ import es.udc.fic.sgsi_magerit.Model.Asset.AssetAssetType;
 import es.udc.fic.sgsi_magerit.Model.Asset.AssetDTO;
 import es.udc.fic.sgsi_magerit.Model.ProjectSizing.ParametrizacionDTO;
 import es.udc.fic.sgsi_magerit.Model.Project.Project;
+import es.udc.fic.sgsi_magerit.Model.Safeguard.SafeguardDTO;
 import es.udc.fic.sgsi_magerit.Model.Threat.AssetThreatDTO;
 import es.udc.fic.sgsi_magerit.Model.Threat.Threat;
 import es.udc.fic.sgsi_magerit.Model.Threat.ThreatDTO;
@@ -118,8 +119,10 @@ public interface ModelService {
                               Integer idProbabilidadTrazabilidad);
 
     public boolean eliminarAmenazaActivo(Long idThreat);
-
     public List<AssetThreatDTO> obtenerAmenazasDeActivo(Long idActivo, Long idProyecto);
     public List<Long> obtenerIdsAmenazasDeActivo(Long idActivo, Long idProyecto);
     public List<ThreatDTO> obtenerTiposAmenazasDeActivo(Long idActivo, Long idProyecto);
+
+    public List<SafeguardDTO> obtenerSalvaguardas(Long idProyecto);
+    public boolean eliminarSalvaguarda(Long idListaTipoSalvaguarda, Long idTipoSalvaguarda, Long idProyecto);
 }

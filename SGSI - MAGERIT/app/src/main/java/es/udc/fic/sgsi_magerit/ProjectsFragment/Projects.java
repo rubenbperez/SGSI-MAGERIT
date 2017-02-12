@@ -117,6 +117,7 @@ public class Projects extends Fragment {
         if (proyectos.isEmpty()) {
             navView.getMenu().findItem(R.id.menuActivos).setEnabled(false);
             navView.getMenu().findItem(R.id.menuAmenazas).setEnabled(false);
+            navView.getMenu().findItem(R.id.menuSalvaguardas).setEnabled(false);
             return;
         }
 
@@ -127,6 +128,7 @@ public class Projects extends Fragment {
             } else {
                 navView.getMenu().findItem(R.id.menuActivos).setEnabled(false);
                 navView.getMenu().findItem(R.id.menuAmenazas).setEnabled(false);
+                navView.getMenu().findItem(R.id.menuSalvaguardas).setEnabled(false);
             }
         }
     }

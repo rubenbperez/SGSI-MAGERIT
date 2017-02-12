@@ -25,6 +25,8 @@ import es.udc.fic.sgsi_magerit.Model.ProjectSizing.ParametrizacionVulnerabilidad
 import es.udc.fic.sgsi_magerit.Model.ProjectSizing.ProjectSizingConstants;
 import es.udc.fic.sgsi_magerit.Model.Project.Project;
 import es.udc.fic.sgsi_magerit.Model.Project.ProjectConstants;
+import es.udc.fic.sgsi_magerit.Model.Safeguard.SafeguardConstants;
+import es.udc.fic.sgsi_magerit.Model.Safeguard.SafeguardDTO;
 import es.udc.fic.sgsi_magerit.Model.Threat.AssetThreatDTO;
 import es.udc.fic.sgsi_magerit.Model.Threat.Threat;
 import es.udc.fic.sgsi_magerit.Model.Threat.ThreatConstants;
@@ -122,6 +124,24 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
             ThreatConstants.ID_VALORACION_PROBABILIDAD_TRAZABILIDAD + " " + ThreatConstants.INT_TYPE + ", " +
             ThreatConstants.FECHA_CREACION + " " + AssetConstants.STRING_TYPE  + " NOT NULL);";
 
+
+    String sqlCreateTableSalvaguardas = "CREATE TABLE " + SafeguardConstants.TABLE_NAME + "(" +
+            SafeguardConstants.ID_SAFEGUARD + " " + SafeguardConstants.INT_TYPE + " PRIMARY KEY AUTOINCREMENT, " +
+            SafeguardConstants.ID_ACTIVO + " " + SafeguardConstants.INT_TYPE + " NOT NULL, " +
+            SafeguardConstants.ID_PROYECTO + " " + SafeguardConstants.INT_TYPE + " NOT NULL, " +
+            SafeguardConstants.ID_AMENAZA + " " + SafeguardConstants.INT_TYPE + " NOT NULL, " +
+            SafeguardConstants.ID_LISTA_TIPO_SALVAGUARDA + " " + SafeguardConstants.INT_TYPE + " NOT NULL, " +
+            SafeguardConstants.ID_TIPO_SALVAGUARDA + " " + SafeguardConstants.INT_TYPE + " NOT NULL, " +
+            SafeguardConstants.ID_VALORACION_CONTROLSEGURIDAD_DISPONIBILIDAD + " " + SafeguardConstants.INT_TYPE + ", " +
+            SafeguardConstants.ID_VALORACION_CONTROLSEGURIDAD_INTEGRIDAD + " " + SafeguardConstants.INT_TYPE + ", " +
+            SafeguardConstants.ID_VALORACION_CONTROLSEGURIDAD_CONFIDENCIALIDAD + " " + SafeguardConstants.INT_TYPE + ", " +
+            SafeguardConstants.ID_VALORACION_CONTROLSEGURIDAD_AUTENTICIDAD + " " + SafeguardConstants.INT_TYPE + ", " +
+            SafeguardConstants.ID_VALORACION_CONTROLSEGURIDAD_TRAZABILIDAD + " " + SafeguardConstants.INT_TYPE + ", " +
+            SafeguardConstants.TIPO_PROTECCION + " " + SafeguardConstants.INT_TYPE + ", " +
+            SafeguardConstants.EFICACIA + " " + SafeguardConstants.INT_TYPE + ", " +
+            SafeguardConstants.FECHA_CREACION + " " + AssetConstants.STRING_TYPE  + " NOT NULL);";
+
+
     public ModelServiceImpl(Context contexto, String nombre, int version) {
         super(contexto, nombre, null, version);
     }
@@ -136,6 +156,7 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
         db.execSQL(sqlCreateTableActivos);
         db.execSQL(sqlCreateTableActivoTipoActivo);
         db.execSQL(sqlCreateTableAmenazas);
+        db.execSQL(sqlCreateTableSalvaguardas);
 
     }
 
@@ -1248,6 +1269,40 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
         db.close();
         return amenazas;
     }
+
+    @Override
+    public List<SafeguardDTO> obtenerSalvaguardas(Long idProyecto) {
+        List <SafeguardDTO> salvaguardas = new ArrayList<SafeguardDTO>();
+
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT DISTINCT " +
+                SafeguardConstants.ID_LISTA_TIPO_SALVAGUARDA + ", " + SafeguardConstants.ID_TIPO_SALVAGUARDA  +
+                " FROM " + SafeguardConstants.TABLE_NAME + " WHERE " +
+                SafeguardConstants.ID_PROYECTO + " = " + idProyecto, null);
+        if (cursor.moveToFirst()){
+            do {
+                Long idTipoLista = cursor.getLong(0);
+                Long idTipoAmenaza = cursor.getLong(1);
+                SafeguardDTO safeguard = new SafeguardDTO(idTipoLista, idTipoAmenaza);
+                salvaguardas.add(safeguard);
+            } while ( (cursor.moveToNext()));
+        }
+        cursor.close();
+        db.close();
+        return salvaguardas;
+    }
+
+    @Override
+    public boolean eliminarSalvaguarda(Long idListaTipoSalvaguarda, Long idTipoSalvaguarda, Long idProyecto) {
+        SQLiteDatabase db = getReadableDatabase();
+        db.delete(SafeguardConstants.TABLE_NAME, SafeguardConstants.ID_PROYECTO
+                + "=" + idProyecto + " AND " + SafeguardConstants.ID_LISTA_TIPO_SALVAGUARDA + "=" +
+                idListaTipoSalvaguarda + " AND " + SafeguardConstants.ID_TIPO_SALVAGUARDA + "=" + idTipoSalvaguarda, null);
+        db.close();
+        return true;
+    }
+
+
 
 
 
