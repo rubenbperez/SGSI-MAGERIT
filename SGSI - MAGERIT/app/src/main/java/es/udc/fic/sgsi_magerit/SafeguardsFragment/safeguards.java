@@ -1,14 +1,12 @@
 package es.udc.fic.sgsi_magerit.SafeguardsFragment;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -24,6 +22,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import es.udc.fic.sgsi_magerit.AddEditSafeguards.AddEditSafeguardActivity;
 import es.udc.fic.sgsi_magerit.Model.ModelService.ModelService;
 import es.udc.fic.sgsi_magerit.Model.ModelService.ModelServiceImpl;
 import es.udc.fic.sgsi_magerit.Model.Safeguard.SafeguardDTO;
@@ -65,9 +64,9 @@ public class Safeguards extends Fragment {
         fabButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*Intent intent = new Intent(getActivity(),AddEditThreatActivity.class);
+                Intent intent = new Intent(getActivity(),AddEditSafeguardActivity.class);
                 intent.putExtra("idProyecto", idProyectoActivo);
-                startActivityForResult(intent, GlobalConstants.REQUEST_CODE_ADD_ACTIVITY);*/
+                startActivityForResult(intent, GlobalConstants.REQUEST_CODE_ADD_ACTIVITY);
             }
         });
         registerForContextMenu(lstOpciones);
