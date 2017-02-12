@@ -201,7 +201,7 @@ public class Projects extends Fragment {
                 break;*/
                 AlertDialog dialog = new AlertDialog.Builder(getActivity()).create();
                 dialog.setTitle("Confirmación");
-                dialog.setMessage("¿Está seguro de querer eliminar este tipo de amenazas?");
+                dialog.setMessage("¿Está seguro de querer eliminar este proyecto?");
                 dialog.setCancelable(false);
                 dialog.setButton(DialogInterface.BUTTON_POSITIVE, "Aceptar",
                         new DialogInterface.OnClickListener() {
@@ -222,7 +222,7 @@ public class Projects extends Fragment {
                             }
                         });
                 dialog.show();
-
+                break;
             case R.id.menuOpcEditar:
                 Intent intent = new Intent(getActivity(), AddProjectActivity.class);
                 intent.putExtra("idProyecto", data.get(index).getId()); //Optional parameters
