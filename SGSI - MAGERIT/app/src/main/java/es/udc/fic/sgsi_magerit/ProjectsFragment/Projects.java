@@ -1,11 +1,13 @@
 package es.udc.fic.sgsi_magerit.ProjectsFragment;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -188,15 +190,38 @@ public class Projects extends Fragment {
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info;
         info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
-        int index = info.position;
+        final int index = info.position;
         switch (item.getItemId()) {
             case R.id.menuOpcBorrar:
-                Log.d("Posicion", Integer.toString(index));
+                /*Log.d("Posicion", Integer.toString(index));
                 service.eliminarProyectoYDimensionamiento(data.get(index).getId());
                 data.remove(index);
                 adaptador.notifyDataSetChanged();
                 comprobarElementosNavView(data,navView);
-                break;
+                break;*/
+                AlertDialog dialog = new AlertDialog.Builder(getActivity()).create();
+                dialog.setTitle("Confirmación");
+                dialog.setMessage("¿Está seguro de querer eliminar este tipo de amenazas?");
+                dialog.setCancelable(false);
+                dialog.setButton(DialogInterface.BUTTON_POSITIVE, "Aceptar",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int buttonId) {
+                                Log.i("Dialogos", "Confirmacion Aceptada.");
+                                service.eliminarProyectoYDimensionamiento(data.get(index).getId());
+                                data.remove(index);
+                                comprobarElementosNavView(data,navView);
+                                adaptador.notifyDataSetChanged();
+                                dialog.cancel();
+                            }
+                        });
+                dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancelar",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int buttonId) {
+                                Log.i("Dialogos", "Confirmacion Cancelada.");
+                                dialog.cancel();
+                            }
+                        });
+                dialog.show();
 
             case R.id.menuOpcEditar:
                 Intent intent = new Intent(getActivity(), AddProjectActivity.class);
