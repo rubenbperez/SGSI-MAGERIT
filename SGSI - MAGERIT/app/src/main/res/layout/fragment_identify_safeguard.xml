@@ -1,13 +1,157 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="es.udc.fic.sgsi_magerit.AddEditSafeguards.IdentifySafeguardFragment">
+    tools:context=".AddEditSafeguards.IdentifySafeguardFragment"
+    android:orientation="vertical">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content">
+        <Spinner
+            android:id="@+id/spnMySpinner"
+            android:layout_width="match_parent"
+            android:layout_height= "wrap_content"
+            android:layout_alignParentTop="true"
+            style="@android:style/Widget.Holo.Light.Spinner"
+            android:spinnerMode="dropdown"
+            android:clickable="true"
+            android:focusable="true" />
+    </RelativeLayout>
 
-</FrameLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <!-- Lista de Protecciones generales u Horizontales -->
+        <ListView android:id="@+id/ListEssential"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:choiceMode="singleChoice"
+            android:visibility="gone"/>
+        <!-- Lista Proteccion DatosInfo -->
+        <ListView android:id="@+id/ListDataInfo"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:choiceMode="singleChoice"
+            android:visibility="gone"/>
+        <!-- Lista Protecciones Claves Criptográficas -->
+        <ListView android:id="@+id/ListCryptKeps"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:choiceMode="singleChoice"
+            android:visibility="gone"/>
+        <!-- Lista Protecciones Servicios -->
+        <ListView android:id="@+id/ListServices"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:scrollingCache="true"
+            android:choiceMode="singleChoice"
+            android:visibility="gone" />
+        <!-- Lista proteccion de las aplicaciones -->
+        <ListView android:id="@+id/ListSoftware"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:scrollingCache="true"
+            android:layout_weight="1"
+            android:choiceMode="singleChoice"
+            android:visibility="gone" />
+        <!-- Lista proteccion de los equipos -->
+        <ListView android:id="@+id/ListHardware"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:scrollingCache="true"
+            android:layout_weight="1"
+            android:choiceMode="singleChoice"
+            android:visibility="gone" />
+        <!-- Lista proteccion de Comunicaciones -->
+        <ListView android:id="@+id/ListCommunicationNet"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:choiceMode="singleChoice"
+            android:visibility="gone"/>
+        <!-- Lista proteccion de puntos de interconexion -->
+        <ListView android:id="@+id/ListInterconnect"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:choiceMode="singleChoice"
+            android:visibility="gone"/>
+        <!-- Lista proteccion Soportes de la información -->
+        <ListView android:id="@+id/ListInfoSup"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:choiceMode="singleChoice"
+            android:visibility="gone"/>
+        <!-- Lista proteccion Equipamiento Auxiliar -->
+        <ListView android:id="@+id/ListAuxEquip"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:choiceMode="singleChoice"
+            android:visibility="gone"/>
+        <!-- Lista proteccion Instalaciones -->
+        <ListView android:id="@+id/ListInstallations"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:choiceMode="singleChoice"
+            android:visibility="gone"/>
+        <!-- Lista proteccion Personal-->
+        <ListView android:id="@+id/ListPersonal"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:choiceMode="singleChoice"
+            android:visibility="gone"/>
+        <!-- Lista proteccion Organizativa-->
+        <ListView android:id="@+id/ListOrg"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:choiceMode="singleChoice"
+            android:visibility="gone"/>
+        <!-- Lista proteccion continuidad-->
+        <ListView android:id="@+id/ListContinuityOps"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:choiceMode="singleChoice"
+            android:visibility="gone"/>
+        <!-- Lista proteccion Externalizacion-->
+        <ListView android:id="@+id/ListExtern"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:choiceMode="singleChoice"
+            android:visibility="gone"/>
+        <!-- Lista AdquisicionYDesarrollo -->
+        <ListView android:id="@+id/ListNewDevelop"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:choiceMode="singleChoice"
+            android:visibility="gone"/>
+    </LinearLayout>
+</LinearLayout>

@@ -200,7 +200,7 @@ public class GlobalConstants {
             "[G] Salvaguardas de tipo organizativo", "[BC] Continuidad de operaciones", "[E] Externalización",
             "[NEW] Adquisición y desarrollo"};
 
-    public final static String[] TIPO_PROTECCIONES_GENERALES = {"[H.IA] Identificación y autenticación",
+    public final static String[] SALVAGUARDA_TIPO_PROTECCIONES_GENERALES = {"[H.IA] Identificación y autenticación",
             "[H.AC] Control de Acceso lógico", "[H.ST] Segregación de tareas",
             "[H.IR] Gestión de incidencias", "[H.tools.AV] Herramienta contra código dañino",
             "[H.tools.IDS] IDS/IPS: Herramienta detección/prevención intrusión",

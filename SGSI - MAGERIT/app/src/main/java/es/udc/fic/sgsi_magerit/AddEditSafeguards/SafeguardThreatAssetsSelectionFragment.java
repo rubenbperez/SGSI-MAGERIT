@@ -21,5 +21,4 @@ public class SafeguardThreatAssetsSelectionFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_safeguard_threat_assets_selection, container, false);
         return view;
     }
-
 }

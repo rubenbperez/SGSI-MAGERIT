@@ -23,7 +23,6 @@ import android.widget.TextView;
 import java.util.List;
 
 import es.udc.fic.sgsi_magerit.AddEditSafeguards.AddEditSafeguardActivity;
-import es.udc.fic.sgsi_magerit.Model.ModelService.ModelService;
 import es.udc.fic.sgsi_magerit.Model.ModelService.ModelServiceImpl;
 import es.udc.fic.sgsi_magerit.Model.Safeguard.SafeguardDTO;
 import es.udc.fic.sgsi_magerit.R;
@@ -163,7 +162,7 @@ public class Safeguards extends Fragment {
         String codeName = "";
         switch (safeguard.getIdListaTipo().intValue()) {
             case 0:
-                codeName = GlobalConstants.TIPO_PROTECCIONES_GENERALES[safeguard.getIdTipo().intValue()];
+                codeName = GlobalConstants.SALVAGUARDA_TIPO_PROTECCIONES_GENERALES[safeguard.getIdTipo().intValue()];
                 break;
             case 1:
                 codeName = GlobalConstants.SALVAGUARDA_TIPO_PROTECCION_DATOS[safeguard.getIdTipo().intValue()];

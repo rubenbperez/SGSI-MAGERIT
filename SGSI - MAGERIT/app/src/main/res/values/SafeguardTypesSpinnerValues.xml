@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="Sizing_spinner_SafeguardType">
+        <item>[H] Protecciones generales u horizontales</item>
+        <item>[D] Protección de datos e Información</item>
+        <item>[K] Protección de las claves criptográficas</item>
+        <item>[S] Protección de Servicios</item>
+        <item>[SW] Protección de las applicaciones (SW)</item>
+        <item>[HW] Protección de los equipos (HW)</item>
+        <item>[COM] Protección de las comunicaciones</item>
+        <item>[IP] Protección en los puntos de interconexión con otros sistemas</item>
+        <item>[MP] Protección de los soportes de información</item>
+        <item>[AUX] Protección de los elementos auxiliares</item>
+        <item>[L] Seguridad física - Protección de instalaciones</item>
+        <item>[PS] Salvaguardas relativas al personal</item>
+        <item>[G] Salvaguardas de tipo organizativo</item>
+        <item>[BC] Continuidad de operaciones</item>
+        <item>[E] Externalización</item>
+        <item>[NEW] Adquisición y desarrollo</item>
+    </string-array>
+</resources>

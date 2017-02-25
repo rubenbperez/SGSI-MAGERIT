@@ -22,10 +22,13 @@ public class AddEditSafeguardActivity extends AppCompatActivity {
     private ViewPager viewPager;
     private AddEditSafeguardFragmentPagerAdapter adapter;
     private ModelService service;
+    private Long idProyecto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        idProyecto = getIntent().getLongExtra("idProyecto", GlobalConstants.NULL_ID_PROYECTO);
+
         service = new ModelServiceImpl(this, GlobalConstants.DATABASE_NAME,1);
         setContentView(R.layout.activity_add_edit_safeguard);
         Toolbar toolbar = (Toolbar) findViewById(R.id.appbar);
@@ -34,7 +37,7 @@ public class AddEditSafeguardActivity extends AppCompatActivity {
         viewPager = (ViewPager) findViewById(R.id.viewpagerSafeguard);
         viewPager.setOffscreenPageLimit(2);
         adapter = new AddEditSafeguardFragmentPagerAdapter(
-                getSupportFragmentManager());
+                getSupportFragmentManager(), idProyecto);
         viewPager.setAdapter(adapter);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.appbartabs);
@@ -91,9 +94,11 @@ public class AddEditSafeguardActivity extends AppCompatActivity {
 
     public class AddEditSafeguardFragmentPagerAdapter extends FragmentPagerAdapter {
 
+        private Long idProyecto;
 
-        public AddEditSafeguardFragmentPagerAdapter(FragmentManager fm) {
+        public AddEditSafeguardFragmentPagerAdapter(FragmentManager fm, Long idProyecto) {
             super(fm);
+            this.idProyecto = idProyecto;
         }
 
         @Override
@@ -106,6 +111,7 @@ public class AddEditSafeguardActivity extends AppCompatActivity {
 
             Fragment f = null;
             Bundle args = new Bundle();
+            args.putLong("idProyecto", idProyecto);
             switch (position) {
                 case AddEditSafeguardActivityConstants.TAB_INDENTIFICACION:
                     f = IdentifySafeguardFragment.newInstance();
