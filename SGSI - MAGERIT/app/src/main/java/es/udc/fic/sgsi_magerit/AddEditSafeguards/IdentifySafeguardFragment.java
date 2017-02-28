@@ -32,21 +32,37 @@ public class IdentifySafeguardFragment extends Fragment {
     private Spinner spinner;
     private ArrayAdapter<CharSequence> spinnerAdapter;
     private ListView lstOpcionesProtecGenerales;
+    private Integer itemCheckedProtecGenerales;
     private ListView lstOpcionesProtecDatos;
+    private Integer itemCheckedProtecDatos;
     private ListView lstOpcionesProtecCrypto;
+    private Integer itemCheckedProtecCrypto;
     private ListView lstOpcionesProtecServices;
+    private Integer itemCheckedProtecServices;
     private ListView lstOpcionesProtecSW;
+    private Integer itemCheckedProtecSW;
     private ListView lstOpcionesProtecHW;
+    private Integer itemCheckedProtecHW;
     private ListView lstOpcionesProtecComs;
+    private Integer itemCheckedProtecComs;
     private ListView lstOpcionesProtecIntercon;
+    private Integer itemCheckedProtecIntercon;
     private ListView lstOpcionesProtecSop;
+    private Integer itemCheckedProtecSop;
     private ListView lstOpcionesProtecAux;
+    private Integer itemCheckedProtecAux;
     private ListView lstOpcionesProtecInst;
+    private Integer itemCheckedProtecInst;
     private ListView lstOpcionesProtecPers;
+    private Integer itemCheckedProtecPers;
     private ListView lstOpcionesProtecOrg;
+    private Integer itemCheckedProtecOrg;
     private ListView lstOpcionesProtecContOps;
+    private Integer itemCheckedProtecContOps;
     private ListView lstOpcionesProtecExtern;
+    private Integer itemCheckedProtecExtern;
     private ListView lstOpcionesProtecAdqDes;
+    private Integer itemCheckedProtecAdqDes;
 
     private List<String> listaProteccionesGenerales;
     private List<String> listaProteccionDatos;
@@ -264,6 +280,261 @@ public class IdentifySafeguardFragment extends Fragment {
                     public void onNothingSelected(AdapterView<?> parent) {
                     }
                 });
+        
+        lstOpcionesProtecGenerales.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Integer aux = itemCheckedProtecGenerales;
+                limpiarListas();
+                if (aux != null && position == aux) {
+                    lstOpcionesProtecGenerales.setItemChecked(position, false);
+                    itemCheckedProtecGenerales = null;
+                } else {
+                    lstOpcionesProtecGenerales.setItemChecked(position, true);
+                    itemCheckedProtecGenerales = position;
+                }
+            }
+        });
+
+        lstOpcionesProtecDatos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Integer aux = itemCheckedProtecDatos;
+                limpiarListas();
+                if (aux != null && position == aux) {
+                    lstOpcionesProtecDatos.setItemChecked(position, false);
+                    itemCheckedProtecDatos = null;
+                } else {
+                    lstOpcionesProtecDatos.setItemChecked(position, true);
+                    itemCheckedProtecDatos = position;
+                }
+            }
+        });
+
+        lstOpcionesProtecCrypto.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Integer aux = itemCheckedProtecCrypto;
+                limpiarListas();
+                if (aux != null && position == aux) {
+                    lstOpcionesProtecCrypto.setItemChecked(position, false);
+                    itemCheckedProtecCrypto = null;
+                } else {
+                    lstOpcionesProtecCrypto.setItemChecked(position, true);
+                    itemCheckedProtecCrypto = position;
+                }
+            }
+        });
+
+        lstOpcionesProtecServices.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Integer aux = itemCheckedProtecServices;
+                limpiarListas();
+                if (aux != null && position == aux) {
+                    lstOpcionesProtecServices.setItemChecked(position, false);
+                    itemCheckedProtecServices = null;
+                } else {
+                    lstOpcionesProtecServices.setItemChecked(position, true);
+                    itemCheckedProtecServices = position;
+                }
+            }
+        });
+
+        lstOpcionesProtecSW.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Integer aux = itemCheckedProtecSW;
+                limpiarListas();
+                if (aux != null && position == aux) {
+                    lstOpcionesProtecSW.setItemChecked(position, false);
+                    itemCheckedProtecSW = null;
+                } else {
+                    lstOpcionesProtecSW.setItemChecked(position, true);
+                    itemCheckedProtecSW = position;
+                }
+            }
+        });
+
+        lstOpcionesProtecHW.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Integer aux = itemCheckedProtecHW;
+                limpiarListas();
+                if (aux != null && position == aux) {
+                    lstOpcionesProtecHW.setItemChecked(position, false);
+                    itemCheckedProtecHW = null;
+                } else {
+                    lstOpcionesProtecHW.setItemChecked(position, true);
+                    itemCheckedProtecHW = position;
+                }
+            }
+        });
+
+        lstOpcionesProtecComs.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Integer aux = itemCheckedProtecComs;
+                limpiarListas();
+                if (aux != null && position == aux) {
+                    lstOpcionesProtecComs.setItemChecked(position, false);
+                    itemCheckedProtecComs = null;
+                } else {
+                    lstOpcionesProtecComs.setItemChecked(position, true);
+                    itemCheckedProtecComs = position;
+                }
+            }
+        });
+
+        lstOpcionesProtecIntercon.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Integer aux = itemCheckedProtecIntercon;
+                limpiarListas();
+                if (aux != null && position == aux) {
+                    lstOpcionesProtecIntercon.setItemChecked(position, false);
+                    itemCheckedProtecIntercon = null;
+                } else {
+                    lstOpcionesProtecIntercon.setItemChecked(position, true);
+                    itemCheckedProtecIntercon = position;
+                }
+            }
+        });
+
+        lstOpcionesProtecSop.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Integer aux = itemCheckedProtecSop;
+                limpiarListas();
+                if (aux != null && position == aux) {
+                    lstOpcionesProtecSop.setItemChecked(position, false);
+                    itemCheckedProtecSop = null;
+                } else {
+                    lstOpcionesProtecSop.setItemChecked(position, true);
+                    itemCheckedProtecSop = position;
+                }
+            }
+        });
+
+        lstOpcionesProtecAux.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Integer aux = itemCheckedProtecAux;
+                limpiarListas();
+                if (aux != null && position == aux) {
+                    lstOpcionesProtecAux.setItemChecked(position, false);
+                    itemCheckedProtecAux = null;
+                } else {
+                    lstOpcionesProtecAux.setItemChecked(position, true);
+                    itemCheckedProtecAux = position;
+                }
+            }
+        });
+
+        lstOpcionesProtecInst.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Integer aux = itemCheckedProtecInst;
+                limpiarListas();
+                if (aux != null && position == aux) {
+                    lstOpcionesProtecInst.setItemChecked(position, false);
+                    itemCheckedProtecInst = null;
+                } else {
+                    lstOpcionesProtecInst.setItemChecked(position, true);
+                    itemCheckedProtecInst = position;
+                }
+            }
+        });
+
+        lstOpcionesProtecPers.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Integer aux = itemCheckedProtecPers;
+                limpiarListas();
+                if (aux != null && position == aux) {
+                    lstOpcionesProtecPers.setItemChecked(position, false);
+                    lstOpcionesProtecGenerales = null;
+                } else {
+                    lstOpcionesProtecPers.setItemChecked(position, true);
+                    itemCheckedProtecPers = position;
+                }
+            }
+        });
+        lstOpcionesProtecOrg.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Integer aux = itemCheckedProtecOrg;
+                limpiarListas();
+                if (aux != null && position == aux) {
+                    lstOpcionesProtecOrg.setItemChecked(position, false);
+                    itemCheckedProtecOrg = null;
+                } else {
+                    lstOpcionesProtecOrg.setItemChecked(position, true);
+                    itemCheckedProtecOrg = position;
+                }
+            }
+        });
+
+        lstOpcionesProtecContOps.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Integer aux = itemCheckedProtecOrg;
+                limpiarListas();
+                if (aux != null && position == aux) {
+                    lstOpcionesProtecContOps.setItemChecked(position, false);
+                    itemCheckedProtecComs = null;
+                } else {
+                    lstOpcionesProtecContOps.setItemChecked(position, true);
+                    itemCheckedProtecComs = position;
+                }
+            }
+        });
+
+        lstOpcionesProtecExtern.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Integer aux = itemCheckedProtecExtern;
+                limpiarListas();
+                if (aux != null && position == aux) {
+                    lstOpcionesProtecExtern.setItemChecked(position, false);
+                    itemCheckedProtecExtern = null;
+                } else {
+                    lstOpcionesProtecExtern.setItemChecked(position, true);
+                    itemCheckedProtecExtern = position;
+                }
+            }
+        });
+
+        lstOpcionesProtecAdqDes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Integer aux = itemCheckedProtecAdqDes;
+                limpiarListas();
+                if (aux != null && position == aux) {
+                    lstOpcionesProtecAdqDes.setItemChecked(position, false);
+                    itemCheckedProtecAdqDes = null;
+                } else {
+                    lstOpcionesProtecAdqDes.setItemChecked(position, true);
+                    itemCheckedProtecAdqDes = position;
+                }
+            }
+        });
 
         return view;
     }
@@ -351,4 +622,40 @@ public class IdentifySafeguardFragment extends Fragment {
             lstOpcionesProtecAdqDes.setVisibility(View.GONE);
     }
 
+    
+    private void limpiarListas () {
+        lstOpcionesProtecGenerales.clearChoices();
+        itemCheckedProtecGenerales = null;
+        lstOpcionesProtecDatos.clearChoices();
+        itemCheckedProtecDatos = null;
+        lstOpcionesProtecCrypto.clearChoices();
+        itemCheckedProtecCrypto = null;
+        lstOpcionesProtecServices.clearChoices();
+        itemCheckedProtecServices = null;
+        lstOpcionesProtecSW.clearChoices();
+        itemCheckedProtecSW = null;
+        lstOpcionesProtecHW.clearChoices();
+        itemCheckedProtecHW = null;
+        lstOpcionesProtecComs.clearChoices();
+        itemCheckedProtecComs = null;
+        lstOpcionesProtecIntercon.clearChoices();
+        itemCheckedProtecIntercon = null;
+        lstOpcionesProtecSop.clearChoices();
+        itemCheckedProtecSop = null;
+        lstOpcionesProtecAux.clearChoices();
+        itemCheckedProtecAux = null;
+        lstOpcionesProtecInst.clearChoices();
+        itemCheckedProtecInst = null;
+        lstOpcionesProtecPers.clearChoices();
+        itemCheckedProtecPers = null;
+        lstOpcionesProtecOrg.clearChoices();
+        itemCheckedProtecOrg = null;
+        lstOpcionesProtecContOps.clearChoices();
+        itemCheckedProtecContOps = null;
+        lstOpcionesProtecExtern.clearChoices();
+        itemCheckedProtecExtern = null;
+        lstOpcionesProtecAdqDes.clearChoices();
+        itemCheckedProtecAdqDes = null;
+    }
+    
 }
