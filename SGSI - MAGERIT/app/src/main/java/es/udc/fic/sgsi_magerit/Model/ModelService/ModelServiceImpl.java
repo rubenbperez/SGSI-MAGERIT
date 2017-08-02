@@ -11,6 +11,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 
 import es.udc.fic.sgsi_magerit.Model.Asset.Asset;
@@ -25,8 +26,10 @@ import es.udc.fic.sgsi_magerit.Model.ProjectSizing.ParametrizacionVulnerabilidad
 import es.udc.fic.sgsi_magerit.Model.ProjectSizing.ProjectSizingConstants;
 import es.udc.fic.sgsi_magerit.Model.Project.Project;
 import es.udc.fic.sgsi_magerit.Model.Project.ProjectConstants;
+import es.udc.fic.sgsi_magerit.Model.Safeguard.AssetsSafeguardDTO;
 import es.udc.fic.sgsi_magerit.Model.Safeguard.SafeguardConstants;
 import es.udc.fic.sgsi_magerit.Model.Safeguard.SafeguardDTO;
+import es.udc.fic.sgsi_magerit.Model.Safeguard.ThreatSafeguardDTO;
 import es.udc.fic.sgsi_magerit.Model.Threat.AssetThreatDTO;
 import es.udc.fic.sgsi_magerit.Model.Threat.Threat;
 import es.udc.fic.sgsi_magerit.Model.Threat.ThreatConstants;
@@ -1302,8 +1305,52 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
         return true;
     }
 
+    @Override
+    public HashMap<AssetsSafeguardDTO, List<ThreatSafeguardDTO>> obtenerAmenazasDeActivos(Long idProyecto) {
+        SQLiteDatabase db = getReadableDatabase();
 
+        Cursor cursor = db.rawQuery("SELECT DISTINCT " +
+                AssetConstants.ID_ACTIVO + ", " + AssetConstants.NOMBRE + ", " +
+                AssetConstants.CODIGO + " FROM " + AssetConstants.TABLE_NAME + " WHERE " +
+                AssetConstants.ID_PROYECTO + " = " + idProyecto, null);
 
+        HashMap<AssetsSafeguardDTO, List<ThreatSafeguardDTO>> assetsThreats =
+                new HashMap<>();
+
+        if (cursor.moveToFirst()){
+            do {
+                Long idActivo = cursor.getLong(0);
+                String nombre = cursor.getString(1);
+                String codigo = cursor.getString(2);
+
+                Cursor cursor2 = db.rawQuery("SELECT DISTINCT " +
+                        ThreatConstants.ID_AMENAZA_ACTIVO + ", " + ThreatConstants.ID_LISTA_TIPO_AMENAZA + ", " +
+                        ThreatConstants.ID_TIPO_AMENAZA + " FROM " + ThreatConstants.TABLE_NAME + " WHERE " +
+                        ThreatConstants.ID_PROYECTO + " = " + idProyecto + " AND " + ThreatConstants.ID_ACTIVO +
+                        " = " + idActivo, null);
+                AssetsSafeguardDTO assetSafeguard = new AssetsSafeguardDTO(idActivo, idProyecto,
+                        nombre, codigo, false);
+                List<ThreatSafeguardDTO> threatsSafeguard= new ArrayList<>();
+                if (cursor2.moveToFirst()) {
+                    do {
+                        Long idAmenaza = cursor2.getLong(0);
+                        Long idListaTipoAmenaza = cursor2.getLong(1);
+                        Long idTipoAmenaza = cursor2.getLong(2);
+                        ThreatSafeguardDTO threatSafeguard = new ThreatSafeguardDTO(idAmenaza,idListaTipoAmenaza,
+                                idTipoAmenaza,idProyecto,false);
+                        threatsSafeguard.add(threatSafeguard);
+                    } while ( (cursor2.moveToNext()));
+                }
+
+                if (!threatsSafeguard.isEmpty())
+                    assetsThreats.put(assetSafeguard,threatsSafeguard);
+                cursor2.close();
+            } while ( (cursor.moveToNext()));
+        }
+        db.close();
+        cursor.close();
+        return assetsThreats;
+    }
 
 
 }

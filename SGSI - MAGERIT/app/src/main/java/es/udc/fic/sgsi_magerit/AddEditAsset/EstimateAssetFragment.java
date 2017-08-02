@@ -51,6 +51,7 @@ public class EstimateAssetFragment extends Fragment {
     private ModelService service;
     private Long idProyecto;
     private Long idActivo;
+    private List<String> strParamActivo;
 
     public EstimateAssetFragment() {
         // Required empty public constructor
@@ -73,7 +74,7 @@ public class EstimateAssetFragment extends Fragment {
         service = new ModelServiceImpl(this.getContext(), GlobalConstants.DATABASE_NAME,1);
         List<Integer> idsParamActivo= service.obtenerParametrizacionesActivadas(
                 idProyecto, ProjectSizingConstants.TABLE_NAME_PARAMETRIZACION_ACTIVO);
-        List<String> strParamActivo = new ArrayList<String>();
+        strParamActivo = new ArrayList<String>();
 
         strParamActivo.add("Seleccione");
 
@@ -155,11 +156,33 @@ public class EstimateAssetFragment extends Fragment {
             EditText etResponsableActivo = (EditText) view.findViewById(R.id.responsableActivo);
             EditText etDescripcionActivo = (EditText) view.findViewById(R.id.descripcionActivo);
             EditText etUbicacionActivo = (EditText) view.findViewById(R.id.ubicacionActivo);
-            spinnerValoracionDisponibilidad.setSelection(devuelveValorSpinner(activo.getIdValoracionDisp()));
-            spinnerValoracionIntegridad.setSelection(devuelveValorSpinner(activo.getIdValoracionInt()));
-            spinnerValoracionConfidencialidad.setSelection(devuelveValorSpinner(activo.getIdValoracionConf()));
-            spinnerValoracionAutenticidad.setSelection(devuelveValorSpinner(activo.getIdValoracionAut()));
-            spinnerValoracionTrazabilidad.setSelection(devuelveValorSpinner(activo.getIdValoracionTraz()));
+            //TODO: Solucionar el bug de forma que si no estan todos habilitados esta parte no funciona
+
+            if (devuelveValorSpinner(activo.getIdValoracionDisp()).intValue() > 0)
+                spinnerValoracionDisponibilidad.setSelection(strParamActivo.indexOf(GlobalConstants.ID_TIPOS[devuelveValorSpinner(activo.getIdValoracionDisp())-1]));
+            else
+                spinnerValoracionDisponibilidad.setSelection(0);
+
+            if (devuelveValorSpinner(activo.getIdValoracionInt()).intValue() > 0)
+                spinnerValoracionIntegridad.setSelection(strParamActivo.indexOf(GlobalConstants.ID_TIPOS[devuelveValorSpinner(activo.getIdValoracionInt())-1]));
+            else
+                spinnerValoracionIntegridad.setSelection(0);
+
+            if (devuelveValorSpinner(activo.getIdValoracionConf()).intValue() > 0)
+                spinnerValoracionConfidencialidad.setSelection(strParamActivo.indexOf(GlobalConstants.ID_TIPOS[devuelveValorSpinner(activo.getIdValoracionConf())-1]));
+            else
+                spinnerValoracionConfidencialidad.setSelection(0);
+
+            if (devuelveValorSpinner(activo.getIdValoracionAut()).intValue() > 0)
+                spinnerValoracionAutenticidad.setSelection(strParamActivo.indexOf(GlobalConstants.ID_TIPOS[devuelveValorSpinner(activo.getIdValoracionAut()-1)]));
+            else
+                spinnerValoracionAutenticidad.setSelection(0);
+
+            if (devuelveValorSpinner(activo.getIdValoracionTraz()).intValue() > 0)
+                spinnerValoracionTrazabilidad.setSelection(strParamActivo.indexOf(GlobalConstants.ID_TIPOS[devuelveValorSpinner(activo.getIdValoracionTraz()-1)]));
+            else
+                spinnerValoracionTrazabilidad.setSelection(0);
+            // EJEMPLO ANTERIOR: spinnerValoracionTrazabilidad.setSelection(devuelveValorSpinner(activo.getIdValoracionTraz()));
 
             etNombreActivo.setText(activo.getNombreActivo());
             etCodigoActivo.setText(activo.getCodigoActivo());

@@ -6,9 +6,8 @@
     android:clickable="false"
     android:focusable="false"
     android:focusableInTouchMode="false">
-
     <TextView
-        android:id="@+id/threat"
+        android:id="@+id/asset_threat"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingLeft="35dp"
@@ -18,5 +17,4 @@
         android:clickable="false"
         android:focusable="false"
         android:focusableInTouchMode="false"/>
-
 </LinearLayout>

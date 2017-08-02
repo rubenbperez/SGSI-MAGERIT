@@ -1,6 +1,7 @@
 package es.udc.fic.sgsi_magerit.Model.ModelService;
 
 import java.text.ParseException;
+import java.util.HashMap;
 import java.util.List;
 
 import es.udc.fic.sgsi_magerit.Model.Asset.Asset;
@@ -8,9 +9,10 @@ import es.udc.fic.sgsi_magerit.Model.Asset.AssetAssetType;
 import es.udc.fic.sgsi_magerit.Model.Asset.AssetDTO;
 import es.udc.fic.sgsi_magerit.Model.ProjectSizing.ParametrizacionDTO;
 import es.udc.fic.sgsi_magerit.Model.Project.Project;
+import es.udc.fic.sgsi_magerit.Model.Safeguard.AssetsSafeguardDTO;
 import es.udc.fic.sgsi_magerit.Model.Safeguard.SafeguardDTO;
+import es.udc.fic.sgsi_magerit.Model.Safeguard.ThreatSafeguardDTO;
 import es.udc.fic.sgsi_magerit.Model.Threat.AssetThreatDTO;
-import es.udc.fic.sgsi_magerit.Model.Threat.Threat;
 import es.udc.fic.sgsi_magerit.Model.Threat.ThreatDTO;
 
 /**
@@ -125,4 +127,6 @@ public interface ModelService {
 
     public List<SafeguardDTO> obtenerSalvaguardas(Long idProyecto);
     public boolean eliminarSalvaguarda(Long idListaTipoSalvaguarda, Long idTipoSalvaguarda, Long idProyecto);
+
+    public HashMap<AssetsSafeguardDTO, List<ThreatSafeguardDTO>> obtenerAmenazasDeActivos(Long idProyecto);
 }

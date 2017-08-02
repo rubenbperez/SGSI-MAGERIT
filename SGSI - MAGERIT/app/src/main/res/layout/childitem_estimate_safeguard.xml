@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="false"
+    android:focusableInTouchMode="false"
+    android:clickable="false"
+    android:longClickable="false">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:stretchColumns="*"
+        android:shrinkColumns="*"
+        android:collapseColumns="*"
+        android:descendantFocusability="beforeDescendants"
+        android:layout_weight="0.15"
+        android:id="@+id/tabla1"
+        android:layout_marginTop="5dp"
+        android:visibility="visible">
+
+        <TableRow
+            android:id="@+id/tableRow1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="fill_vertical">
+
+            <android.widget.TextView
+                android:id="@+id/valorDisponibilidad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Disponibilidad"
+                android:focusable="false"
+                android:textSize="18sp"/>
+            <Spinner
+                android:id="@+id/spinnerDisponibilidad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                style="@android:style/Widget.Holo.Light.Spinner"
+                android:spinnerMode="dropdown"
+                android:clickable="true"
+                android:focusable="true" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="fill_vertical">
+
+            <android.widget.TextView
+                android:id="@+id/valorIntegridad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Integridad"
+                android:focusable="false"
+                android:textSize="18sp"/>
+            <Spinner
+                android:id="@+id/spinnerIntegridad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                style="@android:style/Widget.Holo.Light.Spinner"
+                android:spinnerMode="dropdown"
+                android:clickable="true"
+                android:focusable="true" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="fill_vertical">
+
+            <android.widget.TextView
+                android:id="@+id/valorConfidencialidad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Confidencialidad"
+                android:focusable="false"
+                android:textSize="18sp"/>
+            <Spinner
+                android:id="@+id/spinnerConfidencialidad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                style="@android:style/Widget.Holo.Light.Spinner"
+                android:spinnerMode="dropdown"
+                android:clickable="true"
+                android:focusable="true" />
+        </TableRow>
+
+
+        <TableRow
+            android:id="@+id/tableRow4"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="fill_vertical"
+            android:focusable="false">
+
+            <android.widget.TextView
+                android:id="@+id/valorAutenticidad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Autenticidad"
+                android:textSize="18sp"/>
+            <Spinner
+                android:id="@+id/spinnerAutenticidad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                style="@android:style/Widget.Holo.Light.Spinner"
+                android:spinnerMode="dropdown"
+                android:clickable="true"
+                android:focusable="true" />
+        </TableRow>
+
+
+        <TableRow
+            android:id="@+id/tableRow5"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="fill_vertical"
+            android:gravity="center"
+            android:focusable="false">
+
+            <android.widget.TextView
+                android:id="@+id/valorTrazabilidad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Trazabilidad"
+                android:focusable="false"
+                android:textSize="18sp"/>
+            <Spinner
+                android:id="@+id/spinnerTrazabilidad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                style="@android:style/Widget.Holo.Light.Spinner"
+                android:spinnerMode="dropdown"
+                android:clickable="true"
+                android:focusable="true" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow6"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="fill_vertical"
+            android:gravity="center"
+            android:focusable="false">
+
+            <android.widget.TextView
+                android:id="@+id/valorTipoProteccion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tipo Proteccion"
+                android:focusable="false"
+                android:textSize="18sp"/>
+            <Spinner
+                android:id="@+id/spinnerTProteccion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                style="@android:style/Widget.Holo.Light.Spinner"
+                android:spinnerMode="dropdown"
+                android:clickable="true"
+                android:focusable="true" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow7"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="fill_vertical"
+            android:gravity="center"
+            android:focusable="false">
+
+            <android.widget.TextView
+                android:id="@+id/valorEficacia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Eficacia"
+                android:focusable="false"
+                android:textSize="18sp"/>
+
+            <LinearLayout
+                android:id="@+id/linear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+                <NumberPicker
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_weight=".90"
+                    android:id="@+id/numberPicker"/>
+
+                <android.widget.TextView
+                    android:id="@+id/porcentaje"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".10"
+                    android:text="%"
+                    android:focusable="false"
+                    android:textSize="20sp"
+                    android:layout_centerVertical="true"
+                    android:textAlignment="center" />
+            </LinearLayout>
+        </TableRow>
+
+    </TableLayout>
+</LinearLayout>

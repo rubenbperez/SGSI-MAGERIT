@@ -1,21 +1,30 @@
 package es.udc.fic.sgsi_magerit.Model.Safeguard;
 
-import java.util.List;
 
 /**
  * Created by err0r on 15/05/2017.
  */
-public class ThreatAssetsDTO {
+public class ThreatSafeguardDTO {
+    private Long idAmenaza;
     private Long idListaTipoAmenaza;
     private Long idTipoAmenaza;
     private Long idProyecto;
-    private List<AssetsThreatDTO> activos;
+    private Boolean checked;
 
-    public ThreatAssetsDTO(Long idListaTipoAmenaza, Long idTipoAmenaza, Long idProyecto, List<AssetsThreatDTO> activos) {
+    public ThreatSafeguardDTO(Long idAmenaza, Long idListaTipoAmenaza, Long idTipoAmenaza, Long idProyecto, Boolean checked) {
+        this.idAmenaza = idAmenaza;
         this.idListaTipoAmenaza = idListaTipoAmenaza;
         this.idTipoAmenaza = idTipoAmenaza;
         this.idProyecto = idProyecto;
-        this.activos = activos;
+        this.checked = checked;
+    }
+
+    public Long getIdAmenaza() {
+        return idAmenaza;
+    }
+
+    public void setIdAmenaza(Long idAmenaza) {
+        this.idAmenaza = idAmenaza;
     }
 
     public Long getIdListaTipoAmenaza() {
@@ -42,11 +51,11 @@ public class ThreatAssetsDTO {
         this.idProyecto = idProyecto;
     }
 
-    public List<AssetsThreatDTO> getActivos() {
-        return activos;
+    public Boolean getChecked() {
+        return checked;
     }
 
-    public void setActivos(List<AssetsThreatDTO> activos) {
-        this.activos = activos;
+    public void setChecked(Boolean checked) {
+        this.checked = checked;
     }
 }

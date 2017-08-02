@@ -3,21 +3,19 @@ package es.udc.fic.sgsi_magerit.Model.Safeguard;
 /**
  * Created by err0r on 15/05/2017.
  */
-public class AssetsThreatDTO {
-    Long idActivo;
-    Long idProyecto;
-    Long idAmenaza;
-    String nombreActivo;
-    String codigoActivo;
-    Boolean checked;
+public class AssetsSafeguardDTO {
+    private Long idActivo;
+    private Long idProyecto;
+    private String nombreActivo;
+    private String codigoActivo;
+    private Boolean expanded;
 
-    public AssetsThreatDTO(Long idActivo, Long idProyecto, Long idAmenaza, String nombreActivo, String codigoActivo, Boolean checked) {
+    public AssetsSafeguardDTO(Long idActivo, Long idProyecto, String nombreActivo, String codigoActivo, Boolean expanded) {
         this.idActivo = idActivo;
         this.idProyecto = idProyecto;
-        this.idAmenaza = idAmenaza;
         this.nombreActivo = nombreActivo;
         this.codigoActivo = codigoActivo;
-        this.checked = checked;
+        this.expanded = expanded;
     }
 
     public Long getIdActivo() {
@@ -36,14 +34,6 @@ public class AssetsThreatDTO {
         this.idProyecto = idProyecto;
     }
 
-    public Long getIdAmenaza() {
-        return idAmenaza;
-    }
-
-    public void setIdAmenaza(Long idAmenaza) {
-        this.idAmenaza = idAmenaza;
-    }
-
     public String getNombreActivo() {
         return nombreActivo;
     }
@@ -60,11 +50,11 @@ public class AssetsThreatDTO {
         this.codigoActivo = codigoActivo;
     }
 
-    public Boolean getChecked() {
-        return checked;
+    public Boolean getExpanded() {
+        return expanded;
     }
 
-    public void setChecked(Boolean checked) {
-        this.checked = checked;
+    public void setExpanded(Boolean expanded) {
+        this.expanded = expanded;
     }
 }
