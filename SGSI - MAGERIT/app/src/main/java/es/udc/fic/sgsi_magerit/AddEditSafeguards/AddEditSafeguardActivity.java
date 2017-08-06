@@ -11,9 +11,20 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import es.udc.fic.sgsi_magerit.AddEditProject.AddProjectActivityConstants;
+import es.udc.fic.sgsi_magerit.AddEditThreat.EstimateThreatFragment;
 import es.udc.fic.sgsi_magerit.Model.ModelService.ModelService;
 import es.udc.fic.sgsi_magerit.Model.ModelService.ModelServiceImpl;
+import es.udc.fic.sgsi_magerit.Model.Safeguard.AssetThreatInfoDTO;
+import es.udc.fic.sgsi_magerit.Model.Safeguard.Safeguard;
 import es.udc.fic.sgsi_magerit.R;
 import es.udc.fic.sgsi_magerit.Util.GlobalConstants;
 
@@ -23,11 +34,19 @@ public class AddEditSafeguardActivity extends AppCompatActivity {
     private AddEditSafeguardFragmentPagerAdapter adapter;
     private ModelService service;
     private Long idProyecto;
+    private Long idListaTipoSalvaguardaRecibido;
+    private Long idTipoSalvaguardaRecibido;
+
+    public ViewPager getViewPager() {
+        return viewPager;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         idProyecto = getIntent().getLongExtra("idProyecto", GlobalConstants.NULL_ID_PROYECTO);
+        idListaTipoSalvaguardaRecibido = getIntent().getLongExtra("idListaTipoSalvaguarda", GlobalConstants.NULL_ID_LISTA_TIPO_SALVAGUARDA);
+        idTipoSalvaguardaRecibido = getIntent().getLongExtra("idTipoSalvaguarda", GlobalConstants.NULL_ID_LISTA_TIPO_SALVAGUARDA);
 
         service = new ModelServiceImpl(this, GlobalConstants.DATABASE_NAME,1);
         setContentView(R.layout.activity_add_edit_safeguard);
@@ -47,6 +66,7 @@ public class AddEditSafeguardActivity extends AppCompatActivity {
 
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_return);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(AddEditSafeguardActivityConstants.ACTIVITY_TITLE_CREAR);
 
     }
 
@@ -59,30 +79,81 @@ public class AddEditSafeguardActivity extends AppCompatActivity {
                 finish();
                 return true;
             case R.id.action_aceptar:
-                /*item.setEnabled(false);
+                item.setEnabled(false);
                 if (!comprobarDatos()) {
                     item.setEnabled(true);
                     return false;
                 }
-                if (idListaTipoAmenazaRecibido != GlobalConstants.NULL_ID_LISTA_TIPO_AMENAZA
+                /*if (idListaTipoAmenazaRecibido != GlobalConstants.NULL_ID_LISTA_TIPO_AMENAZA
                         && idListaTipoAmenazaRecibido != GlobalConstants.NULL_ID_LISTA_TIPO_AMENAZA) {
                     editarAmenaza();
                     setResult(0,resultIntent);
-                } else {
-                    crearAmenaza();
-                    setResult(1, resultIntent);
-                }
-                deleteFile("threats.tmp");
+                } else {*/
+                //crearSalvaguarda();
+                //setResult(1, resultIntent);
+                //}
+
+                crearSalvaguarda();
+                setResult(1,resultIntent);
                 item.setEnabled(true);
                 finish();
-                return true;*/
-                break;
+                return true;
             case R.id.action_cancelar:
                 setResult(0, resultIntent);
                 finish();
                 return true;
         }
         return false;
+    }
+
+    private boolean comprobarDatos() {
+        boolean flag = true;
+        IdentifySafeguardFragment fr1 = (IdentifySafeguardFragment) adapter.instantiateItem(viewPager, 0);
+        IdentifySafeguardFragment.SafeguardTypePair pair = fr1.getData();
+
+        if (pair.getIdListaSafeguard() == null || pair.getIdTipoSafeguard() == null) {
+            viewPager.setCurrentItem(AddEditSafeguardActivityConstants.TAB_INDENTIFICACION);
+            Toast.makeText(this, AddEditSafeguardActivityConstants.ERROR_SALVAGUARDA_NO_SELECCIONADA, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        SafeguardThreatAssetsSelectionFragment fr2 = (SafeguardThreatAssetsSelectionFragment) adapter.instantiateItem(viewPager, 1);
+
+        if (!fr2.assetsSelected()) {
+            viewPager.setCurrentItem(AddEditSafeguardActivityConstants.TAB_SELECCION);
+            Toast.makeText(this, AddEditSafeguardActivityConstants.ERROR_AMENAZA_NO_SELECCIONADA, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        return flag;
+    }
+
+    private void crearSalvaguarda() {
+        boolean flag = true;
+        EstimateSafeguardFragment fr3 = (EstimateSafeguardFragment) adapter.instantiateItem(viewPager, 2);
+        fr3.recargarInfo();
+        HashMap<AssetThreatInfoDTO, List<Safeguard>> expandableSafeguard = fr3.getData();
+
+        IdentifySafeguardFragment fr1 = (IdentifySafeguardFragment) adapter.instantiateItem(viewPager, 0);
+        IdentifySafeguardFragment.SafeguardTypePair pair = fr1.getData();
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat(GlobalConstants.DATE_FORMAT);
+        Calendar fechaActual = Calendar.getInstance();
+        String fechaActualStr = dateFormat.format(fechaActual.getTime());
+
+        for (Map.Entry<AssetThreatInfoDTO, List<Safeguard>> entry : expandableSafeguard.entrySet()) {
+
+            Safeguard safeguard = entry.getValue().get(0);
+
+            service.crearSalvaguarda(safeguard.getIdActivo(), safeguard.getIdProyecto(), safeguard.getIdThreat(),
+                    pair.getIdListaSafeguard().longValue(), pair.getIdTipoSafeguard().longValue(),
+                    safeguard.getIdControlSeguridadDisponibilidad(),
+                    safeguard.getIdControlSeguridadIntegridad(),
+                    safeguard.getIdControlSeguridadConfidencialidad(),
+                    safeguard.getIdControlSeguridadAutenticidad(),
+                    safeguard.getIdControlSeguridadTrazabilidad(), safeguard.getTipoProteccion(),
+                    safeguard.getEficacia(), fechaActualStr);
+        }
     }
 
 
@@ -112,6 +183,9 @@ public class AddEditSafeguardActivity extends AppCompatActivity {
             Fragment f = null;
             Bundle args = new Bundle();
             args.putLong("idProyecto", idProyecto);
+            args.putLong("idListaTipoSalvaguarda", idListaTipoSalvaguardaRecibido); //Optional parameters
+            args.putLong("idTipoSalvaguarda", idTipoSalvaguardaRecibido); //Optional parameters
+
             switch (position) {
                 case AddEditSafeguardActivityConstants.TAB_INDENTIFICACION:
                     f = IdentifySafeguardFragment.newInstance();

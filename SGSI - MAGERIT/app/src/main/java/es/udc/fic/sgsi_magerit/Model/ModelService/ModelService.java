@@ -9,7 +9,9 @@ import es.udc.fic.sgsi_magerit.Model.Asset.AssetAssetType;
 import es.udc.fic.sgsi_magerit.Model.Asset.AssetDTO;
 import es.udc.fic.sgsi_magerit.Model.ProjectSizing.ParametrizacionDTO;
 import es.udc.fic.sgsi_magerit.Model.Project.Project;
+import es.udc.fic.sgsi_magerit.Model.Safeguard.AssetThreatInfoDTO;
 import es.udc.fic.sgsi_magerit.Model.Safeguard.AssetsSafeguardDTO;
+import es.udc.fic.sgsi_magerit.Model.Safeguard.Safeguard;
 import es.udc.fic.sgsi_magerit.Model.Safeguard.SafeguardDTO;
 import es.udc.fic.sgsi_magerit.Model.Safeguard.ThreatSafeguardDTO;
 import es.udc.fic.sgsi_magerit.Model.Threat.AssetThreatDTO;
@@ -125,8 +127,21 @@ public interface ModelService {
     public List<Long> obtenerIdsAmenazasDeActivo(Long idActivo, Long idProyecto);
     public List<ThreatDTO> obtenerTiposAmenazasDeActivo(Long idActivo, Long idProyecto);
 
+    public long crearSalvaguarda(Long idAcitvo, Long idProyecto, Long idAmenaza, Long idListaTipoSalvaguarda,
+                                 Long idTipoSalvaguarda, Integer idValoracionControlSeguridadDisponibilidad,
+                                 Integer idValoracionControlSeguridadIntegridad,
+                                 Integer idValoracionControlSeguridadConfidencialidad,
+                                 Integer idValoracionControlSeguridadAutenticidad,
+                                 Integer idValoracionControlSeguridadTrazabilidad,
+                                 Integer tipoProteccion, Integer eficacia, String fechaCreacion);
+
     public List<SafeguardDTO> obtenerSalvaguardas(Long idProyecto);
     public boolean eliminarSalvaguarda(Long idListaTipoSalvaguarda, Long idTipoSalvaguarda, Long idProyecto);
 
-    public HashMap<AssetsSafeguardDTO, List<ThreatSafeguardDTO>> obtenerAmenazasDeActivos(Long idProyecto);
+    public HashMap<AssetsSafeguardDTO, List<ThreatSafeguardDTO>> obtenerAmenazasDeActivos(Long idProyecto,
+                                                                                          Long idListaTipoSalvaguarda,
+                                                                                          Long idTipoSalvaguarda);
+
+    public HashMap<AssetThreatInfoDTO, List<Safeguard>> obtenerInfoSalvaguardasPorIdTipo(Long idProyecto, Long idListaTipoSalvaguarda,
+                                                                                         Long idTipoSalvaguarda) throws ParseException;
 }

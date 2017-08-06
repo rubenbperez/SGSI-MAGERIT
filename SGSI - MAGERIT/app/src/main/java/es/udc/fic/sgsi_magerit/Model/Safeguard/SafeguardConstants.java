@@ -18,8 +18,8 @@ public class SafeguardConstants {
     public static final String ID_ACTIVO = "idActivo";
     public static final String ID_AMENAZA = "idAmenaza";
     public static final String ID_PROYECTO = "idProyecto";
-    public static final String ID_TIPO_SALVAGUARDA = "idTipoAmenaza";
-    public static final String ID_LISTA_TIPO_SALVAGUARDA = "idListaTipoAmenaza";
+    public static final String ID_TIPO_SALVAGUARDA = "idTipoSalvaguarda";
+    public static final String ID_LISTA_TIPO_SALVAGUARDA = "idListaTipoSalvaguarda";
     public static final String ID_VALORACION_CONTROLSEGURIDAD_DISPONIBILIDAD = "idValoracionControlSeguridadDisponibilidad";
     public static final String ID_VALORACION_CONTROLSEGURIDAD_INTEGRIDAD = "idValoracionControlSeguridadIntegridad";
     public static final String ID_VALORACION_CONTROLSEGURIDAD_CONFIDENCIALIDAD = "idValoracionControlSeguridadConfidencialidad";

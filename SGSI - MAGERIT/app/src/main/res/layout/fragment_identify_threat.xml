@@ -55,7 +55,7 @@
             android:clickable="true"
             android:choiceMode="singleChoice"
             android:visibility="gone"/>
-        <!-- Lista de Amenazas: Ataques deliberados -->
+        <!-- Lista de Amenazas: AEdicion -->
         <ListView android:id="@+id/ListEdicion"
             android:layout_weight="1"
             android:layout_width="match_parent"

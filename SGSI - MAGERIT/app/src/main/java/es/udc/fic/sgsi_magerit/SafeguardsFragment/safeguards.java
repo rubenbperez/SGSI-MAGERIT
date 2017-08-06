@@ -146,12 +146,12 @@ public class Safeguards extends Fragment {
                 dialog.show();
                 break;
             case R.id.menuOpcEditar:
-                /*Intent intent = new Intent(getActivity(), AddEditThreatActivity.class);
-                intent.putExtra("idListaTipoAmenaza", data.get(index).getIdListaTipo()); //Optional parameters
-                intent.putExtra("idTipoAmenaza", data.get(index).getIdTipo()); //Optional parameters
+                Intent intent = new Intent(getActivity(), AddEditSafeguardActivity.class);
+                intent.putExtra("idListaTipoSalvaguarda", data.get(index).getIdListaTipo()); //Optional parameters
+                intent.putExtra("idTipoSalvaguarda", data.get(index).getIdTipo()); //Optional parameters
                 intent.putExtra("idProyecto", idProyectoActivo);
                 startActivityForResult(intent, GlobalConstants.REQUEST_CODE_EDIT_ACTIVITY);
-                break;*/
+                break;
         }
 
         return true;
@@ -212,4 +212,22 @@ public class Safeguards extends Fragment {
         }
         return codeName;
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent datas) {
+        super.onActivityResult(requestCode, resultCode, datas);
+
+        if (GlobalConstants.REQUEST_CODE_ADD_ACTIVITY == requestCode)  {
+
+            if (resultCode == 1) {
+                data.clear();
+                data.addAll(service.obtenerSalvaguardas(idProyectoActivo));
+                adaptador.notifyDataSetChanged();
+            }
+
+            if (resultCode == 0)
+                return;
+        }
+    }
+
 }

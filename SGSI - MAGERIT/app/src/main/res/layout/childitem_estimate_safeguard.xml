@@ -155,7 +155,7 @@
                 android:id="@+id/valorTipoProteccion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Tipo Proteccion"
+                android:text="Tipo protección"
                 android:focusable="false"
                 android:textSize="18sp"/>
             <Spinner

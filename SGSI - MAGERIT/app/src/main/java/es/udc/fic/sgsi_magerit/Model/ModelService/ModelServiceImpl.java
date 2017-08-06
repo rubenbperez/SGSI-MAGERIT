@@ -26,7 +26,9 @@ import es.udc.fic.sgsi_magerit.Model.ProjectSizing.ParametrizacionVulnerabilidad
 import es.udc.fic.sgsi_magerit.Model.ProjectSizing.ProjectSizingConstants;
 import es.udc.fic.sgsi_magerit.Model.Project.Project;
 import es.udc.fic.sgsi_magerit.Model.Project.ProjectConstants;
+import es.udc.fic.sgsi_magerit.Model.Safeguard.AssetThreatInfoDTO;
 import es.udc.fic.sgsi_magerit.Model.Safeguard.AssetsSafeguardDTO;
+import es.udc.fic.sgsi_magerit.Model.Safeguard.Safeguard;
 import es.udc.fic.sgsi_magerit.Model.Safeguard.SafeguardConstants;
 import es.udc.fic.sgsi_magerit.Model.Safeguard.SafeguardDTO;
 import es.udc.fic.sgsi_magerit.Model.Safeguard.ThreatSafeguardDTO;
@@ -1105,7 +1107,6 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
             } while ( (cursor.moveToNext()));
         }
 
-
         cursor.close();
         db.close();
         return amenazas;
@@ -1274,6 +1275,43 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
     }
 
     @Override
+    public long crearSalvaguarda(Long idActivo, Long idProyecto, Long idAmenaza, Long idListaTipoSalvaguarda,
+                                 Long idTipoSalvaguarda, Integer idValoracionControlSeguridadDisponibilidad,
+                                 Integer idValoracionControlSeguridadIntegridad,
+                                 Integer idValoracionControlSeguridadConfidencialidad,
+                                 Integer idValoracionControlSeguridadAutenticidad,
+                                 Integer idValoracionControlSeguridadTrazabilidad,
+                                 Integer tipoProteccion, Integer eficacia, String fechaCreacion) {
+
+        SQLiteDatabase db = getReadableDatabase();
+        //Creamos el registro a insertar como objeto ContentValues
+        ContentValues nuevaSalvaguarda = new ContentValues();
+        nuevaSalvaguarda.put(SafeguardConstants.ID_ACTIVO,idActivo);
+        nuevaSalvaguarda.put(SafeguardConstants.ID_PROYECTO, idProyecto);
+        nuevaSalvaguarda.put(SafeguardConstants.ID_AMENAZA, idAmenaza);
+        nuevaSalvaguarda.put(SafeguardConstants.ID_LISTA_TIPO_SALVAGUARDA, idListaTipoSalvaguarda);
+        nuevaSalvaguarda.put(SafeguardConstants.ID_TIPO_SALVAGUARDA, idTipoSalvaguarda);
+        nuevaSalvaguarda.put(SafeguardConstants.ID_VALORACION_CONTROLSEGURIDAD_DISPONIBILIDAD,
+                idValoracionControlSeguridadDisponibilidad);
+        nuevaSalvaguarda.put(SafeguardConstants.ID_VALORACION_CONTROLSEGURIDAD_INTEGRIDAD,
+                idValoracionControlSeguridadIntegridad);
+        nuevaSalvaguarda.put(SafeguardConstants.ID_VALORACION_CONTROLSEGURIDAD_CONFIDENCIALIDAD,
+                idValoracionControlSeguridadConfidencialidad);
+        nuevaSalvaguarda.put(SafeguardConstants.ID_VALORACION_CONTROLSEGURIDAD_AUTENTICIDAD,
+                idValoracionControlSeguridadAutenticidad);
+        nuevaSalvaguarda.put(SafeguardConstants.ID_VALORACION_CONTROLSEGURIDAD_TRAZABILIDAD,
+                idValoracionControlSeguridadTrazabilidad);
+        nuevaSalvaguarda.put(SafeguardConstants.TIPO_PROTECCION, tipoProteccion);
+        nuevaSalvaguarda.put(SafeguardConstants.EFICACIA, eficacia);
+        nuevaSalvaguarda.put(SafeguardConstants.FECHA_CREACION,fechaCreacion);
+        //Insertamos el registro en la base de datos
+
+        long id = db.insert(SafeguardConstants.TABLE_NAME, null, nuevaSalvaguarda);
+        db.close();
+        return id;
+    }
+
+    @Override
     public List<SafeguardDTO> obtenerSalvaguardas(Long idProyecto) {
         List <SafeguardDTO> salvaguardas = new ArrayList<SafeguardDTO>();
 
@@ -1306,8 +1344,32 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
     }
 
     @Override
-    public HashMap<AssetsSafeguardDTO, List<ThreatSafeguardDTO>> obtenerAmenazasDeActivos(Long idProyecto) {
+    public HashMap<AssetsSafeguardDTO, List<ThreatSafeguardDTO>> obtenerAmenazasDeActivos(Long idProyecto,
+                                                                                          Long idListaTipoSalvaguarda,
+                                                                                          Long idTipoSalvaguarda) {
         SQLiteDatabase db = getReadableDatabase();
+
+        List<Long> idsAmenazasConSalvaguarda = new ArrayList<>();
+        if (idListaTipoSalvaguarda != GlobalConstants.NULL_ID_LISTA_TIPO_SALVAGUARDA
+                && idTipoSalvaguarda != GlobalConstants.NULL_ID_LISTA_TIPO_SALVAGUARDA) {
+
+            Cursor cursorAux = db.rawQuery("SELECT DISTINCT " +
+                    SafeguardConstants.ID_AMENAZA + " FROM " +
+                    SafeguardConstants.TABLE_NAME + " WHERE " +
+                    SafeguardConstants.ID_PROYECTO + " = " + idProyecto + " AND " +
+                    SafeguardConstants.ID_LISTA_TIPO_SALVAGUARDA + " = " + idListaTipoSalvaguarda +
+                    " AND " + SafeguardConstants.ID_TIPO_SALVAGUARDA + " = " + idTipoSalvaguarda, null);
+
+            if (cursorAux.moveToFirst()) {
+                do {
+                    Long idAmenaza = cursorAux.getLong(0);
+                    idsAmenazasConSalvaguarda.add(idAmenaza);
+                } while ((cursorAux.moveToNext()));
+            }
+
+            cursorAux.close();
+        }
+
 
         Cursor cursor = db.rawQuery("SELECT DISTINCT " +
                 AssetConstants.ID_ACTIVO + ", " + AssetConstants.NOMBRE + ", " +
@@ -1336,12 +1398,17 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
                         Long idAmenaza = cursor2.getLong(0);
                         Long idListaTipoAmenaza = cursor2.getLong(1);
                         Long idTipoAmenaza = cursor2.getLong(2);
+                        Boolean checked = false;
+
+                        if (idsAmenazasConSalvaguarda.contains(idAmenaza))
+                            checked = true;
+
                         ThreatSafeguardDTO threatSafeguard = new ThreatSafeguardDTO(idAmenaza,idListaTipoAmenaza,
-                                idTipoAmenaza,idProyecto,false);
+                                idTipoAmenaza,idProyecto,checked);
+
                         threatsSafeguard.add(threatSafeguard);
                     } while ( (cursor2.moveToNext()));
                 }
-
                 if (!threatsSafeguard.isEmpty())
                     assetsThreats.put(assetSafeguard,threatsSafeguard);
                 cursor2.close();
@@ -1352,5 +1419,82 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
         return assetsThreats;
     }
 
+    //@Override
+    public HashMap<AssetThreatInfoDTO, List<Safeguard>> obtenerInfoSalvaguardasPorIdTipo(Long idProyecto, Long idListaTipoSalvaguarda,
+                                                                                         Long idTipoSalvaguarda)throws ParseException {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        HashMap<AssetThreatInfoDTO, List<Safeguard>> salvaguardas = new HashMap<>();
+
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT s." +
+                SafeguardConstants.ID_SAFEGUARD + ", s." + SafeguardConstants.ID_PROYECTO  + ", " +
+                SafeguardConstants.ID_AMENAZA + ", " + SafeguardConstants.ID_LISTA_TIPO_SALVAGUARDA  + ", " +
+                SafeguardConstants.ID_TIPO_SALVAGUARDA + ", " + SafeguardConstants.ID_VALORACION_CONTROLSEGURIDAD_DISPONIBILIDAD + ", " +
+                SafeguardConstants.ID_VALORACION_CONTROLSEGURIDAD_INTEGRIDAD + ", " +
+                SafeguardConstants.ID_VALORACION_CONTROLSEGURIDAD_CONFIDENCIALIDAD + ", " +
+                SafeguardConstants.ID_VALORACION_CONTROLSEGURIDAD_AUTENTICIDAD + ", " +
+                SafeguardConstants.ID_VALORACION_CONTROLSEGURIDAD_TRAZABILIDAD + ", " +
+                SafeguardConstants.TIPO_PROTECCION + ", " + SafeguardConstants.EFICACIA + ", s." +
+                SafeguardConstants.FECHA_CREACION + ", a." + AssetConstants.ID_ACTIVO + ", " + AssetConstants.NOMBRE + ", " +
+                AssetConstants.CODIGO + ", " + ThreatConstants.ID_LISTA_TIPO_AMENAZA + ", " +
+                ThreatConstants.ID_TIPO_AMENAZA + " FROM " + SafeguardConstants.TABLE_NAME + " s JOIN " +
+                AssetConstants.TABLE_NAME + " a ON s." + SafeguardConstants.ID_ACTIVO + " = a." +
+                AssetConstants.ID_ACTIVO + " JOIN " + ThreatConstants.TABLE_NAME + " t ON t." +
+                ThreatConstants.ID_AMENAZA_ACTIVO + " = " + SafeguardConstants.ID_AMENAZA +
+                " WHERE s." + SafeguardConstants.ID_PROYECTO + " = " +
+                idProyecto + " AND " + SafeguardConstants.ID_LISTA_TIPO_SALVAGUARDA + " = " +
+                idListaTipoSalvaguarda + " AND " + SafeguardConstants.ID_TIPO_SALVAGUARDA + " = " + idTipoSalvaguarda, null);
+
+        if (cursor.moveToFirst()){
+            do {
+                List<Safeguard> safeguards = new ArrayList<>();
+
+
+                Long idSalvaguarda = cursor.getLong(0);
+                Long idProyectoBD = cursor.getLong(1);
+                Long idAmenaza = cursor.getLong(2);
+                Long idListaTipoSalvaguardaBD = cursor.getLong(3);
+                Long idTipoSalvaguardaBD = cursor.getLong(4);
+
+                Integer idValoracionDisp = cursor.getInt(5);
+                Integer idValoracionInt = cursor.getInt(6);
+                Integer idValoracionConf = cursor.getInt(7);
+                Integer idValoracionAut = cursor.getInt(8);
+                Integer idValoracionTraz = cursor.getInt(9);
+
+                Integer tprotec = cursor.getInt(10);
+                Integer eficacia;
+
+                if (!cursor.isNull(11))
+                    eficacia = cursor.getInt(11);
+                else
+                    eficacia = null;
+                String fechaCreacion = cursor.getString(12);
+
+                Long idActivo = cursor.getLong(13);
+                String nombreActivo = cursor.getString(14);
+                String codigoActivo = cursor.getString(15);
+                Long idListaTipoAmenaza = cursor.getLong(16);
+                Long idTipoAmenaza = cursor.getLong(17);
+
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(dateFormat.parse(fechaCreacion));
+
+                AssetThreatInfoDTO assetThreat = new AssetThreatInfoDTO(idActivo, nombreActivo,
+                        codigoActivo, idAmenaza, idListaTipoAmenaza, idTipoAmenaza, idProyecto);
+
+                Safeguard safeguard = new Safeguard(idSalvaguarda,idAmenaza, idActivo, idProyecto,idListaTipoSalvaguarda,
+                        idTipoSalvaguarda, idValoracionDisp, idValoracionInt, idValoracionConf, idValoracionAut,
+                        idValoracionTraz, tprotec, eficacia, cal);
+
+                safeguards.add(safeguard);
+
+                salvaguardas.put(assetThreat,safeguards);
+            } while ( (cursor.moveToNext()));
+        }
+        cursor.close();
+        db.close();
+        return salvaguardas;
+    }
 
 }
