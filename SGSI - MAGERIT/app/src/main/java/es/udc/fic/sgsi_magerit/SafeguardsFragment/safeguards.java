@@ -129,7 +129,7 @@ public class Safeguards extends Fragment {
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int buttonId) {
                                 Log.i("Dialogos", "Confirmacion Aceptada.");
-                                service.eliminarSalvaguarda(data.get(index).getIdListaTipo(), data.get(index).getIdTipo(), idProyectoActivo);
+                                service.eliminarSalvaguardaPorTipo(data.get(index).getIdListaTipo(), data.get(index).getIdTipo(), idProyectoActivo);
                                 data.remove(index);
                                 //comprobarElementosNavView(data,navView);
                                 adaptador.notifyDataSetChanged();

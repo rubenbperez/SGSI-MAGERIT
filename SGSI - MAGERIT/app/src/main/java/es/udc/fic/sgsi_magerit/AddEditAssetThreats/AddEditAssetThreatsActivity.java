@@ -159,7 +159,7 @@ public class AddEditAssetThreatsActivity extends AppCompatActivity {
                         at.getIdDegradacionAutenticidad(), at.getIdDegradacionTrazabilidad(),
                         at.getIdDegradacionTrazabilidad(), fechaActualStr);
             } else {
-                service.editarAmenaza(at.getIdThreat(),
+                service.editarValoracionAmenaza(at.getIdThreat(),
                         at.getIdDegradacionDisponibilidad(), at.getIdProbabilidadDisponibilidad(),
                         at.getIdDegradacionIntegridad(), at.getIdProbabilidadIntegridad(),
                         at.getIdDegradacionConfidencialidad(),at.getIdProbabilidadConfidencialidad(),

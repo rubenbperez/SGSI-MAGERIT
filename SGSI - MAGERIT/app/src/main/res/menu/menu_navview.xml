@@ -22,5 +22,15 @@
             android:icon="@drawable/ic_menu"
             android:title="Salvaguardas"/>
 
+        <item
+            android:id="@+id/menuAnalisis"
+            android:icon="@drawable/ic_menu"
+            android:title="Análisis"/>
+
+        <item
+            android:id="@+id/tareasPendientes"
+            android:icon="@drawable/ic_menu"
+            android:title="Tareas Pendientes"/>
+
     </group>
 </menu>

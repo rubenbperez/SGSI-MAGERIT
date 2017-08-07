@@ -13,7 +13,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -84,17 +86,14 @@ public class AddEditSafeguardActivity extends AppCompatActivity {
                     item.setEnabled(true);
                     return false;
                 }
-                /*if (idListaTipoAmenazaRecibido != GlobalConstants.NULL_ID_LISTA_TIPO_AMENAZA
-                        && idListaTipoAmenazaRecibido != GlobalConstants.NULL_ID_LISTA_TIPO_AMENAZA) {
-                    editarAmenaza();
+                if (idListaTipoSalvaguardaRecibido != GlobalConstants.NULL_ID_LISTA_TIPO_SALVAGUARDA
+                        && idListaTipoSalvaguardaRecibido != GlobalConstants.NULL_ID_LISTA_TIPO_SALVAGUARDA) {
+                    editarSalvaguarda();
                     setResult(0,resultIntent);
-                } else {*/
-                //crearSalvaguarda();
-                //setResult(1, resultIntent);
-                //}
-
+                } else {
                 crearSalvaguarda();
-                setResult(1,resultIntent);
+                setResult(1, resultIntent);
+                }
                 item.setEnabled(true);
                 finish();
                 return true;
@@ -155,6 +154,86 @@ public class AddEditSafeguardActivity extends AppCompatActivity {
                     safeguard.getEficacia(), fechaActualStr);
         }
     }
+
+    private boolean editarSalvaguarda() {
+
+        //Obtenemos la lista que hay en el fragmento de valoracion
+        EstimateSafeguardFragment fr3 = (EstimateSafeguardFragment) adapter.instantiateItem(viewPager, 2);
+        fr3.recargarInfo();
+        HashMap<AssetThreatInfoDTO, List<Safeguard>> expandableSafeguardFr3 = fr3.getData();
+
+        HashMap<AssetThreatInfoDTO, List<Safeguard>> expandableSafeguardBD = new HashMap<>();
+
+        try {
+            expandableSafeguardBD = service.obtenerInfoSalvaguardasPorIdTipo(idProyecto,
+                    idListaTipoSalvaguardaRecibido, idTipoSalvaguardaRecibido);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        IdentifySafeguardFragment fr1 = (IdentifySafeguardFragment) adapter.instantiateItem(viewPager, 0);
+        IdentifySafeguardFragment.SafeguardTypePair pair = fr1.getData();
+
+        List<Integer> idsSalvaguardasComprobadas = new ArrayList<>();
+
+        //Sabemos lo que hay en base de datos y lo que hay en el fragmento 3.
+
+        if (expandableSafeguardFr3.isEmpty())
+            return false;
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat(GlobalConstants.DATE_FORMAT);
+        Calendar fechaActual = Calendar.getInstance();
+        String fechaActualStr = dateFormat.format(fechaActual.getTime());
+        Boolean flagActualizado = false;
+
+        for (Map.Entry<AssetThreatInfoDTO, List<Safeguard>> entryFr3 : expandableSafeguardFr3.entrySet()) {
+            AssetThreatInfoDTO keyFr3 = entryFr3.getKey();
+            Safeguard valueFr3 = entryFr3.getValue().get(0);
+            flagActualizado = false;
+
+            for (Map.Entry<AssetThreatInfoDTO, List<Safeguard>> entryBD : expandableSafeguardBD.entrySet()) {
+                AssetThreatInfoDTO keyBD = entryBD.getKey();
+                Safeguard valueBD = entryBD.getValue().get(0);
+
+                // si está, actualizamos
+                if (valueFr3.getIdThreat() == valueBD.getIdThreat()) {
+                    service.editarValoracionSalvaguarda(valueFr3.getIdSafeguard(),
+                            valueFr3.getIdControlSeguridadDisponibilidad(),
+                            valueFr3.getIdControlSeguridadIntegridad(),
+                            valueFr3.getIdControlSeguridadConfidencialidad(),
+                            valueFr3.getIdControlSeguridadAutenticidad(),
+                            valueFr3.getIdControlSeguridadTrazabilidad(), valueFr3.getTipoProteccion(),
+                            valueFr3.getEficacia());
+                    flagActualizado = true;
+                    break;
+                }
+            }
+            //si no ha sido actualizado lo anadimos
+            if (!flagActualizado) {
+                service.crearSalvaguarda(valueFr3.getIdActivo(), valueFr3.getIdProyecto(), valueFr3.getIdThreat(),
+                        pair.getIdListaSafeguard().longValue(), pair.getIdTipoSafeguard().longValue(),
+                        valueFr3.getIdControlSeguridadDisponibilidad(),
+                        valueFr3.getIdControlSeguridadIntegridad(),
+                        valueFr3.getIdControlSeguridadConfidencialidad(),
+                        valueFr3.getIdControlSeguridadAutenticidad(),
+                        valueFr3.getIdControlSeguridadTrazabilidad(), valueFr3.getTipoProteccion(),
+                        valueFr3.getEficacia(), fechaActualStr);
+            }
+            idsSalvaguardasComprobadas.add(valueFr3.getIdThreat().intValue());
+        }
+
+        // Eliminamos las que ya no existan
+        for (Map.Entry<AssetThreatInfoDTO, List<Safeguard>> entryBD : expandableSafeguardBD.entrySet()) {
+            AssetThreatInfoDTO keyBD = entryBD.getKey();
+            Safeguard valueBD = entryBD.getValue().get(0);
+
+            if (!idsSalvaguardasComprobadas.contains(valueBD.getIdThreat().intValue())) {
+                service.eliminarSalvaguardaPorId(valueBD.getIdSafeguard(), idProyecto);
+            }
+        }
+        return true;
+    }
+
 
 
     @Override

@@ -288,25 +288,27 @@ public class AddEditThreatActivity extends AppCompatActivity {
 
         List<Integer> elementosComprobados = new ArrayList<>();
 
-        for (AssetThreatDTO at : listaAmenazasFr3) {
+        if (!listaAmenazasFr3.isEmpty()) {
+            for (AssetThreatDTO at : listaAmenazasFr3) {
 
-            if (listaAmenazasBD.contains(at.getIdThreat())) {
-                service.editarAmenaza(at.getIdThreat(),
-                        at.getIdDegradacionDisponibilidad(), at.getIdProbabilidadDisponibilidad(),
-                        at.getIdDegradacionIntegridad(), at.getIdProbabilidadIntegridad(),
-                        at.getIdDegradacionConfidencialidad(),at.getIdProbabilidadConfidencialidad(),
-                        at.getIdDegradacionAutenticidad(), at.getIdDegradacionAutenticidad(),
-                        at.getIdDegradacionTrazabilidad(), at.getIdDegradacionTrazabilidad());
-            } else {
-                service.crearAmenaza(at.getIdActivo(),at.getIdProyecto(),idListaTipoAmenazaRecibido, idTipoAmenazaRecibido,
-                        at.getIdDegradacionDisponibilidad(), at.getIdProbabilidadDisponibilidad(),
-                        at.getIdDegradacionIntegridad(), at.getIdProbabilidadIntegridad(),
-                        at.getIdDegradacionConfidencialidad(),at.getIdProbabilidadConfidencialidad(),
-                        at.getIdDegradacionAutenticidad(), at.getIdDegradacionAutenticidad(),
-                        at.getIdDegradacionTrazabilidad(), at.getIdDegradacionTrazabilidad(),
-                        fechaActualStr);
+                if (listaAmenazasBD.contains(at.getIdThreat())) {
+                    service.editarValoracionAmenaza(at.getIdThreat(),
+                            at.getIdDegradacionDisponibilidad(), at.getIdProbabilidadDisponibilidad(),
+                            at.getIdDegradacionIntegridad(), at.getIdProbabilidadIntegridad(),
+                            at.getIdDegradacionConfidencialidad(), at.getIdProbabilidadConfidencialidad(),
+                            at.getIdDegradacionAutenticidad(), at.getIdDegradacionAutenticidad(),
+                            at.getIdDegradacionTrazabilidad(), at.getIdDegradacionTrazabilidad());
+                } else {
+                    service.crearAmenaza(at.getIdActivo(), at.getIdProyecto(), idListaTipoAmenazaRecibido, idTipoAmenazaRecibido,
+                            at.getIdDegradacionDisponibilidad(), at.getIdProbabilidadDisponibilidad(),
+                            at.getIdDegradacionIntegridad(), at.getIdProbabilidadIntegridad(),
+                            at.getIdDegradacionConfidencialidad(), at.getIdProbabilidadConfidencialidad(),
+                            at.getIdDegradacionAutenticidad(), at.getIdDegradacionAutenticidad(),
+                            at.getIdDegradacionTrazabilidad(), at.getIdDegradacionTrazabilidad(),
+                            fechaActualStr);
+                }
+                elementosComprobados.add(listaAmenazasBD.indexOf(at.getIdThreat()));
             }
-            elementosComprobados.add(listaAmenazasBD.indexOf(at.getIdThreat()));
         }
         //Eliminamos los elementos que estan en Fr3 pero no en BBDD
         // ahora eliminamos de BD las que no estén en la otra lista

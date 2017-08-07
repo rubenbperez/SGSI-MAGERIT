@@ -220,8 +220,8 @@ public class IdentifySafeguardFragment extends Fragment {
             return pair;
         }
 
-        if (idListaTipoSalvaguarda == GlobalConstants.NULL_ID_LISTA_TIPO_SALVAGUARDA &&
-                idTipoSalvaguarda == GlobalConstants.NULL_ID_LISTA_TIPO_SALVAGUARDA) {
+        if (idListaTipoSalvaguarda != GlobalConstants.NULL_ID_LISTA_TIPO_SALVAGUARDA &&
+                idTipoSalvaguarda != GlobalConstants.NULL_ID_LISTA_TIPO_SALVAGUARDA) {
             pair.idListaSafeguard = idListaTipoSalvaguarda.intValue();
             pair.idTipoSafeguard = idTipoSalvaguarda.intValue();
             return pair;

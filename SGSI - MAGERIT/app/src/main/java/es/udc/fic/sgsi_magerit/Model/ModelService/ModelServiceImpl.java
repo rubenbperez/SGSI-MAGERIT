@@ -1135,7 +1135,7 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
 
 
     @Override
-    public void editarAmenaza(Long idAmenaza, Integer idDegradacionDisponibilidad,
+    public void editarValoracionAmenaza(Long idAmenaza, Integer idDegradacionDisponibilidad,
                              Integer idProbabilidadDisponibilidad, Integer idDegradacionIntegridad,
                              Integer idProbabilidadIntegridad, Integer idDegradacionConfidencialidad,
                              Integer idProbabilidadConfidencialidad, Integer idDegradacionAutenticidad,
@@ -1312,6 +1312,37 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
     }
 
     @Override
+    public void editarValoracionSalvaguarda(Long idSalvaguarda, Integer idValoracionControlSeguridadDisponibilidad,
+                                  Integer idValoracionControlSeguridadIntegridad,
+                                  Integer idValoracionControlSeguridadConfidencialidad,
+                                  Integer idValoracionControlSeguridadAutenticidad,
+                                  Integer idValoracionControlSeguridadTrazabilidad,
+                                  Integer tipoProteccion, Integer eficacia) {
+
+
+        SQLiteDatabase db = getReadableDatabase();
+        //Creamos el registro a editar como objeto ContentValues
+        ContentValues editarSalvaguarda = new ContentValues();
+        editarSalvaguarda.put(SafeguardConstants.ID_VALORACION_CONTROLSEGURIDAD_DISPONIBILIDAD,
+                idValoracionControlSeguridadDisponibilidad);
+        editarSalvaguarda.put(SafeguardConstants.ID_VALORACION_CONTROLSEGURIDAD_INTEGRIDAD,
+                idValoracionControlSeguridadIntegridad);
+        editarSalvaguarda.put(SafeguardConstants.ID_VALORACION_CONTROLSEGURIDAD_CONFIDENCIALIDAD,
+                idValoracionControlSeguridadConfidencialidad);
+        editarSalvaguarda.put(SafeguardConstants.ID_VALORACION_CONTROLSEGURIDAD_AUTENTICIDAD,
+                idValoracionControlSeguridadAutenticidad);
+        editarSalvaguarda.put(SafeguardConstants.ID_VALORACION_CONTROLSEGURIDAD_TRAZABILIDAD,
+                idValoracionControlSeguridadTrazabilidad);
+        editarSalvaguarda.put(SafeguardConstants.TIPO_PROTECCION, tipoProteccion);
+        editarSalvaguarda.put(SafeguardConstants.EFICACIA, eficacia);
+
+        
+        db.update(SafeguardConstants.TABLE_NAME, editarSalvaguarda, SafeguardConstants.ID_SAFEGUARD + "="+
+                idSalvaguarda, null);
+        db.close();
+    }
+
+    @Override
     public List<SafeguardDTO> obtenerSalvaguardas(Long idProyecto) {
         List <SafeguardDTO> salvaguardas = new ArrayList<SafeguardDTO>();
 
@@ -1334,11 +1365,21 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
     }
 
     @Override
-    public boolean eliminarSalvaguarda(Long idListaTipoSalvaguarda, Long idTipoSalvaguarda, Long idProyecto) {
+    public boolean eliminarSalvaguardaPorTipo(Long idListaTipoSalvaguarda, Long idTipoSalvaguarda, Long idProyecto) {
         SQLiteDatabase db = getReadableDatabase();
         db.delete(SafeguardConstants.TABLE_NAME, SafeguardConstants.ID_PROYECTO
                 + "=" + idProyecto + " AND " + SafeguardConstants.ID_LISTA_TIPO_SALVAGUARDA + "=" +
                 idListaTipoSalvaguarda + " AND " + SafeguardConstants.ID_TIPO_SALVAGUARDA + "=" + idTipoSalvaguarda, null);
+        db.close();
+        return true;
+    }
+
+    @Override
+    public boolean eliminarSalvaguardaPorId(Long idSalvaguarda, Long idProyecto) {
+        SQLiteDatabase db = getReadableDatabase();
+        db.delete(SafeguardConstants.TABLE_NAME, SafeguardConstants.ID_PROYECTO
+                + "=" + idProyecto + " AND " + SafeguardConstants.ID_SAFEGUARD + "=" +
+                idSalvaguarda, null);
         db.close();
         return true;
     }

@@ -115,7 +115,7 @@ public interface ModelService {
 
     public List<Long> obtenerIdsAmenazaActivoPorTipoAmenaza(Long idListaTipoAmenaza, Long idTipoAmenaza, Long idProyecto);
 
-    public void editarAmenaza(Long idAmenaza, Integer idDegradacionDisponibilidad,
+    public void editarValoracionAmenaza(Long idAmenaza, Integer idDegradacionDisponibilidad,
                               Integer idProbabilidadDisponibilidad, Integer idDegradacionIntegridad,
                               Integer idProbabilidadIntegridad, Integer idDegradacionConfidencialidad,
                               Integer idProbabilidadConfidencialidad, Integer idDegradacionAutenticidad,
@@ -127,7 +127,7 @@ public interface ModelService {
     public List<Long> obtenerIdsAmenazasDeActivo(Long idActivo, Long idProyecto);
     public List<ThreatDTO> obtenerTiposAmenazasDeActivo(Long idActivo, Long idProyecto);
 
-    public long crearSalvaguarda(Long idAcitvo, Long idProyecto, Long idAmenaza, Long idListaTipoSalvaguarda,
+    public long crearSalvaguarda(Long idActivo, Long idProyecto, Long idAmenaza, Long idListaTipoSalvaguarda,
                                  Long idTipoSalvaguarda, Integer idValoracionControlSeguridadDisponibilidad,
                                  Integer idValoracionControlSeguridadIntegridad,
                                  Integer idValoracionControlSeguridadConfidencialidad,
@@ -135,8 +135,17 @@ public interface ModelService {
                                  Integer idValoracionControlSeguridadTrazabilidad,
                                  Integer tipoProteccion, Integer eficacia, String fechaCreacion);
 
+    public void editarValoracionSalvaguarda(Long idSalvaguarda,
+                                  Integer idValoracionControlSeguridadDisponibilidad,
+                                  Integer idValoracionControlSeguridadIntegridad,
+                                  Integer idValoracionControlSeguridadConfidencialidad,
+                                  Integer idValoracionControlSeguridadAutenticidad,
+                                  Integer idValoracionControlSeguridadTrazabilidad,
+                                  Integer tipoProteccion, Integer eficacia);
+
     public List<SafeguardDTO> obtenerSalvaguardas(Long idProyecto);
-    public boolean eliminarSalvaguarda(Long idListaTipoSalvaguarda, Long idTipoSalvaguarda, Long idProyecto);
+    public boolean eliminarSalvaguardaPorTipo(Long idListaTipoSalvaguarda, Long idTipoSalvaguarda, Long idProyecto);
+    public boolean eliminarSalvaguardaPorId(Long idSalvaguarda, Long idProyecto);
 
     public HashMap<AssetsSafeguardDTO, List<ThreatSafeguardDTO>> obtenerAmenazasDeActivos(Long idProyecto,
                                                                                           Long idListaTipoSalvaguarda,
@@ -144,4 +153,6 @@ public interface ModelService {
 
     public HashMap<AssetThreatInfoDTO, List<Safeguard>> obtenerInfoSalvaguardasPorIdTipo(Long idProyecto, Long idListaTipoSalvaguarda,
                                                                                          Long idTipoSalvaguarda) throws ParseException;
+
+
 }

@@ -138,6 +138,7 @@ public class Threats extends Fragment {
             }
 
             if (resultCode == 0)
+                adaptador.notifyDataSetChanged();
                 return;
         }
         comprobarElementosNavView(data,navView);
