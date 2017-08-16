@@ -7,6 +7,7 @@ import java.util.List;
 import es.udc.fic.sgsi_magerit.Model.Asset.Asset;
 import es.udc.fic.sgsi_magerit.Model.Asset.AssetAssetType;
 import es.udc.fic.sgsi_magerit.Model.Asset.AssetDTO;
+import es.udc.fic.sgsi_magerit.Model.PendingTasks.PendingTaskDTO;
 import es.udc.fic.sgsi_magerit.Model.ProjectSizing.ParametrizacionDTO;
 import es.udc.fic.sgsi_magerit.Model.Project.Project;
 import es.udc.fic.sgsi_magerit.Model.Safeguard.AssetThreatInfoDTO;
@@ -154,5 +155,7 @@ public interface ModelService {
     public HashMap<AssetThreatInfoDTO, List<Safeguard>> obtenerInfoSalvaguardasPorIdTipo(Long idProyecto, Long idListaTipoSalvaguarda,
                                                                                          Long idTipoSalvaguarda) throws ParseException;
 
+
+    public List<PendingTaskDTO> obtenerTareasPendientes(Long idProyecto);
 
 }

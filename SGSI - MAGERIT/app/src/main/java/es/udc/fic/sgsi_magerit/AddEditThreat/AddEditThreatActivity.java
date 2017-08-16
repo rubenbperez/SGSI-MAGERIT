@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
@@ -268,6 +269,7 @@ public class AddEditThreatActivity extends AppCompatActivity {
         }
         return true;
     }
+
 
     private boolean editarAmenaza() {
 

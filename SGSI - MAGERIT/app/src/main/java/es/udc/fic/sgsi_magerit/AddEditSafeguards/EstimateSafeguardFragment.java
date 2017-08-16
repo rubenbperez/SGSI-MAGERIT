@@ -163,6 +163,7 @@ public class EstimateSafeguardFragment extends Fragment {
                     android.R.layout.simple_spinner_item, strParamCtrlSeguridad);
             spinnerAdapterDisp.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinnerDisp.setAdapter((SpinnerAdapter) spinnerAdapterDisp);
+            spinnerDisp.setAdapter((SpinnerAdapter) spinnerAdapterDisp);
 
             if (expandableListDetail.get(expandableListTitle.get(listPosition)).get(
                     expandedListPosition).getIdControlSeguridadDisponibilidad() != null)
@@ -173,8 +174,12 @@ public class EstimateSafeguardFragment extends Fragment {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                     int index = parent.getSelectedItemPosition();
+                    if (index != 0)
                     expandableListDetail.get(expandableListTitle.get(listPosition)).get(
                             expandedListPosition).setIdControlSeguridadDisponibilidad(index);
+                    else
+                        expandableListDetail.get(expandableListTitle.get(listPosition)).get(
+                                expandedListPosition).setIdControlSeguridadDisponibilidad(null);
                 }
 
                 @Override
@@ -198,8 +203,12 @@ public class EstimateSafeguardFragment extends Fragment {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                     int index = parent.getSelectedItemPosition();
-                    expandableListDetail.get(expandableListTitle.get(listPosition)).get(
-                            expandedListPosition).setIdControlSeguridadIntegridad(index);
+                    if (index != 0)
+                        expandableListDetail.get(expandableListTitle.get(listPosition)).get(
+                                expandedListPosition).setIdControlSeguridadIntegridad(index);
+                    else
+                        expandableListDetail.get(expandableListTitle.get(listPosition)).get(
+                                expandedListPosition).setIdControlSeguridadIntegridad(null);
                 }
 
                 @Override
@@ -223,8 +232,12 @@ public class EstimateSafeguardFragment extends Fragment {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                     int index = parent.getSelectedItemPosition();
+                    if (index != 0)
                     expandableListDetail.get(expandableListTitle.get(listPosition)).get(
                             expandedListPosition).setIdControlSeguridadConfidencialidad(index);
+                    else
+                        expandableListDetail.get(expandableListTitle.get(listPosition)).get(
+                                expandedListPosition).setIdControlSeguridadConfidencialidad(null);
                 }
 
                 @Override
@@ -248,8 +261,12 @@ public class EstimateSafeguardFragment extends Fragment {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                     int index = parent.getSelectedItemPosition();
-                    expandableListDetail.get(expandableListTitle.get(listPosition)).get(
-                            expandedListPosition).setIdControlSeguridadAutenticidad(index);
+                    if (index != 0)
+                        expandableListDetail.get(expandableListTitle.get(listPosition)).get(
+                                expandedListPosition).setIdControlSeguridadAutenticidad(index);
+                    else
+                        expandableListDetail.get(expandableListTitle.get(listPosition)).get(
+                                expandedListPosition).setIdControlSeguridadAutenticidad(null);
                 }
 
                 @Override
@@ -273,8 +290,12 @@ public class EstimateSafeguardFragment extends Fragment {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                     int index = parent.getSelectedItemPosition();
+                    if (index != 0)
                     expandableListDetail.get(expandableListTitle.get(listPosition)).get(
                             expandedListPosition).setIdControlSeguridadTrazabilidad(index);
+                    else
+                        expandableListDetail.get(expandableListTitle.get(listPosition)).get(
+                                expandedListPosition).setIdControlSeguridadTrazabilidad(null);
                 }
 
                 @Override
@@ -296,8 +317,12 @@ public class EstimateSafeguardFragment extends Fragment {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                     int index = parent.getSelectedItemPosition();
+                    if (index != 0)
                     expandableListDetail.get(expandableListTitle.get(listPosition)).get(
                             expandedListPosition).setTipoProteccion(index);
+                    else
+                        expandableListDetail.get(expandableListTitle.get(listPosition)).get(
+                                expandedListPosition).setTipoProteccion(null);
                 }
 
                 @Override

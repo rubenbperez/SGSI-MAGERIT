@@ -18,6 +18,7 @@ import es.udc.fic.sgsi_magerit.Model.Asset.Asset;
 import es.udc.fic.sgsi_magerit.Model.Asset.AssetAssetType;
 import es.udc.fic.sgsi_magerit.Model.Asset.AssetConstants;
 import es.udc.fic.sgsi_magerit.Model.Asset.AssetDTO;
+import es.udc.fic.sgsi_magerit.Model.PendingTasks.PendingTaskDTO;
 import es.udc.fic.sgsi_magerit.Model.ProjectSizing.ParametrizacionActivo;
 import es.udc.fic.sgsi_magerit.Model.ProjectSizing.ParametrizacionControlSeguridad;
 import es.udc.fic.sgsi_magerit.Model.ProjectSizing.ParametrizacionDTO;
@@ -33,10 +34,10 @@ import es.udc.fic.sgsi_magerit.Model.Safeguard.SafeguardConstants;
 import es.udc.fic.sgsi_magerit.Model.Safeguard.SafeguardDTO;
 import es.udc.fic.sgsi_magerit.Model.Safeguard.ThreatSafeguardDTO;
 import es.udc.fic.sgsi_magerit.Model.Threat.AssetThreatDTO;
-import es.udc.fic.sgsi_magerit.Model.Threat.Threat;
 import es.udc.fic.sgsi_magerit.Model.Threat.ThreatConstants;
 import es.udc.fic.sgsi_magerit.Model.Threat.ThreatDTO;
 import es.udc.fic.sgsi_magerit.Util.GlobalConstants;
+import es.udc.fic.sgsi_magerit.Util.Converter;
 
 /**
  * Created by err0r on 13/05/2016.
@@ -1086,16 +1087,56 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
                 String nombre = cursor.getString(1);
                 String codigo = cursor.getString(2);
                 Long idAmenaza = cursor.getLong(3);
-                Integer idDegradacionDisp = cursor.getInt(4);
-                Integer idProbabilidadDisp = cursor.getInt(5);
-                Integer idDegradacionInt = cursor.getInt(6);
-                Integer idProbabilidadInt = cursor.getInt(7);
-                Integer idDegradacionConf = cursor.getInt(8);
-                Integer idProbabilidadConf = cursor.getInt(9);
-                Integer idDegradacionAut = cursor.getInt(10);
-                Integer idProbabilidadAut = cursor.getInt(11);
-                Integer idDegradacionTraz = cursor.getInt(12);
-                Integer idProbabilidadTraz = cursor.getInt(13);
+
+                Integer idDegradacionDisp = null;
+                if (!cursor.isNull(4)) {
+                    idDegradacionDisp = cursor.getInt(4);
+                }
+
+                Integer idProbabilidadDisp = null;
+                if (!cursor.isNull(5)) {
+                    idProbabilidadDisp = cursor.getInt(5);
+                }
+
+                Integer idDegradacionInt = null;
+                if (!cursor.isNull(6)) {
+                    idDegradacionInt = cursor.getInt(6);
+                }
+
+                Integer idProbabilidadInt = null;
+                if (!cursor.isNull(7)) {
+                    idProbabilidadInt = cursor.getInt(7);
+                }
+
+                Integer idDegradacionConf = null;
+                if (!cursor.isNull(8)) {
+                    idDegradacionConf = cursor.getInt(8);
+                }
+
+                Integer idProbabilidadConf = null;
+                if (!cursor.isNull(9)) {
+                    idProbabilidadConf = cursor.getInt(9);
+                }
+
+                Integer idDegradacionAut = null;
+                if (!cursor.isNull(10)) {
+                    idDegradacionAut = cursor.getInt(10);
+                }
+
+                Integer idProbabilidadAut = null;
+                if (!cursor.isNull(11)) {
+                    idProbabilidadAut = cursor.getInt(11);
+                }
+
+                Integer idDegradacionTraz = null;
+                if (!cursor.isNull(12)) {
+                    idDegradacionTraz = cursor.getInt(12);
+                }
+
+                Integer idProbabilidadTraz = null;
+                if (!cursor.isNull(13)) {
+                    idProbabilidadTraz = cursor.getInt(13);
+                }
 
                 AssetThreatDTO threat = new AssetThreatDTO(idAmenaza,idActivo,idProyecto,codigo,nombre,
                         idListaTipoAmenaza, idTipoAmenaza, idDegradacionDisp, idProbabilidadDisp,
@@ -1200,16 +1241,56 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
                 Long idAmenaza = cursor.getLong(0);
                 Long idListaTipoAmenaza = cursor.getLong(1);
                 Long idTipoAmenaza = cursor.getLong(2);
-                Integer idDegradacionDisp = cursor.getInt(3);
-                Integer idProbabilidadDisp = cursor.getInt(4);
-                Integer idDegradacionInt = cursor.getInt(5);
-                Integer idProbabilidadInt = cursor.getInt(6);
-                Integer idDegradacionConf = cursor.getInt(7);
-                Integer idProbabilidadConf = cursor.getInt(8);
-                Integer idDegradacionAut = cursor.getInt(9);
-                Integer idProbabilidadAut = cursor.getInt(10);
-                Integer idDegradacionTraz = cursor.getInt(11);
-                Integer idProbabilidadTraz = cursor.getInt(12);
+                Integer idDegradacionDisp = null;
+
+                if (!cursor.isNull(3)) {
+                    idDegradacionDisp = cursor.getInt(3);
+                }
+
+                Integer idProbabilidadDisp = null;
+                if (!cursor.isNull(4)) {
+                    idProbabilidadDisp = cursor.getInt(4);
+                }
+
+                Integer idDegradacionInt = null;
+                if (!cursor.isNull(5)) {
+                    idDegradacionInt = cursor.getInt(5);
+                }
+
+                Integer idProbabilidadInt = null;
+                if (!cursor.isNull(6)) {
+                    idProbabilidadInt = cursor.getInt(6);
+                }
+
+                Integer idDegradacionConf = null;
+                if (!cursor.isNull(7)) {
+                    idDegradacionConf = cursor.getInt(7);
+                }
+
+                Integer idProbabilidadConf = null;
+                if (!cursor.isNull(8)) {
+                    idProbabilidadConf = cursor.getInt(8);
+                }
+
+                Integer idDegradacionAut = null;
+                if (!cursor.isNull(9)) {
+                    idDegradacionAut = cursor.getInt(9);
+                }
+
+                Integer idProbabilidadAut = null;
+                if (!cursor.isNull(10)) {
+                    idProbabilidadAut = cursor.getInt(10);
+                }
+
+                Integer idDegradacionTraz = null;
+                if (!cursor.isNull(11)) {
+                    idDegradacionTraz = cursor.getInt(11);
+                }
+
+                Integer idProbabilidadTraz = null;
+                if (!cursor.isNull(12)) {
+                    idProbabilidadTraz = cursor.getInt(12);
+                }
 
                 AssetThreatDTO threat = new AssetThreatDTO(idAmenaza,idActivo,idProyecto,null,null,
                         idListaTipoAmenaza, idTipoAmenaza, idDegradacionDisp, idProbabilidadDisp,
@@ -1497,15 +1578,31 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
                 Long idListaTipoSalvaguardaBD = cursor.getLong(3);
                 Long idTipoSalvaguardaBD = cursor.getLong(4);
 
-                Integer idValoracionDisp = cursor.getInt(5);
-                Integer idValoracionInt = cursor.getInt(6);
-                Integer idValoracionConf = cursor.getInt(7);
-                Integer idValoracionAut = cursor.getInt(8);
-                Integer idValoracionTraz = cursor.getInt(9);
+                Integer idValoracionDisp = null;
+                if (!cursor.isNull(5))
+                    idValoracionDisp = cursor.getInt(5);
 
-                Integer tprotec = cursor.getInt(10);
-                Integer eficacia;
+                Integer idValoracionInt = null;
+                if (!cursor.isNull(6))
+                    idValoracionInt = cursor.getInt(6);
 
+                Integer idValoracionConf = null;
+                if (!cursor.isNull(7))
+                    idValoracionConf = cursor.getInt(7);
+
+                Integer idValoracionAut = null;
+                if (!cursor.isNull(8))
+                    idValoracionAut = cursor.getInt(8);
+
+                Integer idValoracionTraz = null;
+                if (!cursor.isNull(9))
+                    idValoracionTraz = cursor.getInt(9);
+
+                Integer tprotec = null;
+                if (!cursor.isNull(10))
+                    tprotec = cursor.getInt(10);
+
+                Integer eficacia = null;
                 if (!cursor.isNull(11))
                     eficacia = cursor.getInt(11);
                 else
@@ -1537,5 +1634,125 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
         db.close();
         return salvaguardas;
     }
+
+
+    private List<PendingTaskDTO> obtenerActivosSinValorar(Long idProyecto) {
+
+        SQLiteDatabase db = getReadableDatabase();
+        List<PendingTaskDTO> pendingTasks = new ArrayList<>();
+
+        Cursor cursor = db.rawQuery("SELECT " +
+                AssetConstants.ID_ACTIVO + ", " + AssetConstants.NOMBRE + ", " + AssetConstants.CODIGO +
+                " FROM " + AssetConstants.TABLE_NAME + " WHERE " + AssetConstants.ID_PROYECTO + " = "
+                + idProyecto + " AND " + AssetConstants.ID_VALORACION_ACTIVO_AUTENTICIDAD + " IS NULL" +
+                " AND " + AssetConstants.ID_VALORACION_ACTIVO_CONFIDENCIALIDAD + " IS NULL" +
+                " AND " + AssetConstants.ID_VALORACION_ACTIVO_DISPONIBILIDAD + " IS NULL" +
+                " AND " + AssetConstants.ID_VALORACION_ACTIVO_INTEGRIDAD + " IS NULL" +
+                " AND " + AssetConstants.ID_VALORACION_ACTIVO_TRAZABILIDAD + " IS NULL", null);
+        if (cursor.moveToFirst()){
+            do {
+                Long idActivo = cursor.getLong(0);
+                String nombre = cursor.getString(1);
+                String codigo = cursor.getString(2);
+                String codigoNombre = "[" + codigo + "] " + nombre;
+                PendingTaskDTO task = new PendingTaskDTO(idActivo, codigoNombre,null,null,null,null,idProyecto,0,0);
+                pendingTasks.add(task);
+            } while ( (cursor.moveToNext()));
+        }
+        cursor.close();
+        db.close();
+        return pendingTasks;
+
+    }
+
+
+    private List<PendingTaskDTO> obtenerActivosSinAmenazas(Long idProyecto) {
+
+        SQLiteDatabase db = getReadableDatabase();
+        List<PendingTaskDTO> pendingTasks = new ArrayList<>();
+
+        Cursor cursor = db.rawQuery("SELECT a." +
+                AssetConstants.ID_ACTIVO + ", " + AssetConstants.NOMBRE + ", " +AssetConstants.CODIGO +
+                " FROM " + AssetConstants.TABLE_NAME + " a LEFT JOIN " +
+                ThreatConstants.TABLE_NAME + " t ON a." + AssetConstants.ID_ACTIVO + " = t." +
+                ThreatConstants.ID_ACTIVO + " WHERE a." + ThreatConstants.ID_PROYECTO + " = "
+                + idProyecto + " AND t." + ThreatConstants.ID_AMENAZA_ACTIVO + " IS NULL" , null);
+
+        if (cursor.moveToFirst()){
+            do {
+                Long idActivo = cursor.getLong(0);
+                String nombre = cursor.getString(1);
+                String codigo = cursor.getString(2);
+                String codigoNombre = "[" + codigo + "] " + nombre;
+                PendingTaskDTO task = new PendingTaskDTO(idActivo,codigoNombre,null,null,null,null,idProyecto,0,1);
+                pendingTasks.add(task);
+            } while ( (cursor.moveToNext()));
+        }
+        cursor.close();
+        db.close();
+        return pendingTasks;
+
+    }
+
+
+    private List<PendingTaskDTO> obtenerAmenazasSinValorar(Long idProyecto) {
+
+        SQLiteDatabase db = getReadableDatabase();
+        List<PendingTaskDTO> pendingTasks = new ArrayList<>();
+
+        Cursor cursor = db.rawQuery("SELECT t." +
+                ThreatConstants.ID_AMENAZA_ACTIVO + ", " + ThreatConstants.ID_LISTA_TIPO_AMENAZA + ", " +
+                ThreatConstants.ID_TIPO_AMENAZA + ", a." + AssetConstants.ID_ACTIVO + ", a." +
+                AssetConstants.NOMBRE + ", a." + AssetConstants.CODIGO +
+                " FROM " + ThreatConstants.TABLE_NAME + " t JOIN " +
+                AssetConstants.TABLE_NAME + " a ON t." + ThreatConstants.ID_ACTIVO + " = a." + AssetConstants.ID_ACTIVO +
+                " WHERE t." + ThreatConstants.ID_PROYECTO + " = "
+                + idProyecto + " AND " + ThreatConstants.ID_VALORACION_DEGRADACION_AUTENTICIDAD + " IS NULL" +
+                " AND " + ThreatConstants.ID_VALORACION_DEGRADACION_CONFIDENCIALIDAD + " IS NULL" +
+                " AND " + ThreatConstants.ID_VALORACION_DEGRADACION_DISPONIBILIDAD + " IS NULL" +
+                " AND " + ThreatConstants.ID_VALORACION_DEGRADACION_INTEGRIDAD + " IS NULL" +
+                " AND " + ThreatConstants.ID_VALORACION_DEGRADACION_TRAZABILIDAD + " IS NULL" +
+                " AND " + ThreatConstants.ID_VALORACION_PROBABILIDAD_AUTENTICIDAD + " IS NULL" +
+                " AND " + ThreatConstants.ID_VALORACION_PROBABILIDAD_CONFIDENCIALIDAD + " IS NULL" +
+                " AND " + ThreatConstants.ID_VALORACION_PROBABILIDAD_DISPONIBILIDAD + " IS NULL" +
+                " AND " + ThreatConstants.ID_VALORACION_PROBABILIDAD_INTEGRIDAD + " IS NULL" +
+                " AND " + ThreatConstants.ID_VALORACION_PROBABILIDAD_TRAZABILIDAD + " IS NULL", null);
+
+        if (cursor.moveToFirst()){
+            do {
+                Long idAmenaza = cursor.getLong(0);
+                Integer idLista = cursor.getInt(1);
+                Integer idTipo = cursor.getInt(2);
+                Long idActivo = cursor.getLong(3);
+                String nombreActivo = cursor.getString(4);
+                String codigoActivo = cursor.getString(5);
+
+                String codigoNombre = Converter.convertirNombreAmenaza(idLista, idTipo);
+                String codigoNombreActivo = "[" + codigoActivo + "] " + nombreActivo;
+                PendingTaskDTO task = new PendingTaskDTO(idActivo,codigoNombreActivo,idAmenaza,codigoNombre,null,null,idProyecto,1,0);
+                pendingTasks.add(task);
+            } while ( (cursor.moveToNext()));
+        }
+        cursor.close();
+        db.close();
+        return pendingTasks;
+
+    }
+
+
+    @Override
+    public List<PendingTaskDTO> obtenerTareasPendientes(Long idProyecto){
+
+        List<PendingTaskDTO> pendingTasks = new ArrayList<>();
+        pendingTasks.addAll(obtenerActivosSinValorar(idProyecto));
+        pendingTasks.addAll(obtenerActivosSinAmenazas(idProyecto));
+        pendingTasks.addAll(obtenerAmenazasSinValorar(idProyecto));
+        return pendingTasks;
+
+    }
+
+
+
+
 
 }

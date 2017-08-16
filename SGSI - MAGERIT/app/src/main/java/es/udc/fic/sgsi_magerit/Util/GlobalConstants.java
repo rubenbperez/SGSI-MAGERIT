@@ -15,6 +15,8 @@ public class GlobalConstants {
     public final static String[] ID_TIPOS = {"Muy alta", "Alta", "Media", "Baja", "Muy Baja"};
     public final static String DATE_ERROR = "Ha habído un problema interno con las fechas. Inténtelo de nuevo más tarde";
     public final static String[] TIPO_PROTECCION = {"Preventiva", "Disuasoria"};
+    public final static String[] TIPO_ELEMENTO_TAREA = {"Activo", "Amenaza", "Salvaguarda"};
+    public final static String[] TIPO_CAUSA_TAREA_PENDIENTE = {"Sin Valorar", "Sin Amenazas"};
 
     /********************************************************************************************/
     //LISTAS PARA TIPOS DE ACTIVOS

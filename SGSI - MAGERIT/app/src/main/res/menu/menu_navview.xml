@@ -28,7 +28,7 @@
             android:title="Análisis"/>
 
         <item
-            android:id="@+id/tareasPendientes"
+            android:id="@+id/menuTareasPendientes"
             android:icon="@drawable/ic_menu"
             android:title="Tareas Pendientes"/>
 

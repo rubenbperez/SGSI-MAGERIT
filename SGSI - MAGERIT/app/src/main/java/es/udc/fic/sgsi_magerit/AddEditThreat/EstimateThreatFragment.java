@@ -84,8 +84,6 @@ public class EstimateThreatFragment extends Fragment {
             strParamProbabilidad.add(GlobalConstants.ID_TIPOS[i-1]);
         }
 
-
-
         if (idListaTipoAmenazaRecibido != GlobalConstants.NULL_ID_LISTA_TIPO_AMENAZA &&
                 idTipoAmenazaRecibido != GlobalConstants.NULL_ID_LISTA_TIPO_AMENAZA) {
             /*List<AssetDTO> activosSeleccionados= service.obtenerActivosConIdAmenaza(idListaTipoAmenazaRecibido,idTipoAmenazaRecibido,idProyecto);
@@ -193,12 +191,16 @@ public class EstimateThreatFragment extends Fragment {
                     android.R.layout.simple_spinner_item, strParamDegradacion);
             spinnerAdapterDisp1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinnerDisp1.setAdapter((SpinnerAdapter) spinnerAdapterDisp1);
-            spinnerDisp1.setSelection(data.get(position).getIdDegradacionDisponibilidad());
+            if (data.get(position).getIdDegradacionDisponibilidad() != null)
+                spinnerDisp1.setSelection(data.get(position).getIdDegradacionDisponibilidad());
             spinnerDisp1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                     int index = parent.getSelectedItemPosition();
-                    data.get(position).setIdDegradacionDisponibilidad(index);
+                    if (index != 0)
+                        data.get(position).setIdDegradacionDisponibilidad(index);
+                    else
+                        data.get(position).setIdDegradacionDisponibilidad(null);
                 }
 
                 @Override
@@ -211,12 +213,16 @@ public class EstimateThreatFragment extends Fragment {
                     android.R.layout.simple_spinner_item, strParamProbabilidad);
             spinnerAdapterDisp2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinnerDisp2.setAdapter((SpinnerAdapter) spinnerAdapterDisp2);
-            spinnerDisp2.setSelection(data.get(position).getIdProbabilidadDisponibilidad());
+            if (data.get(position).getIdProbabilidadDisponibilidad() != null)
+                spinnerDisp2.setSelection(data.get(position).getIdProbabilidadDisponibilidad());
             spinnerDisp2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                     int index = parent.getSelectedItemPosition();
-                    data.get(position).setIdProbabilidadDisponibilidad(index);
+                    if (index != 0)
+                        data.get(position).setIdProbabilidadDisponibilidad(index);
+                    else
+                        data.get(position).setIdProbabilidadDisponibilidad(null);
                 }
 
                 @Override
@@ -233,12 +239,16 @@ public class EstimateThreatFragment extends Fragment {
                     android.R.layout.simple_spinner_item, strParamDegradacion);
             spinnerAdapterInt1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinnerInt1.setAdapter((SpinnerAdapter) spinnerAdapterInt1);
-            spinnerInt1.setSelection(data.get(position).getIdDegradacionIntegridad());
+            if (data.get(position).getIdDegradacionIntegridad()!=null)
+                spinnerInt1.setSelection(data.get(position).getIdDegradacionIntegridad());
             spinnerInt1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                     int index = parent.getSelectedItemPosition();
-                    data.get(position).setIdDegradacionIntegridad(index);
+                    if (index != 0)
+                        data.get(position).setIdDegradacionIntegridad(index);
+                    else
+                        data.get(position).setIdDegradacionIntegridad(null);
                 }
 
                 @Override
@@ -251,12 +261,16 @@ public class EstimateThreatFragment extends Fragment {
                     android.R.layout.simple_spinner_item, strParamProbabilidad);
             spinnerAdapterInt2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinnerInt2.setAdapter((SpinnerAdapter) spinnerAdapterInt2);
-            spinnerInt2.setSelection(data.get(position).getIdProbabilidadIntegridad());
+            if (data.get(position).getIdProbabilidadIntegridad() != null)
+                spinnerInt2.setSelection(data.get(position).getIdProbabilidadIntegridad());
             spinnerInt2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                     int index = parent.getSelectedItemPosition();
-                    data.get(position).setIdProbabilidadIntegridad(index);
+                    if (index != 0)
+                        data.get(position).setIdProbabilidadIntegridad(index);
+                    else
+                        data.get(position).setIdProbabilidadIntegridad(null);
                 }
 
                 @Override
@@ -273,12 +287,16 @@ public class EstimateThreatFragment extends Fragment {
                     android.R.layout.simple_spinner_item, strParamDegradacion);
             spinnerAdapterConf1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinnerConf1.setAdapter((SpinnerAdapter) spinnerAdapterConf1);
-            spinnerConf1.setSelection(data.get(position).getIdDegradacionConfidencialidad());
+            if (data.get(position).getIdDegradacionConfidencialidad() != null)
+                spinnerConf1.setSelection(data.get(position).getIdDegradacionConfidencialidad());
             spinnerConf1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                     int index = parent.getSelectedItemPosition();
-                    data.get(position).setIdDegradacionConfidencialidad(index);
+                    if (index != 0)
+                        data.get(position).setIdDegradacionConfidencialidad(index);
+                    else
+                        data.get(position).setIdDegradacionConfidencialidad(null);
                 }
 
                 @Override
@@ -291,12 +309,16 @@ public class EstimateThreatFragment extends Fragment {
                     android.R.layout.simple_spinner_item, strParamProbabilidad);
             spinnerAdapterConf2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinnerConf2.setAdapter((SpinnerAdapter) spinnerAdapterConf2);
-            spinnerConf2.setSelection(data.get(position).getIdProbabilidadConfidencialidad());
+            if (data.get(position).getIdProbabilidadConfidencialidad() != null)
+                spinnerConf2.setSelection(data.get(position).getIdProbabilidadConfidencialidad());
             spinnerConf2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                     int index = parent.getSelectedItemPosition();
-                    data.get(position).setIdProbabilidadConfidencialidad(index);
+                    if (index != 0)
+                        data.get(position).setIdProbabilidadConfidencialidad(index);
+                    else
+                        data.get(position).setIdProbabilidadConfidencialidad(0);
                 }
 
                 @Override
@@ -312,12 +334,16 @@ public class EstimateThreatFragment extends Fragment {
                     android.R.layout.simple_spinner_item, strParamDegradacion);
             spinnerAdapterAut1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinnerAut1.setAdapter((SpinnerAdapter) spinnerAdapterAut1);
-            spinnerAut1.setSelection(data.get(position).getIdDegradacionAutenticidad());
+            if (data.get(position).getIdDegradacionAutenticidad() != null)
+                spinnerAut1.setSelection(data.get(position).getIdDegradacionAutenticidad());
             spinnerAut1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                     int index = parent.getSelectedItemPosition();
-                    data.get(position).setIdDegradacionAutenticidad(index);
+                    if (index != 0)
+                        data.get(position).setIdDegradacionAutenticidad(index);
+                    else
+                        data.get(position).setIdDegradacionAutenticidad(null);
                 }
 
                 @Override
@@ -330,12 +356,16 @@ public class EstimateThreatFragment extends Fragment {
                     android.R.layout.simple_spinner_item, strParamProbabilidad);
             spinnerAdapterAut2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinnerAut2.setAdapter((SpinnerAdapter) spinnerAdapterAut2);
-            spinnerAut2.setSelection(data.get(position).getIdProbabilidadAutenticidad());
+            if (data.get(position).getIdProbabilidadAutenticidad() != null)
+                spinnerAut2.setSelection(data.get(position).getIdProbabilidadAutenticidad());
             spinnerAut2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                     int index = parent.getSelectedItemPosition();
-                    data.get(position).setIdProbabilidadAutenticidad(index);
+                    if (index!=0)
+                        data.get(position).setIdProbabilidadAutenticidad(index);
+                    else
+                        data.get(position).setIdProbabilidadAutenticidad(null);
                 }
 
                 @Override
@@ -352,12 +382,16 @@ public class EstimateThreatFragment extends Fragment {
                     android.R.layout.simple_spinner_item, strParamDegradacion);
             spinnerAdapterTraz1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinnerTraz1.setAdapter((SpinnerAdapter) spinnerAdapterTraz1);
-            spinnerTraz1.setSelection(data.get(position).getIdDegradacionTrazabilidad());
+            if (data.get(position).getIdDegradacionTrazabilidad() != null)
+                spinnerTraz1.setSelection(data.get(position).getIdDegradacionTrazabilidad());
             spinnerTraz1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                     int index = parent.getSelectedItemPosition();
-                    data.get(position).setIdDegradacionTrazabilidad(index);
+                    if (index != 0)
+                        data.get(position).setIdDegradacionTrazabilidad(index);
+                    else
+                        data.get(position).setIdDegradacionTrazabilidad(null);
                 }
 
                 @Override
@@ -370,12 +404,16 @@ public class EstimateThreatFragment extends Fragment {
                     android.R.layout.simple_spinner_item, strParamProbabilidad);
             spinnerAdapterTraz2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinnerTraz2.setAdapter((SpinnerAdapter) spinnerAdapterTraz2);
-            spinnerTraz2.setSelection(data.get(position).getIdProbabilidadTrazabilidad());
+            if (data.get(position).getIdProbabilidadTrazabilidad() != null)
+                spinnerTraz2.setSelection(data.get(position).getIdProbabilidadTrazabilidad());
             spinnerTraz2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                     int index = parent.getSelectedItemPosition();
-                    data.get(position).setIdProbabilidadTrazabilidad(index);
+                    if (index != 0)
+                        data.get(position).setIdProbabilidadTrazabilidad(index);
+                    else
+                        data.get(position).setIdProbabilidadTrazabilidad(null);
                 }
 
                 @Override
@@ -470,7 +508,8 @@ public class EstimateThreatFragment extends Fragment {
             for (AssetDTO a : datos)
             {
                 AssetThreatDTO assetThreat = new AssetThreatDTO(null, a.getIdActivo(), a.getIdProyecto(),
-                        a.getCodigoActivo(), a.getNombreActivo(), null, null, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, false);
+                        a.getCodigoActivo(), a.getNombreActivo(), null, null, null, null, null, null, null,
+                        null, null, null, null, null, false);
                 datosValidos.add(assetThreat);
             }
 

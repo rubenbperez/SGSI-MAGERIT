@@ -10,7 +10,9 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import es.udc.fic.sgsi_magerit.AnalisisFragment.Analisis;
 import es.udc.fic.sgsi_magerit.AssetsFragment.Assets;
+import es.udc.fic.sgsi_magerit.PendingTasksFragment.PendingTasks;
 import es.udc.fic.sgsi_magerit.ProjectsFragment.Projects;
 import es.udc.fic.sgsi_magerit.SafeguardsFragment.Safeguards;
 import es.udc.fic.sgsi_magerit.ThreatsFragment.Threats;
@@ -68,6 +70,16 @@ public class MainActivity extends AppCompatActivity {
 
                             case R.id.menuSalvaguardas:
                                 fragment = new Safeguards();
+                                fragmentTransaction = true;
+                                break;
+
+                            case R.id.menuAnalisis:
+                                fragment = new Analisis();
+                                fragmentTransaction = true;
+                                break;
+
+                            case R.id.menuTareasPendientes:
+                                fragment = new PendingTasks();
                                 fragmentTransaction = true;
                                 break;
                         }
