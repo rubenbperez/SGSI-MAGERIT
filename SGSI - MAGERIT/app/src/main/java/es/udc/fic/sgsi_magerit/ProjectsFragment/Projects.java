@@ -166,6 +166,7 @@ public class Projects extends Fragment {
 
             RadioButton lblRatioButton = (RadioButton) item.findViewById(R.id.radioButton);
             lblRatioButton.setChecked(data.get(position).getActivated());
+
             return(item);
         }
 

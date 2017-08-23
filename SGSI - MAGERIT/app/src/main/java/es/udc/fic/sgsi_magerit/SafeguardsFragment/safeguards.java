@@ -44,7 +44,7 @@ public class Safeguards extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_threats, container, false);
+        View view = inflater.inflate(R.layout.fragment_safeguards, container, false);
         service = new ModelServiceImpl(getContext(), GlobalConstants.DATABASE_NAME, 1);
         navView = (NavigationView) getActivity().findViewById(R.id.navview);
 

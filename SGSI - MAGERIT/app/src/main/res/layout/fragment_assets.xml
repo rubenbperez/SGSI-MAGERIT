@@ -3,12 +3,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_height="fill_parent"
+    android:background="@color/assetBackground">
 
     <ListView android:id="@+id/LstOpciones"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:clickable="true" />
+        android:clickable="true"/>
 
     <android.support.design.widget.FloatingActionButton android:id="@+id/fab"
         android:layout_width="wrap_content"

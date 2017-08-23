@@ -55,7 +55,7 @@ public class Threats extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_assets, container, false);
+        View view = inflater.inflate(R.layout.fragment_threats, container, false);
         service = new ModelServiceImpl(getContext(), GlobalConstants.DATABASE_NAME,1);
         navView = (NavigationView)getActivity().findViewById(R.id.navview);
         idProyectoActivo = service.obtenerIdProyectoActivo();

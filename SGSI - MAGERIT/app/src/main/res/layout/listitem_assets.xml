@@ -5,29 +5,36 @@
     android:clickable="false"
     android:descendantFocusability="blocksDescendants"
     android:focusable="false"
-    android:focusableInTouchMode="false">
+    android:focusableInTouchMode="false"
+    android:paddingTop="2dp"
+    android:paddingBottom="2dp">
 
     <TextView
         android:id="@+id/asset_code_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="name"
-        android:textSize="24sp"
+        android:textColor="@color/asset"
+        android:textSize="20sp"
         android:textStyle="bold"
         android:clickable="false"
         android:focusable="false"
-        android:focusableInTouchMode="false"/>
+        android:focusableInTouchMode="false"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"/>
 
     <TextView
         android:id="@+id/asset_desc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="name2"
-        android:textSize="16sp"
+        android:textSize="18sp"
         android:layout_below="@+id/asset_code_name"
         android:clickable="false"
         android:focusable="false"
-        android:focusableInTouchMode="false"/>
+        android:focusableInTouchMode="false"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="5dp"/>
 
     <TextView
         android:id="@+id/asset_resp"
@@ -38,7 +45,9 @@
         android:layout_below="@+id/asset_desc"
         android:clickable="false"
         android:focusable="false"
-        android:focusableInTouchMode="false"/>
+        android:focusableInTouchMode="false"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="5dp"/>
 
     <TextView
         android:id="@+id/asset_loc"
@@ -49,6 +58,8 @@
         android:layout_below="@+id/asset_resp"
         android:clickable="false"
         android:focusable="false"
-        android:focusableInTouchMode="false"/>
+        android:focusableInTouchMode="false"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="5dp"/>
 
 </RelativeLayout>

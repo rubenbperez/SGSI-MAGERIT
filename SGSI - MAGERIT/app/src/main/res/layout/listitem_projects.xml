@@ -5,18 +5,22 @@
     android:clickable="false"
     android:descendantFocusability="blocksDescendants"
     android:focusable="false"
-    android:focusableInTouchMode="false">
+    android:focusableInTouchMode="false"
+    android:paddingTop="2dp"
+    android:paddingBottom="2dp">
 
     <TextView
         android:id="@+id/project_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="name"
-        android:textSize="28sp"
+        android:textSize="20sp"
         android:textStyle="bold"
         android:clickable="false"
         android:focusable="false"
-        android:focusableInTouchMode="false"/>
+        android:focusableInTouchMode="false"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"/>
 
     <TextView
         android:id="@+id/project_desc"
@@ -27,18 +31,22 @@
         android:layout_below="@+id/project_name"
         android:clickable="false"
         android:focusable="false"
-        android:focusableInTouchMode="false"/>
+        android:focusableInTouchMode="false"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="5dp"/>
 
     <TextView
         android:id="@+id/project_dir"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="name3"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:layout_below="@+id/project_desc"
         android:clickable="false"
         android:focusable="false"
-        android:focusableInTouchMode="false"/>
+        android:focusableInTouchMode="false"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="5dp"/>
 
     <RadioButton
         android:id="@+id/radioButton"
@@ -48,6 +56,8 @@
         android:layout_centerVertical="true"
         android:clickable="false"
         android:focusable="false"
-        android:focusableInTouchMode="false"/>
+        android:focusableInTouchMode="false"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"/>
 
 </RelativeLayout>

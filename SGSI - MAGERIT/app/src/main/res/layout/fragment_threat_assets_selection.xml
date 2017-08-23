@@ -2,7 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="es.udc.fic.sgsi_magerit.AddEditThreat.ThreatAssetsSelectionFragment">
+    tools:context="es.udc.fic.sgsi_magerit.AddEditThreat.ThreatAssetsSelectionFragment"
+    android:background="@color/threatBackground">
 
     <ListView android:id="@+id/LstOpciones"
         android:layout_width="match_parent"

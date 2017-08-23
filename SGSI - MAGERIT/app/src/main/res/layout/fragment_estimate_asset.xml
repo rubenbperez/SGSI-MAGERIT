@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".AddEditAsset.EstimateAssetFragment">
+    tools:context=".AddEditAsset.EstimateAssetFragment"
+    android:background="@color/assetBackground">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,7 +16,9 @@
             android:layout_height="wrap_content"
             android:text="Detalles del Activo"
             android:textSize="18sp"
-            android:background="#CFD8DC"/>
+            android:background="#CFD8DC"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"/>
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/nombreActivoWrapper"
@@ -28,7 +31,9 @@
                 android:layout_height="wrap_content"
                 android:inputType="text"
                 android:hint="Nombre"
-                android:imeOptions="flagNoFullscreen"/>
+                android:imeOptions="flagNoFullscreen"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"/>
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -43,7 +48,9 @@
                 android:inputType="text"
                 android:hint="Código"
                 android:imeOptions="flagNoFullscreen"
-                android:maxLength="5" />
+                android:maxLength="5"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"/>
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -57,7 +64,9 @@
             android:layout_height="wrap_content"
             android:inputType="text"
             android:hint="Responsable"
-            android:imeOptions="flagNoFullscreen"/>
+            android:imeOptions="flagNoFullscreen"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"/>
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -71,7 +80,9 @@
             android:layout_height="wrap_content"
             android:inputType="text"
             android:hint="Descripción"
-            android:imeOptions="flagNoFullscreen"/>
+            android:imeOptions="flagNoFullscreen"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"/>
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -85,7 +96,9 @@
                 android:layout_height="wrap_content"
                 android:inputType="text"
                 android:hint="Ubicación"
-                android:imeOptions="flagNoFullscreen"/>
+                android:imeOptions="flagNoFullscreen"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"/>
         </android.support.design.widget.TextInputLayout>
 
         <android.widget.TextView
@@ -94,7 +107,9 @@
             android:layout_marginTop="30dp"
             android:text="Valoración del activo"
             android:textSize="18sp"
-            android:background="#CFD8DC"/>
+            android:background="#CFD8DC"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"/>
 
         <TableLayout
             android:layout_width="match_parent"
@@ -106,7 +121,10 @@
             android:layout_weight="0.15"
             android:id="@+id/tabla1"
             android:layout_marginTop="5dp"
-            android:visibility="visible">
+            android:visibility="visible"
+            android:paddingLeft="10dp"
+            android:paddingRight="8dp"
+            android:layout_marginBottom="5dp">
 
             <TableRow
                 android:id="@+id/tableRow1"

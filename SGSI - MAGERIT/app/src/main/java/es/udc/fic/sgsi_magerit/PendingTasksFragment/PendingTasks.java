@@ -85,7 +85,7 @@ public class PendingTasks extends Fragment {
 
             lblAssetName.setText(data.get(position).getNombreActivo());
 
-            if (data.get(position).getIdTipo() == 1) {
+            if (data.get(position).getIdTipo() == 1 || data.get(position).getIdTipo() == 2) {
                 LinearLayout linearThreat = (LinearLayout) item.findViewById(R.id.linearThreat);
                 linearThreat.setVisibility(View.VISIBLE);
                 lblThreatName.setText(data.get(position).getNombreAmenaza());
@@ -94,7 +94,7 @@ public class PendingTasks extends Fragment {
             if (data.get(position).getIdTipo() == 2) {
                 LinearLayout linearSafeguard = (LinearLayout) item.findViewById(R.id.linearSafeguard);
                 linearSafeguard.setVisibility(View.VISIBLE);
-                lblSafeguardName.setText(data.get(position).getNombreAmenaza());
+                lblSafeguardName.setText(data.get(position).getNombreSalvaguarda());
             }
 
             TextView lblPendingTask = (TextView) item.findViewById(R.id.pending_task);
@@ -136,8 +136,11 @@ public class PendingTasks extends Fragment {
             case 4:
                 text = "La Amenaza no tiene Salvaguardas definidas.";
                 break;
-        }
 
+            case 5:
+                text = "La Salvaguarda no tiene definido un tipo de protección.";
+                break;
+        }
 
         return text;
     }

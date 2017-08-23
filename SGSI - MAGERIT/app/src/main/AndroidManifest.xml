@@ -11,6 +11,7 @@
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -20,7 +21,8 @@
             android:name=".AddEditThreat.AddEditThreatActivity"
             android:configChanges="keyboardHidden|orientation|screenSize" />
         <activity android:name=".AddEditAssetThreats.AddEditAssetThreatsActivity" />
-        <activity android:name=".AddEditSafeguards.AddEditSafeguardActivity"/>
+        <activity android:name=".AddEditSafeguards.AddEditSafeguardActivity" />
+        <activity android:name=".AddEditAssetSafeguards.AddEditAssetSafeguardsActivity"></activity>
     </application>
 
 </manifest>

@@ -27,11 +27,14 @@ import es.udc.fic.sgsi_magerit.Model.ProjectSizing.ParametrizacionVulnerabilidad
 import es.udc.fic.sgsi_magerit.Model.ProjectSizing.ProjectSizingConstants;
 import es.udc.fic.sgsi_magerit.Model.Project.Project;
 import es.udc.fic.sgsi_magerit.Model.Project.ProjectConstants;
+import es.udc.fic.sgsi_magerit.Model.Safeguard.AssetSafeguardsThreatsInfoDTO;
 import es.udc.fic.sgsi_magerit.Model.Safeguard.AssetThreatInfoDTO;
+import es.udc.fic.sgsi_magerit.Model.Safeguard.AssetThreatSafeguardDTO;
 import es.udc.fic.sgsi_magerit.Model.Safeguard.AssetsSafeguardDTO;
 import es.udc.fic.sgsi_magerit.Model.Safeguard.Safeguard;
 import es.udc.fic.sgsi_magerit.Model.Safeguard.SafeguardConstants;
 import es.udc.fic.sgsi_magerit.Model.Safeguard.SafeguardDTO;
+import es.udc.fic.sgsi_magerit.Model.Safeguard.SafeguardInfoDTO;
 import es.udc.fic.sgsi_magerit.Model.Safeguard.ThreatSafeguardDTO;
 import es.udc.fic.sgsi_magerit.Model.Threat.AssetThreatDTO;
 import es.udc.fic.sgsi_magerit.Model.Threat.ThreatConstants;
@@ -1446,6 +1449,92 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
     }
 
     @Override
+    public List<SafeguardDTO> obtenerSalvaguardasDeActivo(Long idProyecto, Long idActivo) {
+        List <SafeguardDTO> salvaguardas = new ArrayList<SafeguardDTO>();
+
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT DISTINCT " +
+                SafeguardConstants.ID_LISTA_TIPO_SALVAGUARDA + ", " + SafeguardConstants.ID_TIPO_SALVAGUARDA  +
+                " FROM " + SafeguardConstants.TABLE_NAME + " WHERE " +
+                SafeguardConstants.ID_PROYECTO + " = " + idProyecto + " AND " + SafeguardConstants.ID_ACTIVO + " = " +
+                idActivo, null);
+        if (cursor.moveToFirst()){
+            do {
+                Long idTipoLista = cursor.getLong(0);
+                Long idTipoAmenaza = cursor.getLong(1);
+                SafeguardDTO safeguard = new SafeguardDTO(idTipoLista, idTipoAmenaza);
+                salvaguardas.add(safeguard);
+            } while ( (cursor.moveToNext()));
+        }
+        cursor.close();
+        db.close();
+        return salvaguardas;
+    }
+
+    @Override
+    public HashMap<AssetSafeguardsThreatsInfoDTO, List<Safeguard>> obtenerInfoSalvaguardasDeActivo(Long idProyecto, Long idActivo) {
+        SQLiteDatabase db = getReadableDatabase();
+
+        HashMap<AssetSafeguardsThreatsInfoDTO, List<Safeguard>> assetSafeguardThreats =
+                new HashMap<>();
+
+        Cursor cursor = db.rawQuery("SELECT DISTINCT s." +
+                SafeguardConstants.ID_SAFEGUARD + ", s." +
+                SafeguardConstants.ID_LISTA_TIPO_SALVAGUARDA + ", s." +
+                SafeguardConstants.ID_TIPO_SALVAGUARDA + ", t." +
+                ThreatConstants.ID_AMENAZA_ACTIVO + ", t." +
+                ThreatConstants.ID_LISTA_TIPO_AMENAZA + ", t." +
+                ThreatConstants.ID_TIPO_AMENAZA + ", " +
+                SafeguardConstants.ID_VALORACION_CONTROLSEGURIDAD_AUTENTICIDAD + ", " +
+                SafeguardConstants.ID_VALORACION_CONTROLSEGURIDAD_CONFIDENCIALIDAD + ", " +
+                SafeguardConstants.ID_VALORACION_CONTROLSEGURIDAD_DISPONIBILIDAD + ", " +
+                SafeguardConstants.ID_VALORACION_CONTROLSEGURIDAD_INTEGRIDAD + ", " +
+                SafeguardConstants.ID_VALORACION_CONTROLSEGURIDAD_TRAZABILIDAD + ", " +
+                SafeguardConstants.TIPO_PROTECCION + " FROM " +
+                SafeguardConstants.TABLE_NAME + " s LEFT JOIN " + ThreatConstants.TABLE_NAME + " t ON s." +
+                SafeguardConstants.ID_AMENAZA + " = t." + ThreatConstants.ID_AMENAZA_ACTIVO +
+                " WHERE t." + SafeguardConstants.ID_PROYECTO + " = " +
+                idProyecto + " AND t." + SafeguardConstants.ID_ACTIVO + " = " + idActivo, null);
+
+        if (cursor.moveToFirst()){
+            do {
+                Long idSafeguard = cursor.getLong(0);
+                Long idListaSafeguard = cursor.getLong(1);
+                Long idTipoSafeguard = cursor.getLong(2);
+                Long idAmenaza = cursor.getLong(3);
+                Long idListaThreat = cursor.getLong(4);
+                Long idTipoThreat = cursor.getLong(5);
+                Integer idValoracionAut = cursor.getInt(6);
+                Integer idValoracionConf = cursor.getInt(7);
+                Integer idValoracionDisp = cursor.getInt(8);
+                Integer idValoracionInt = cursor.getInt(9);
+                Integer idValoracionTraz = cursor.getInt(10);
+                Integer idTprotec = cursor.getInt(11);
+
+                List<Safeguard> safeguards = new ArrayList<>();
+
+                AssetSafeguardsThreatsInfoDTO safeguardThreatInfo = new
+                        AssetSafeguardsThreatsInfoDTO(idListaThreat, idTipoThreat, idListaSafeguard,
+                        idTipoSafeguard,false);
+
+                Safeguard safeguard = new Safeguard(idSafeguard, idAmenaza, idActivo, idProyecto,
+                        idListaSafeguard, idTipoSafeguard,idValoracionDisp,idValoracionInt, idValoracionConf,
+                        idValoracionAut,idValoracionTraz,idTprotec,null,null);
+
+                safeguards.add(safeguard);
+
+                assetSafeguardThreats.put(safeguardThreatInfo,safeguards);
+
+            } while ( (cursor.moveToNext()));
+        }
+        db.close();
+        cursor.close();
+
+        return assetSafeguardThreats;
+
+    }
+
+    @Override
     public boolean eliminarSalvaguardaPorTipo(Long idListaTipoSalvaguarda, Long idTipoSalvaguarda, Long idProyecto) {
         SQLiteDatabase db = getReadableDatabase();
         db.delete(SafeguardConstants.TABLE_NAME, SafeguardConstants.ID_PROYECTO
@@ -1540,6 +1629,120 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
         cursor.close();
         return assetsThreats;
     }
+
+    @Override
+    public HashMap<SafeguardInfoDTO, List<AssetThreatSafeguardDTO>> obtenerSalvaguardasYAmenazasDeActivo(Long idProyecto, Long idActivo) {
+
+        SQLiteDatabase db = getReadableDatabase();
+        List<Long> idsThreatsActivoConSalvaguarda = new ArrayList<>();
+
+        Cursor cursorAux = db.rawQuery("SELECT DISTINCT t." +
+                ThreatConstants.ID_AMENAZA_ACTIVO + " FROM " +
+                ThreatConstants.TABLE_NAME + " t JOIN " + SafeguardConstants.TABLE_NAME +
+                " s ON t." + ThreatConstants.ID_AMENAZA_ACTIVO + " = s." + SafeguardConstants.ID_AMENAZA
+                + " WHERE t." + ThreatConstants.ID_PROYECTO + " = " + idProyecto + " AND t." +
+                ThreatConstants.ID_ACTIVO + " = " + idActivo, null);
+
+        if (cursorAux.moveToFirst()) {
+            do {
+                Long idThreat = cursorAux.getLong(0);
+                idsThreatsActivoConSalvaguarda.add(idThreat);
+            } while ((cursorAux.moveToNext()));
+        }
+        cursorAux.close();
+
+        HashMap<SafeguardInfoDTO, List<AssetThreatSafeguardDTO>> AssetSafeguardThreats =
+                new HashMap<>();
+
+        if (idsThreatsActivoConSalvaguarda.isEmpty())
+            return AssetSafeguardThreats;
+
+        Cursor cursor = db.rawQuery("SELECT DISTINCT " +
+                SafeguardConstants.ID_LISTA_TIPO_SALVAGUARDA + ", " +
+                SafeguardConstants.ID_TIPO_SALVAGUARDA +" FROM " +
+                SafeguardConstants.TABLE_NAME + " WHERE " + SafeguardConstants.ID_PROYECTO + " = " +
+                idProyecto + " AND " + SafeguardConstants.ID_ACTIVO + " = " + idActivo, null);
+
+        if (cursor.moveToFirst()){
+            do {
+                Long idListaSafeguard = cursor.getLong(0);
+                Long idTipoSafeguard = cursor.getLong(1);
+
+                Cursor cursor2 = db.rawQuery("SELECT DISTINCT s." +
+                        SafeguardConstants.ID_SAFEGUARD + ", t." +
+                        ThreatConstants.ID_AMENAZA_ACTIVO + ", t." + ThreatConstants.ID_LISTA_TIPO_AMENAZA + ", t." +
+                        ThreatConstants.ID_TIPO_AMENAZA + " FROM " + ThreatConstants.TABLE_NAME +
+                        " t LEFT JOIN " + SafeguardConstants.TABLE_NAME + " s ON t." + ThreatConstants.ID_AMENAZA_ACTIVO
+                        + " = s." + SafeguardConstants.ID_AMENAZA +  " WHERE t." +
+                        ThreatConstants.ID_PROYECTO + " = " + idProyecto + " AND t." + ThreatConstants.ID_ACTIVO +
+                        " = " + idActivo, null);
+
+                SafeguardInfoDTO assetSafeguard = new SafeguardInfoDTO(idListaSafeguard, idTipoSafeguard, false);
+
+                List<AssetThreatSafeguardDTO> threatsSafeguard= new ArrayList<>();
+                if (cursor2.moveToFirst()) {
+                    do {
+                        Long idSalvaguarda = null;
+                        if (!cursor.isNull(0)) {
+                            idSalvaguarda = cursor2.getLong(0);
+                        }
+                        Long idAmenaza = cursor2.getLong(1);
+                        Long idListaTipoAmenaza = cursor2.getLong(2);
+                        Long idTipoAmenaza = cursor2.getLong(3);
+                        Boolean checked = false;
+
+                        if (idsThreatsActivoConSalvaguarda.contains(idAmenaza))
+                            checked = true;
+
+                        AssetThreatSafeguardDTO threatSafeguard = new AssetThreatSafeguardDTO(
+                                idSalvaguarda,idAmenaza,idListaTipoAmenaza,idTipoAmenaza,idProyecto,checked);
+
+                        threatsSafeguard.add(threatSafeguard);
+                    } while ( (cursor2.moveToNext()));
+                }
+                if (!threatsSafeguard.isEmpty())
+                    AssetSafeguardThreats.put(assetSafeguard,threatsSafeguard);
+                cursor2.close();
+            } while ( (cursor.moveToNext()));
+        }
+        db.close();
+        cursor.close();
+        return AssetSafeguardThreats;
+
+    }
+
+    @Override
+    public List<AssetThreatSafeguardDTO> obtenerAmenazasDeActivo2(Long idActivo, Long idProyecto) {
+
+        SQLiteDatabase db = getReadableDatabase();
+
+        List<AssetThreatSafeguardDTO> listThreat = new ArrayList<>();
+
+
+        Cursor cursor = db.rawQuery("SELECT DISTINCT " +
+                ThreatConstants.ID_AMENAZA_ACTIVO + ", " + ThreatConstants.ID_LISTA_TIPO_AMENAZA + ", " +
+                ThreatConstants.ID_TIPO_AMENAZA + " FROM " + ThreatConstants.TABLE_NAME + " WHERE " +
+                ThreatConstants.ID_PROYECTO + " = " + idProyecto + " AND " + ThreatConstants.ID_ACTIVO +
+                " = " + idActivo, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                Long idAmenaza = cursor.getLong(0);
+                Long idListaTipoAmenaza = cursor.getLong(1);
+                Long idTipoAmenaza = cursor.getLong(2);
+                Boolean checked = false;
+
+                AssetThreatSafeguardDTO threatSafeguard = new AssetThreatSafeguardDTO(
+                        null, idAmenaza, idListaTipoAmenaza, idTipoAmenaza, idProyecto, checked);
+                listThreat.add(threatSafeguard);
+            } while ((cursor.moveToNext()));
+        }
+
+        db.close();
+        cursor.close();
+        return listThreat;
+    }
+
 
     //@Override
     public HashMap<AssetThreatInfoDTO, List<Safeguard>> obtenerInfoSalvaguardasPorIdTipo(Long idProyecto, Long idListaTipoSalvaguarda,
@@ -1694,7 +1897,6 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
 
     }
 
-
     private List<PendingTaskDTO> obtenerAmenazasSinValorar(Long idProyecto) {
 
         SQLiteDatabase db = getReadableDatabase();
@@ -1736,19 +1938,238 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
         cursor.close();
         db.close();
         return pendingTasks;
-
     }
 
+    private List<PendingTaskDTO> obtenerAmenazasSinValorarDegradacion(Long idProyecto) {
+
+        SQLiteDatabase db = getReadableDatabase();
+        List<PendingTaskDTO> pendingTasks = new ArrayList<>();
+
+        Cursor cursor = db.rawQuery("SELECT t." +
+                ThreatConstants.ID_AMENAZA_ACTIVO + ", " + ThreatConstants.ID_LISTA_TIPO_AMENAZA + ", " +
+                ThreatConstants.ID_TIPO_AMENAZA + ", a." + AssetConstants.ID_ACTIVO + ", a." +
+                AssetConstants.NOMBRE + ", a." + AssetConstants.CODIGO +
+                " FROM " + ThreatConstants.TABLE_NAME + " t JOIN " +
+                AssetConstants.TABLE_NAME + " a ON t." + ThreatConstants.ID_ACTIVO + " = a." + AssetConstants.ID_ACTIVO +
+                " WHERE t." + ThreatConstants.ID_PROYECTO + " = "
+                + idProyecto + " AND (("
+
+                + ThreatConstants.ID_VALORACION_DEGRADACION_AUTENTICIDAD + " IS NULL" +
+                " AND " + ThreatConstants.ID_VALORACION_PROBABILIDAD_AUTENTICIDAD + " IS NOT NULL)" +
+
+                " OR (" + ThreatConstants.ID_VALORACION_DEGRADACION_CONFIDENCIALIDAD + " IS NULL" +
+                " AND " + ThreatConstants.ID_VALORACION_PROBABILIDAD_CONFIDENCIALIDAD + " IS NOT NULL)" +
+
+                " OR (" + ThreatConstants.ID_VALORACION_DEGRADACION_DISPONIBILIDAD + " IS NULL" +
+                " AND " + ThreatConstants.ID_VALORACION_PROBABILIDAD_DISPONIBILIDAD + " IS NOT NULL)" +
+
+                " OR (" + ThreatConstants.ID_VALORACION_DEGRADACION_INTEGRIDAD + " IS NULL" +
+                " AND " + ThreatConstants.ID_VALORACION_PROBABILIDAD_INTEGRIDAD + " IS NOT NULL)" +
+
+                " OR (" + ThreatConstants.ID_VALORACION_DEGRADACION_TRAZABILIDAD + " IS NULL" +
+                " AND " + ThreatConstants.ID_VALORACION_PROBABILIDAD_TRAZABILIDAD + " IS NOT NULL))", null);
+
+        if (cursor.moveToFirst()){
+            do {
+                Long idAmenaza = cursor.getLong(0);
+                Integer idLista = cursor.getInt(1);
+                Integer idTipo = cursor.getInt(2);
+                Long idActivo = cursor.getLong(3);
+                String nombreActivo = cursor.getString(4);
+                String codigoActivo = cursor.getString(5);
+
+                String codigoNombre = Converter.convertirNombreAmenaza(idLista, idTipo);
+                String codigoNombreActivo = "[" + codigoActivo + "] " + nombreActivo;
+                PendingTaskDTO task = new PendingTaskDTO(idActivo,codigoNombreActivo,idAmenaza,codigoNombre,null,null,idProyecto,1,2);
+                pendingTasks.add(task);
+            } while ( (cursor.moveToNext()));
+        }
+        cursor.close();
+        db.close();
+        return pendingTasks;
+    }
+
+    private List<PendingTaskDTO> obtenerAmenazasSinValorarProbabilidad(Long idProyecto) {
+
+        SQLiteDatabase db = getReadableDatabase();
+        List<PendingTaskDTO> pendingTasks = new ArrayList<>();
+
+        Cursor cursor = db.rawQuery("SELECT t." +
+                ThreatConstants.ID_AMENAZA_ACTIVO + ", " + ThreatConstants.ID_LISTA_TIPO_AMENAZA + ", " +
+                ThreatConstants.ID_TIPO_AMENAZA + ", a." + AssetConstants.ID_ACTIVO + ", a." +
+                AssetConstants.NOMBRE + ", a." + AssetConstants.CODIGO +
+                " FROM " + ThreatConstants.TABLE_NAME + " t JOIN " +
+                AssetConstants.TABLE_NAME + " a ON t." + ThreatConstants.ID_ACTIVO + " = a." + AssetConstants.ID_ACTIVO +
+                " WHERE t." + ThreatConstants.ID_PROYECTO + " = "
+                + idProyecto + " AND (("
+
+                + ThreatConstants.ID_VALORACION_DEGRADACION_AUTENTICIDAD + " IS NOT NULL" +
+                " AND " + ThreatConstants.ID_VALORACION_PROBABILIDAD_AUTENTICIDAD + " IS NULL)" +
+
+                " OR (" + ThreatConstants.ID_VALORACION_DEGRADACION_CONFIDENCIALIDAD + " IS NOT NULL" +
+                " AND " + ThreatConstants.ID_VALORACION_PROBABILIDAD_CONFIDENCIALIDAD + " IS NULL)" +
+
+                " OR (" + ThreatConstants.ID_VALORACION_DEGRADACION_DISPONIBILIDAD + " IS NOT NULL" +
+                " AND " + ThreatConstants.ID_VALORACION_PROBABILIDAD_DISPONIBILIDAD + " IS NULL)" +
+
+                " OR (" + ThreatConstants.ID_VALORACION_DEGRADACION_INTEGRIDAD + " IS NOT NULL" +
+                " AND " + ThreatConstants.ID_VALORACION_PROBABILIDAD_INTEGRIDAD + " IS NULL)" +
+
+                " OR (" + ThreatConstants.ID_VALORACION_DEGRADACION_TRAZABILIDAD + " IS NOT NULL" +
+                " AND " + ThreatConstants.ID_VALORACION_PROBABILIDAD_TRAZABILIDAD + " IS NULL))", null);
+
+        if (cursor.moveToFirst()){
+            do {
+                Long idAmenaza = cursor.getLong(0);
+                Integer idLista = cursor.getInt(1);
+                Integer idTipo = cursor.getInt(2);
+                Long idActivo = cursor.getLong(3);
+                String nombreActivo = cursor.getString(4);
+                String codigoActivo = cursor.getString(5);
+
+                String codigoNombre = Converter.convertirNombreAmenaza(idLista, idTipo);
+                String codigoNombreActivo = "[" + codigoActivo + "] " + nombreActivo;
+                PendingTaskDTO task = new PendingTaskDTO(idActivo,codigoNombreActivo,idAmenaza,codigoNombre,null,null,idProyecto,1,3);
+                pendingTasks.add(task);
+            } while ( (cursor.moveToNext()));
+        }
+        cursor.close();
+        db.close();
+        return pendingTasks;
+    }
+
+    private List<PendingTaskDTO> obtenerAmenazasSinSalvaguardas(Long idProyecto){
+        SQLiteDatabase db = getReadableDatabase();
+        List<PendingTaskDTO> pendingTasks = new ArrayList<>();
+
+        Cursor cursor = db.rawQuery("SELECT t." +
+                ThreatConstants.ID_AMENAZA_ACTIVO + ", " + ThreatConstants.ID_LISTA_TIPO_AMENAZA + ", " +
+                ThreatConstants.ID_TIPO_AMENAZA + ", a." + AssetConstants.ID_ACTIVO + ", a." +
+                AssetConstants.NOMBRE + ", a." + AssetConstants.CODIGO +
+                " FROM " + ThreatConstants.TABLE_NAME + " t LEFT JOIN " +
+                AssetConstants.TABLE_NAME + " a ON t." + ThreatConstants.ID_ACTIVO + " = a." +
+                AssetConstants.ID_ACTIVO + " LEFT JOIN " + SafeguardConstants.TABLE_NAME + " s ON t." +
+                ThreatConstants.ID_LISTA_TIPO_AMENAZA + " = s." + SafeguardConstants.ID_AMENAZA +
+                " WHERE t." + ThreatConstants.ID_PROYECTO + " = " + idProyecto,null);
+
+        if (cursor.moveToFirst()){
+            do {
+                Long idAmenaza = cursor.getLong(0);
+                Integer idLista = cursor.getInt(1);
+                Integer idTipo = cursor.getInt(2);
+                Long idActivo = cursor.getLong(3);
+                String nombreActivo = cursor.getString(4);
+                String codigoActivo = cursor.getString(5);
+
+                String codigoNombre = Converter.convertirNombreAmenaza(idLista, idTipo);
+                String codigoNombreActivo = "[" + codigoActivo + "] " + nombreActivo;
+                PendingTaskDTO task = new PendingTaskDTO(idActivo,codigoNombreActivo,idAmenaza,codigoNombre,null,null,idProyecto,1,4);
+                pendingTasks.add(task);
+            } while ( (cursor.moveToNext()));
+        }
+        cursor.close();
+        db.close();
+        return pendingTasks;
+    }
+
+    private List<PendingTaskDTO> obtenerSalvaguardasSinValorar(Long idProyecto) {
+
+        SQLiteDatabase db = getReadableDatabase();
+        List<PendingTaskDTO> pendingTasks = new ArrayList<>();
+
+        Cursor cursor = db.rawQuery("SELECT s." +
+                SafeguardConstants.ID_SAFEGUARD + ", " + SafeguardConstants.ID_LISTA_TIPO_SALVAGUARDA + ", " +
+                SafeguardConstants.ID_TIPO_SALVAGUARDA + ", a." + AssetConstants.ID_ACTIVO + ", a." +
+                AssetConstants.NOMBRE + ", a." + AssetConstants.CODIGO + ", t." +
+                ThreatConstants.ID_AMENAZA_ACTIVO + ", " + ThreatConstants.ID_LISTA_TIPO_AMENAZA + ", " +
+                ThreatConstants.ID_TIPO_AMENAZA + " FROM " + SafeguardConstants.TABLE_NAME + " s JOIN " +
+                AssetConstants.TABLE_NAME + " a ON s." + SafeguardConstants.ID_ACTIVO + " = a." + AssetConstants.ID_ACTIVO +
+                " JOIN " + ThreatConstants.TABLE_NAME + " t ON s." + SafeguardConstants.ID_AMENAZA +
+                " = t." + ThreatConstants.ID_AMENAZA_ACTIVO + " WHERE t." + SafeguardConstants.ID_PROYECTO + " = "
+                + idProyecto + " AND " + SafeguardConstants.ID_VALORACION_CONTROLSEGURIDAD_AUTENTICIDAD + " IS NULL" +
+                " AND " + SafeguardConstants.ID_VALORACION_CONTROLSEGURIDAD_CONFIDENCIALIDAD + " IS NULL" +
+                " AND " + SafeguardConstants.ID_VALORACION_CONTROLSEGURIDAD_DISPONIBILIDAD + " IS NULL" +
+                " AND " + SafeguardConstants.ID_VALORACION_CONTROLSEGURIDAD_INTEGRIDAD + " IS NULL" +
+                " AND " + SafeguardConstants.ID_VALORACION_CONTROLSEGURIDAD_TRAZABILIDAD + " IS NULL", null);
+
+        if (cursor.moveToFirst()){
+            do {
+                Long idSalvaguarda = cursor.getLong(0);
+                Integer idListaS = cursor.getInt(1);
+                Integer idTipoS = cursor.getInt(2);
+                Long idActivo = cursor.getLong(3);
+                String nombreActivo = cursor.getString(4);
+                String codigoActivo = cursor.getString(5);
+                Long idAmenaza = cursor.getLong(6);
+                Integer idListaA = cursor.getInt(7);
+                Integer idTipoA = cursor.getInt(8);
+
+                String codigoNombreSalvaguarda = Converter.convertirNombreSalvaguarda(idListaS, idTipoS);
+                String codigoNombreAmenaza = Converter.convertirNombreAmenaza(idListaA, idTipoA);
+                String codigoNombreActivo = "[" + codigoActivo + "] " + nombreActivo;
+                PendingTaskDTO task = new PendingTaskDTO(idActivo,codigoNombreActivo,idAmenaza,codigoNombreAmenaza,
+                        idSalvaguarda,codigoNombreSalvaguarda,idProyecto,2,0);
+                pendingTasks.add(task);
+            } while ( (cursor.moveToNext()));
+        }
+        cursor.close();
+        db.close();
+        return pendingTasks;
+    }
+
+    private List<PendingTaskDTO> obtenerSalvaguardasSinTProtec(Long idProyecto) {
+
+        SQLiteDatabase db = getReadableDatabase();
+        List<PendingTaskDTO> pendingTasks = new ArrayList<>();
+
+        Cursor cursor = db.rawQuery("SELECT s." +
+                SafeguardConstants.ID_SAFEGUARD + ", " + SafeguardConstants.ID_LISTA_TIPO_SALVAGUARDA + ", " +
+                SafeguardConstants.ID_TIPO_SALVAGUARDA + ", a." + AssetConstants.ID_ACTIVO + ", a." +
+                AssetConstants.NOMBRE + ", a." + AssetConstants.CODIGO + ", t." +
+                ThreatConstants.ID_AMENAZA_ACTIVO + ", " + ThreatConstants.ID_LISTA_TIPO_AMENAZA + ", " +
+                ThreatConstants.ID_TIPO_AMENAZA + " FROM " + SafeguardConstants.TABLE_NAME + " s JOIN " +
+                AssetConstants.TABLE_NAME + " a ON s." + SafeguardConstants.ID_ACTIVO + " = a." + AssetConstants.ID_ACTIVO +
+                " JOIN " + ThreatConstants.TABLE_NAME + " t ON s." + SafeguardConstants.ID_AMENAZA +
+                " = t." + ThreatConstants.ID_AMENAZA_ACTIVO + " WHERE t." + SafeguardConstants.ID_PROYECTO + " = "
+                + idProyecto + " AND " + SafeguardConstants.TIPO_PROTECCION + " IS NULL", null);
+
+        if (cursor.moveToFirst()){
+            do {
+                Long idSalvaguarda = cursor.getLong(0);
+                Integer idListaS = cursor.getInt(1);
+                Integer idTipoS = cursor.getInt(2);
+                Long idActivo = cursor.getLong(3);
+                String nombreActivo = cursor.getString(4);
+                String codigoActivo = cursor.getString(5);
+                Long idAmenaza = cursor.getLong(6);
+                Integer idListaA = cursor.getInt(7);
+                Integer idTipoA = cursor.getInt(8);
+
+                String codigoNombreSalvaguarda = Converter.convertirNombreSalvaguarda(idListaS, idTipoS);
+                String codigoNombreAmenaza = Converter.convertirNombreAmenaza(idListaA, idTipoA);
+                String codigoNombreActivo = "[" + codigoActivo + "] " + nombreActivo;
+                PendingTaskDTO task = new PendingTaskDTO(idActivo,codigoNombreActivo,idAmenaza,codigoNombreAmenaza,
+                        idSalvaguarda,codigoNombreSalvaguarda,idProyecto,2,5);
+                pendingTasks.add(task);
+            } while ( (cursor.moveToNext()));
+        }
+        cursor.close();
+        db.close();
+        return pendingTasks;
+    }
 
     @Override
     public List<PendingTaskDTO> obtenerTareasPendientes(Long idProyecto){
-
         List<PendingTaskDTO> pendingTasks = new ArrayList<>();
         pendingTasks.addAll(obtenerActivosSinValorar(idProyecto));
         pendingTasks.addAll(obtenerActivosSinAmenazas(idProyecto));
         pendingTasks.addAll(obtenerAmenazasSinValorar(idProyecto));
+        pendingTasks.addAll(obtenerAmenazasSinValorarDegradacion(idProyecto));
+        pendingTasks.addAll(obtenerAmenazasSinValorarProbabilidad(idProyecto));
+        pendingTasks.addAll(obtenerAmenazasSinSalvaguardas(idProyecto));
+        pendingTasks.addAll(obtenerSalvaguardasSinValorar(idProyecto));
+        pendingTasks.addAll(obtenerSalvaguardasSinTProtec(idProyecto));
         return pendingTasks;
-
     }
 
 

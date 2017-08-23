@@ -7,11 +7,27 @@
     android:focusable="false"
     android:focusableInTouchMode="false">
     <TextView
+        android:id="@+id/asset_safeguard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="35dp"
+        android:textSize="16dp"
+        android:text="Safeguard"
+        android:textStyle=""
+        android:typeface="sans"
+        android:clickable="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"/>
+
+    <TextView
         android:id="@+id/asset_threat"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="35dp"
         android:textSize="16dp"
+        android:text="threat"
         android:textStyle=""
         android:typeface="sans"
         android:clickable="false"

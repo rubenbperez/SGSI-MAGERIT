@@ -1,33 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:paddingBottom="3dp"
+    android:paddingTop="3dp">
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Nombre Activo: "
+            android:text="Activo: "
             android:textStyle="bold"
+            android:textColor="@color/asset"
             android:clickable="false"
             android:focusable="false"
-            android:focusableInTouchMode="false"/>
-
+            android:focusableInTouchMode="false"
+            android:layout_marginRight="3dp"/>
 
         <TextView
             android:id="@+id/asset"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="assetName"
+            android:textColor="@color/asset"
             android:textStyle="bold"
             android:clickable="false"
             android:focusable="false"
-            android:focusableInTouchMode="false"/>
+            android:focusableInTouchMode="false" />
 
     </LinearLayout>
 
@@ -37,23 +43,27 @@
         android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Nombre Amenaza: "
+            android:text="Amenaza: "
             android:textStyle="bold"
+            android:textColor="@color/threat"
             android:clickable="false"
             android:focusable="false"
-            android:focusableInTouchMode="false" />
-
+            android:focusableInTouchMode="false"
+            android:layout_marginRight="3dp"/>
 
         <TextView
             android:id="@+id/threat"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="threatName"
+            android:textColor="@color/threat"
             android:textStyle="bold"
             android:clickable="false"
             android:focusable="false"
@@ -66,16 +76,20 @@
         android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Nombre Salvaguarda: "
+            android:text="Salvaguarda: "
             android:textStyle="bold"
+            android:textColor="@color/safeguard"
             android:clickable="false"
             android:focusable="false"
-            android:focusableInTouchMode="false"/>
+            android:focusableInTouchMode="false"
+            android:layout_marginRight="3dp"/>
 
 
         <TextView
@@ -83,10 +97,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="safeguardName"
+            android:textColor="@color/safeguard"
             android:textStyle="bold"
             android:clickable="false"
             android:focusable="false"
-            android:focusableInTouchMode="false" />
+            android:focusableInTouchMode="false"/>
 
     </LinearLayout>
 
@@ -98,7 +113,7 @@
         android:text="name"
         android:clickable="false"
         android:focusable="false"
-        android:focusableInTouchMode="false"/>
-
-
+        android:focusableInTouchMode="false"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"/>
 </LinearLayout>

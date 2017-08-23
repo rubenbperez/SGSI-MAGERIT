@@ -2,11 +2,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PendingTasksFragment.PendingTasks">
+    tools:context=".PendingTasksFragment.PendingTasks"
+    android:background="@color/pendingTasksBackground">
 
     <!-- TODO: Update blank fragment layout -->
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/LstPendingTasks" />
+        android:id="@+id/LstPendingTasks"
+        android:layout_marginTop="5dp" />
 </FrameLayout>

@@ -23,6 +23,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import es.udc.fic.sgsi_magerit.AddEditAsset.AddEditAssetActivity;
+import es.udc.fic.sgsi_magerit.AddEditAssetSafeguards.AddEditAssetSafeguardsActivity;
 import es.udc.fic.sgsi_magerit.AddEditAssetThreats.AddEditAssetThreatsActivity;
 import es.udc.fic.sgsi_magerit.Model.Asset.AssetDTO;
 import es.udc.fic.sgsi_magerit.Model.ModelService.ModelServiceImpl;
@@ -109,7 +110,7 @@ public class Assets extends Fragment {
                 (AdapterView.AdapterContextMenuInfo)menuInfo;
 
         menu.setHeaderTitle(data.get(info.position).getNombreActivo());
-        inflater.inflate(R.menu.menu_editar_borrar_editaramenazas, menu);
+        inflater.inflate(R.menu.menu_editar_borrar_activos, menu);
     }
 
     @Override
@@ -157,11 +158,18 @@ public class Assets extends Fragment {
                 startActivityForResult(intent, GlobalConstants.REQUEST_CODE_EDIT_ACTIVITY);
                 break;
 
-            case R.id.menuOpcEditarAmenaza:
+            case R.id.menuOpcEditarAmenazas:
                 Intent intent2 = new Intent(getActivity(), AddEditAssetThreatsActivity.class);
                 intent2.putExtra("idActivo", data.get(index).getIdActivo()); //Optional parameters
                 intent2.putExtra("idProyecto", idProyectoActivo);
                 startActivityForResult(intent2, GlobalConstants.REQUEST_CODE_EDIT_ACTIVITY);
+                break;
+
+            case R.id.menuOpcEditarSalvaguardas:
+                Intent intent3 = new Intent(getActivity(), AddEditAssetSafeguardsActivity.class);
+                intent3.putExtra("idActivo", data.get(index).getIdActivo()); //Optional parameters
+                intent3.putExtra("idProyecto", idProyectoActivo);
+                startActivityForResult(intent3, GlobalConstants.REQUEST_CODE_EDIT_ACTIVITY);
                 break;
         }
 

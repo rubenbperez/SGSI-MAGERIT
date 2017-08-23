@@ -2,13 +2,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddEditThreat.EstimateThreatFragment">
+    tools:context=".AddEditThreat.EstimateThreatFragment"
+    android:background="@color/threatBackground">
 
     <ListView android:id="@+id/LstOpciones"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:descendantFocusability="blocksDescendants"
         android:focusable="true"
-        android:focusableInTouchMode="true"/>
+        android:focusableInTouchMode="true" />
 
 </FrameLayout>
