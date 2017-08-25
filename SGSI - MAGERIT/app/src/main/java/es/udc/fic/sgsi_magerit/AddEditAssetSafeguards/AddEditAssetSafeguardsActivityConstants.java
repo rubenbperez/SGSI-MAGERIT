@@ -10,5 +10,7 @@ public class AddEditAssetSafeguardsActivityConstants {
     public final static int TAB_SELECCION = 1;
     public final static int TAB_VALORACION = 2;
     public final static String ACTIVITY_TITLE_EDITAR = "Editar Salvaguardas";
+    public final static String ERROR_SALVAGUARDA_SELECCIONADA_SIN_AMENAZAS =
+            "Hay una salvaguarda seleccionada sin amenazas. No se pueden crear salvaguardas sin estar asociadas a una amenaza";
 
 }

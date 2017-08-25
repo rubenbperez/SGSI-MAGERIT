@@ -18,7 +18,7 @@
         android:focusableInTouchMode="true"
         android:enabled="true"
         android:text="[A]"
-        android:textColor="#000000"
+        android:textColor="@color/threat"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentRight="true" />

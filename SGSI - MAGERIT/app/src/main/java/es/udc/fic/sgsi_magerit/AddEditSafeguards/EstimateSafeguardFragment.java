@@ -391,9 +391,11 @@ public class EstimateSafeguardFragment extends Fragment {
                 convertView = layoutInflater.inflate(R.layout.groupitem_threat_asset_safeguard, null);
             }
             TextView listTitleTextView = (TextView) convertView
-                    .findViewById(R.id.asset_threat);
-            listTitleTextView.setText("[" + listTitle.getCodigoActivo() + "] " + listTitle.getNombreActivo()
-                    + " - " + obtenerNombreAmenaza(listTitle.getIdListaTipoAmenaza(), listTitle.getIdTipoAmenaza()));
+                    .findViewById(R.id.asset);
+            TextView listTitleTextView2 = (TextView) convertView
+                    .findViewById(R.id.threat);
+            listTitleTextView.setText("[" + listTitle.getCodigoActivo() + "] " + listTitle.getNombreActivo());
+            listTitleTextView2.setText(obtenerNombreAmenaza(listTitle.getIdListaTipoAmenaza(), listTitle.getIdTipoAmenaza()));
 
             //listTitleTextView.setText("[" + listTitle.getCodigoActivo() + "] " + listTitle.getNombreActivo());
             //listTitle2TextView.setText(obtenerNombreAmenaza(listTitle.getIdListaTipoAmenaza(), listTitle.getIdTipoAmenaza()));

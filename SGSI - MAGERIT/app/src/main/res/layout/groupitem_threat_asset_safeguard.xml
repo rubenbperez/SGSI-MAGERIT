@@ -2,21 +2,49 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:clickable="false"
     android:focusable="false"
-    android:focusableInTouchMode="false">
+    android:focusableInTouchMode="false"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp">
     <TextView
-        android:id="@+id/asset_threat"
-        android:layout_width="match_parent"
+        android:id="@+id/asset"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingLeft="35dp"
+        android:text="[T]"
         android:textSize="16dp"
+        android:textColor="@color/asset"
         android:textStyle=""
         android:typeface="sans"
         android:clickable="false"
         android:focusable="false"
-        android:focusableInTouchMode="false"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"/>
+        android:focusableInTouchMode="false" />
+
+    <TextView
+        android:id="@+id/none"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16dp"
+        android:text="  -  "
+        android:textStyle=""
+        android:typeface="sans"
+        android:clickable="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false" />
+
+    <TextView
+        android:id="@+id/threat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="[S]"
+        android:textSize="16dp"
+        android:textColor="@color/threat"
+        android:textStyle=""
+        android:typeface="sans"
+        android:clickable="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false" />
+
 </LinearLayout>

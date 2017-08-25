@@ -137,7 +137,7 @@ public class EstimateThreatFragment extends Fragment {
         public View getView(final int position, View convertView, ViewGroup parent) {
             LayoutInflater inflater = LayoutInflater.from(getContext());
 
-            View item = inflater.inflate(R.layout.lisitem_threat_assets_estimation, null);
+            View item = inflater.inflate(R.layout.lisitem_threat_assets_estimation2, null);
             TextView lblAssetName = (TextView) item.findViewById(R.id.asset);
             lblAssetName.setText("[" + data.get(position).getCodigoActivo() + "]" + " " + data.get(position).getNombreActivo());
 

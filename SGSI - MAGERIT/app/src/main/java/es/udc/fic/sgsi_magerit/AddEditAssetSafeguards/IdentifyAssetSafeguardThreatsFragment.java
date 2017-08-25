@@ -44,6 +44,11 @@ public class IdentifyAssetSafeguardThreatsFragment extends Fragment {
     HashMap<SafeguardInfoDTO, List<AssetThreatSafeguardDTO>> expandableListDetail;
     ExpandableListView expandableListView;
 
+
+    public HashMap<SafeguardInfoDTO, List<AssetThreatSafeguardDTO>> getData() {
+        return expandableListDetail;
+    }
+
     public IdentifyAssetSafeguardThreatsFragment() {
         // Required empty public constructor
     }
@@ -255,23 +260,21 @@ public class IdentifyAssetSafeguardThreatsFragment extends Fragment {
 
         // anado las nuevas que no estaban antiguamente
         for ( SafeguardDTO sf: safegardsSelected) {
-            boolean is = true;
-
+            boolean flag = true;
             if (!expandableListDetail.isEmpty()) {
 
                 for (Map.Entry<SafeguardInfoDTO, List<AssetThreatSafeguardDTO>> entry : expandableListDetail.entrySet()) {
                     SafeguardInfoDTO key = entry.getKey();
 
                     if (key.getIdListaTipo() == sf.getIdListaTipo() && key.getIdTipo() == sf.getIdTipo()) {
-                        is = false;
+                        flag = false;
                         break;
                     }
-
-                    if (is) {
-                        SafeguardInfoDTO safeguard = new SafeguardInfoDTO(sf.getIdListaTipo(), sf.getIdTipo(), false);
-                        expandableListTitleNuevo.add(safeguard);
-                        expandableListDetailNueva.put(safeguard, threats);
-                    }
+                }
+                if (flag) {
+                    SafeguardInfoDTO safeguard = new SafeguardInfoDTO(sf.getIdListaTipo(), sf.getIdTipo(), false);
+                    expandableListTitleNuevo.add(safeguard);
+                    expandableListDetailNueva.put(safeguard, threats);
                 }
             } else {
                 SafeguardInfoDTO safeguard = new SafeguardInfoDTO(sf.getIdListaTipo(), sf.getIdTipo(), false);
@@ -285,7 +288,6 @@ public class IdentifyAssetSafeguardThreatsFragment extends Fragment {
 
         expandableListAdapter = new CustomExpandableListAdapter(this.getContext(), expandableListTitle, expandableListDetailNueva);
         expandableListView.setAdapter(expandableListAdapter);
-
     }
 
 

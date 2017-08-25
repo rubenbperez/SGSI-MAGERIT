@@ -1,12 +1,17 @@
 package es.udc.fic.sgsi_magerit.PendingTasksFragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -18,6 +23,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import es.udc.fic.sgsi_magerit.AddEditAsset.AddEditAssetActivity;
+import es.udc.fic.sgsi_magerit.AddEditAssetSafeguards.AddEditAssetSafeguardsActivity;
+import es.udc.fic.sgsi_magerit.AddEditAssetThreats.AddEditAssetThreatsActivity;
 import es.udc.fic.sgsi_magerit.Model.ModelService.ModelServiceImpl;
 import es.udc.fic.sgsi_magerit.Model.PendingTasks.PendingTaskDTO;
 import es.udc.fic.sgsi_magerit.Model.Project.Project;
@@ -30,7 +38,8 @@ public class PendingTasks extends Fragment {
     private ListView lstOpciones;
     private ModelServiceImpl service;
     private List<PendingTaskDTO> data;
-    private  Long idProyecto;
+    private Long idProyecto;
+    private PendingTaskAdapter adaptador;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -65,6 +74,7 @@ public class PendingTasks extends Fragment {
         lstOpciones = (ListView)view.findViewById(R.id.LstPendingTasks);
         lstOpciones.setAdapter(adaptador);
 
+        registerForContextMenu(lstOpciones);
         return view;
     }
 
@@ -143,6 +153,86 @@ public class PendingTasks extends Fragment {
         }
 
         return text;
+    }
+
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v,
+                                    ContextMenu.ContextMenuInfo menuInfo)
+    {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getActivity().getMenuInflater();
+
+        AdapterView.AdapterContextMenuInfo info =
+                (AdapterView.AdapterContextMenuInfo)menuInfo;
+
+        menu.setHeaderTitle(data.get(info.position).getNombreActivo());
+        inflater.inflate(R.menu.menu_resolver, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info;
+        info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
+        final int index = info.position;
+        switch (item.getItemId()) {
+            case R.id.menuOpcResolver:
+
+                switch(data.get(index).getIdTipo().intValue()) {
+                    case 0:
+                        if (data.get(index).getCausa() == 0) {
+                            Intent intent = new Intent(getActivity(), AddEditAssetActivity.class);
+                            intent.putExtra("idActivo", data.get(index).getIdActivo()); //Optional parameters
+                            intent.putExtra("idProyecto", idProyecto);
+                            startActivityForResult(intent, GlobalConstants.REQUEST_CODE_EDIT_ACTIVITY);
+                        } else {
+                            Intent intent = new Intent(getActivity(), AddEditAssetThreatsActivity.class);
+                            intent.putExtra("idActivo", data.get(index).getIdActivo()); //Optional parameters
+                            intent.putExtra("idProyecto", idProyecto);
+                            startActivityForResult(intent, GlobalConstants.REQUEST_CODE_EDIT_ACTIVITY);
+                        }
+                        break;
+                    case 1:
+                        if (data.get(index).getCausa() != 4) {
+                            Intent intent = new Intent(getActivity(), AddEditAssetThreatsActivity.class);
+                            intent.putExtra("idActivo", data.get(index).getIdActivo()); //Optional parameters
+                            intent.putExtra("idProyecto", idProyecto);
+                            startActivityForResult(intent, GlobalConstants.REQUEST_CODE_EDIT_ACTIVITY);
+                        } else {
+                            Intent intent = new Intent(getActivity(), AddEditAssetSafeguardsActivity.class);
+                            intent.putExtra("idActivo", data.get(index).getIdActivo()); //Optional parameters
+                            intent.putExtra("idProyecto", idProyecto);
+                            startActivityForResult(intent, GlobalConstants.REQUEST_CODE_EDIT_ACTIVITY);
+                        }
+                        break;
+                    case 2:
+                        Intent intent = new Intent(getActivity(), AddEditAssetSafeguardsActivity.class);
+                        intent.putExtra("idActivo", data.get(index).getIdActivo()); //Optional parameters
+                        intent.putExtra("idProyecto", idProyecto);
+                        startActivityForResult(intent, GlobalConstants.REQUEST_CODE_EDIT_ACTIVITY);
+                        break;
+                }
+                break;
+        }
+        return true;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent datas) {
+        super.onActivityResult(requestCode, resultCode, datas);
+
+        if (GlobalConstants.REQUEST_CODE_ADD_ACTIVITY == requestCode ||
+                GlobalConstants.REQUEST_CODE_EDIT_ACTIVITY == requestCode) {
+
+            if (resultCode == 1) {
+                data.clear();
+                data.addAll(data = service.obtenerTareasPendientes(idProyecto));
+                adaptador.notifyDataSetChanged();
+            }
+
+            if (resultCode == 0)
+                return;
+        }
     }
 
 

@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -98,6 +99,7 @@ public class IdentifyThreatFragment extends Fragment {
         spinnerAdapter =  ArrayAdapter.createFromResource(getContext(), R.array.Sizing_spinner_Threats,
                 android.R.layout.simple_spinner_item);
 
+
         if (idListaTipoAmenazaRecibido != GlobalConstants.NULL_ID_LISTA_TIPO_AMENAZA
                 && idListaTipoAmenazaRecibido != GlobalConstants.NULL_ID_LISTA_TIPO_AMENAZA) {
 
@@ -121,7 +123,18 @@ public class IdentifyThreatFragment extends Fragment {
             lstOpcionesEdicion.setVisibility(View.VISIBLE);
             spinner.setVisibility(View.GONE);
             ArrayAdapter<String> lstEdicion = new ArrayAdapter<String>(this.getContext(),
-                    android.R.layout.simple_list_item_single_choice, listaEdicion);
+                    android.R.layout.simple_list_item_single_choice, listaEdicion){
+                @Override
+                public View getView(int position, View convertView, ViewGroup parent) {
+
+                    View view = super.getView(position, convertView, parent);
+                    TextView text = (TextView) view.findViewById(android.R.id.text1);
+
+                    text.setTextColor(getResources().getColor(R.color.threat));
+
+                    return view;
+                }
+            };;
             lstOpcionesEdicion.setAdapter(lstEdicion);
             lstOpcionesEdicion.setItemChecked(0,true);
             return view;
@@ -255,8 +268,9 @@ public class IdentifyThreatFragment extends Fragment {
             }
         });
 
-                spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter((SpinnerAdapter) spinnerAdapter);
+
         spinner.setOnItemSelectedListener(
                 new AdapterView.OnItemSelectedListener() {
                     public void onItemSelected(AdapterView<?> parent,

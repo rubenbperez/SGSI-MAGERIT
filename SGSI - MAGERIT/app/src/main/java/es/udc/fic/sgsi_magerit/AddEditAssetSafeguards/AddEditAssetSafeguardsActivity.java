@@ -11,9 +11,22 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import es.udc.fic.sgsi_magerit.AddEditSafeguards.AddEditSafeguardActivityConstants;
 import es.udc.fic.sgsi_magerit.Model.ModelService.ModelService;
 import es.udc.fic.sgsi_magerit.Model.ModelService.ModelServiceImpl;
+import es.udc.fic.sgsi_magerit.Model.Safeguard.AssetSafeguardsThreatsInfoDTO;
+import es.udc.fic.sgsi_magerit.Model.Safeguard.AssetThreatSafeguardDTO;
+import es.udc.fic.sgsi_magerit.Model.Safeguard.Safeguard;
+import es.udc.fic.sgsi_magerit.Model.Safeguard.SafeguardInfoDTO;
 import es.udc.fic.sgsi_magerit.R;
 import es.udc.fic.sgsi_magerit.Util.GlobalConstants;
 
@@ -43,7 +56,7 @@ public class AddEditAssetSafeguardsActivity extends AppCompatActivity {
         adapter = new AddEditAssetSafeguardsFragmentPagerAdapter(
                 getSupportFragmentManager(),idProyecto);
         viewPager.setAdapter(adapter);
-
+        viewPager.setOffscreenPageLimit(3);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.appbartabs);
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         tabLayout.setTabMode(TabLayout.MODE_FIXED);
@@ -53,6 +66,7 @@ public class AddEditAssetSafeguardsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         getSupportActionBar().setTitle(AddEditAssetSafeguardsActivityConstants.ACTIVITY_TITLE_EDITAR);
+
     }
 
     @Override
@@ -64,8 +78,13 @@ public class AddEditAssetSafeguardsActivity extends AppCompatActivity {
                 finish();
                 return true;
             case R.id.action_aceptar:
+                setResult(0, resultIntent);
                 item.setEnabled(false);
-                //editarAmenazas();
+                if (!comprobarDatos()) {
+                    item.setEnabled(true);
+                    return false;
+                }
+                editarSalvaguardas();
                 item.setEnabled(true);
                 finish();
                 return true;
@@ -132,6 +151,95 @@ public class AddEditAssetSafeguardsActivity extends AppCompatActivity {
             return AddEditAssetSafeguardsActivityConstants.tabTitles[position];
         }
     }
-    
+
+    private boolean comprobarDatos() {
+
+        IdentifyAssetSafeguardThreatsFragment fr2 = (IdentifyAssetSafeguardThreatsFragment)
+                adapter.instantiateItem(viewPager, 1);
+
+        //fr2.recargarInfo();
+        HashMap<SafeguardInfoDTO, List<AssetThreatSafeguardDTO>> expandableSafegardsThreatSelected = fr2.getData();
+
+        boolean flag = false;
+
+        for (Map.Entry<SafeguardInfoDTO, List<AssetThreatSafeguardDTO>> entrySelected : expandableSafegardsThreatSelected.entrySet()) {
+            SafeguardInfoDTO keySelected = entrySelected.getKey();
+            List<AssetThreatSafeguardDTO> valueSelected = entrySelected.getValue();
+
+            for (AssetThreatSafeguardDTO safeguard : valueSelected) {
+                if (safeguard.getChecked()) {
+                    flag = true;
+                    break;
+                }
+            }
+
+            if (!flag) {
+                Toast.makeText(this, AddEditAssetSafeguardsActivityConstants.ERROR_SALVAGUARDA_SELECCIONADA_SIN_AMENAZAS, Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private void editarSalvaguardas() {
+        EstimateAssetSafeguardsFragment fr3 = (EstimateAssetSafeguardsFragment)
+                adapter.instantiateItem(viewPager, 2);
+
+        fr3.recargarInfo();
+        HashMap<AssetSafeguardsThreatsInfoDTO, List<Safeguard>> safeguards = fr3.getData();
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat(GlobalConstants.DATE_FORMAT);
+        Calendar fechaActual = Calendar.getInstance();
+        String fechaActualStr = dateFormat.format(fechaActual.getTime());
+
+
+        List <Long> idsSalvaguardasComprobadas = new ArrayList<>();
+
+        HashMap<AssetSafeguardsThreatsInfoDTO, List<Safeguard>> expandableBD = service.
+                obtenerInfoSalvaguardasDeActivo(idProyecto,idActivoRecibido);
+        
+        for (Map.Entry<AssetSafeguardsThreatsInfoDTO, List<Safeguard>> entrySelected : safeguards.entrySet()) {
+            AssetSafeguardsThreatsInfoDTO key = entrySelected.getKey();
+            List<Safeguard> value = entrySelected.getValue();
+
+            // Anadimos as novas
+            if (value.get(0).getIdSafeguard() == null) {
+                service.crearSalvaguarda(value.get(0).getIdActivo(), value.get(0).getIdProyecto(), value.get(0).getIdThreat(),
+                        key.getIdListaTipoSalvaguarda().longValue(), key.getIdTipoSalvaguarda().longValue(),
+                        value.get(0).getIdControlSeguridadDisponibilidad(),
+                        value.get(0).getIdControlSeguridadIntegridad(),
+                        value.get(0).getIdControlSeguridadConfidencialidad(),
+                        value.get(0).getIdControlSeguridadAutenticidad(),
+                        value.get(0).getIdControlSeguridadTrazabilidad(), value.get(0).getTipoProteccion(),
+                        value.get(0).getEficacia(), fechaActualStr);
+            } else { //editamos as que xa había
+                service.editarValoracionSalvaguarda(value.get(0).getIdSafeguard(),
+                        value.get(0).getIdControlSeguridadDisponibilidad(),
+                        value.get(0).getIdControlSeguridadIntegridad(),
+                        value.get(0).getIdControlSeguridadConfidencialidad(),
+                        value.get(0).getIdControlSeguridadAutenticidad(),
+                        value.get(0).getIdControlSeguridadTrazabilidad(), value.get(0).getTipoProteccion(),
+                        value.get(0).getEficacia());
+                idsSalvaguardasComprobadas.add(value.get(0).getIdSafeguard());
+            }
+        }
+
+
+
+        //eliminamos as que se poidan  haber eliminado
+
+        for (Map.Entry<AssetSafeguardsThreatsInfoDTO, List<Safeguard>> entryBD : expandableBD.entrySet()) {
+            AssetSafeguardsThreatsInfoDTO keyBD = entryBD.getKey();
+            Safeguard valueBD = entryBD.getValue().get(0);
+
+            if (!idsSalvaguardasComprobadas.contains(valueBD.getIdSafeguard())) {
+                service.eliminarSalvaguardaPorId(valueBD.getIdSafeguard(), idProyecto);
+            }
+        }
+
+    }
+
+
+
     
 }

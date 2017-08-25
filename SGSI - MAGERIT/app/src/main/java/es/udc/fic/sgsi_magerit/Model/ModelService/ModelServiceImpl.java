@@ -1733,7 +1733,7 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
                 Boolean checked = false;
 
                 AssetThreatSafeguardDTO threatSafeguard = new AssetThreatSafeguardDTO(
-                        null, idAmenaza, idListaTipoAmenaza, idTipoAmenaza, idProyecto, checked);
+                        idAmenaza, null, idListaTipoAmenaza, idTipoAmenaza, idProyecto, checked);
                 listThreat.add(threatSafeguard);
             } while ((cursor.moveToNext()));
         }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,12 +21,15 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import es.udc.fic.sgsi_magerit.Model.ModelService.ModelServiceImpl;
 import es.udc.fic.sgsi_magerit.Model.ProjectSizing.ProjectSizingConstants;
 import es.udc.fic.sgsi_magerit.Model.Safeguard.AssetSafeguardsThreatsInfoDTO;
 import es.udc.fic.sgsi_magerit.Model.Safeguard.AssetThreatInfoDTO;
+import es.udc.fic.sgsi_magerit.Model.Safeguard.AssetThreatSafeguardDTO;
 import es.udc.fic.sgsi_magerit.Model.Safeguard.Safeguard;
+import es.udc.fic.sgsi_magerit.Model.Safeguard.SafeguardInfoDTO;
 import es.udc.fic.sgsi_magerit.R;
 import es.udc.fic.sgsi_magerit.Util.Converter;
 import es.udc.fic.sgsi_magerit.Util.GlobalConstants;
@@ -42,6 +46,10 @@ public class EstimateAssetSafeguardsFragment extends Fragment {
     List<String> strParamCtrlSeguridad;
     List<String> strParamTProteccion;
     ExpandableListView expandableListView;
+
+    public HashMap<AssetSafeguardsThreatsInfoDTO, List<Safeguard>> getData() {
+        return expandableListDetail;
+    }
 
     public static EstimateAssetSafeguardsFragment newInstance() {
         EstimateAssetSafeguardsFragment fragment = new EstimateAssetSafeguardsFragment();
@@ -366,12 +374,16 @@ public class EstimateAssetSafeguardsFragment extends Fragment {
             if (convertView == null) {
                 LayoutInflater layoutInflater = (LayoutInflater) this.context.
                         getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = layoutInflater.inflate(R.layout.groupitem_threat_asset_safeguard, null);
+                convertView = layoutInflater.inflate(R.layout.groupitem_asset_safeguard_threats, null);
             }
             TextView listTitleTextView = (TextView) convertView
-                    .findViewById(R.id.asset_threat);
-            listTitleTextView.setText(Converter.convertirNombreAmenaza(listTitle.getIdListaTipoAmenaza().intValue(), listTitle.getIdTipoAmenaza().intValue())
-                    + " - " + Converter.convertirNombreSalvaguarda(listTitle.getIdListaTipoSalvaguarda().intValue(),listTitle.getIdTipoSalvaguarda().intValue()));
+                    .findViewById(R.id.threat);
+            TextView listTitleTextView2 = (TextView) convertView
+                    .findViewById(R.id.safeguard);
+            listTitleTextView.setText(Converter.convertirNombreAmenaza(listTitle.getIdListaTipoAmenaza().intValue(),
+                    listTitle.getIdTipoAmenaza().intValue()));
+            listTitleTextView2.setText(Converter.convertirNombreSalvaguarda(listTitle.getIdListaTipoSalvaguarda().intValue(),
+                    listTitle.getIdTipoSalvaguarda().intValue()));
 
             //listTitleTextView.setText("[" + listTitle.getCodigoActivo() + "] " + listTitle.getNombreActivo());
             //listTitle2TextView.setText(obtenerNombreAmenaza(listTitle.getIdListaTipoAmenaza(), listTitle.getIdTipoAmenaza()));
@@ -395,6 +407,125 @@ public class EstimateAssetSafeguardsFragment extends Fragment {
 
     }
 
+    protected void recargarInfo() {
+        AddEditAssetSafeguardsActivity.AddEditAssetSafeguardsFragmentPagerAdapter adapter;
+        AddEditAssetSafeguardsActivity act = (AddEditAssetSafeguardsActivity) getActivity();
+
+        adapter = (AddEditAssetSafeguardsActivity.AddEditAssetSafeguardsFragmentPagerAdapter) act.getViewPager().getAdapter();
+        IdentifyAssetSafeguardThreatsFragment fr2 = (IdentifyAssetSafeguardThreatsFragment)
+                adapter.instantiateItem(act.getViewPager(), 1);
+
+        HashMap<SafeguardInfoDTO, List<AssetThreatSafeguardDTO>> expandableSafegardsThreatSelected = fr2.getData();
+        HashMap<AssetSafeguardsThreatsInfoDTO, List<Safeguard>> expandableListDetailNueva = new HashMap<>();
+        List<AssetSafeguardsThreatsInfoDTO> expandableListTitleNuevo = new ArrayList<>();
+
+        if (!expandableListDetail.isEmpty()) {
+            for (Map.Entry<AssetSafeguardsThreatsInfoDTO, List<Safeguard>> entry : expandableListDetail.entrySet()) {
+                AssetSafeguardsThreatsInfoDTO key = entry.getKey();
+                List<Safeguard> value = entry.getValue();
+
+                //si ya estaba, la dejo. Si estaba, pero ya no la elimino
+
+                for (Map.Entry<SafeguardInfoDTO, List<AssetThreatSafeguardDTO>> entrySelected : expandableSafegardsThreatSelected.entrySet()) {
+                    SafeguardInfoDTO keySelected = entrySelected.getKey();
+                    List<AssetThreatSafeguardDTO> valueSelected = entrySelected.getValue();
+
+                    boolean flag = false;
+
+                    for (AssetThreatSafeguardDTO aux : valueSelected) {
+
+                        if (aux.getChecked() && aux.getIdListaTipoAmenaza() == key.getIdListaTipoAmenaza() && aux.getIdTipoAmenaza() ==
+                                key.getIdTipoAmenaza() && keySelected.getIdListaTipo() == key.getIdListaTipoSalvaguarda()
+                                && keySelected.getIdTipo() == key.getIdTipoSalvaguarda()) {
+                            flag = true;
+                            break;
+                        }
+                    }
+
+                    if (flag) {
+                        expandableListDetailNueva.put(key, value);
+                        expandableListTitleNuevo.add(key);
+                    }
+                }
+
+            }
+        }
+
+        // anado las nuevas que no estaban antiguamente
+        for(Map.Entry<SafeguardInfoDTO, List<AssetThreatSafeguardDTO>>  entrySelected : expandableSafegardsThreatSelected.entrySet()) {
+            SafeguardInfoDTO keySelected = entrySelected.getKey();
+            List<AssetThreatSafeguardDTO> valueSelected = entrySelected.getValue();
+
+            if (!expandableListDetail.isEmpty()) {
+
+                for (AssetThreatSafeguardDTO aux: valueSelected) {
+                    boolean flag = false;
+                    for (Map.Entry<AssetSafeguardsThreatsInfoDTO, List<Safeguard>> entryActual : expandableListDetail.entrySet()) {
+                        AssetSafeguardsThreatsInfoDTO key = entryActual.getKey();
+                        List<Safeguard> value = entryActual.getValue();
+                        if (aux.getIdListaTipoAmenaza() == key.getIdListaTipoAmenaza() && aux.getIdTipoAmenaza() ==
+                                key.getIdTipoAmenaza() && keySelected.getIdListaTipo() == key.getIdListaTipoSalvaguarda()
+                                && keySelected.getIdTipo() == key.getIdTipoSalvaguarda()) {
+                            flag = true;
+                            break;
+                        }
+                    }
+                    if (!flag && aux.getChecked()) {
+                        AssetSafeguardsThreatsInfoDTO infoDTO = new AssetSafeguardsThreatsInfoDTO(
+                                aux.getIdListaTipoAmenaza(), aux.getIdTipoAmenaza(),
+                                keySelected.getIdListaTipo(), keySelected.getIdTipo(), false);
+                        Safeguard safeguard = new Safeguard(null, aux.getIdAmenaza(),
+                                idActivo, idProyecto, keySelected.getIdListaTipo(),
+                                keySelected.getIdTipo(), null, null, null, null, null, null, null, null);
+                        List<Safeguard> listSafeguard = new ArrayList<>();
+                        listSafeguard.add(safeguard);
+                        expandableListDetailNueva.put(infoDTO, listSafeguard);
+                        expandableListTitleNuevo.add(infoDTO);
+                    }
+
+                }
+            } else { //anadimos todos los elementos
+                for (Map.Entry<SafeguardInfoDTO, List<AssetThreatSafeguardDTO>> entrySelected2 : expandableSafegardsThreatSelected.entrySet()) {
+                    SafeguardInfoDTO key2 = entrySelected2.getKey();
+                    List<AssetThreatSafeguardDTO> value2 = entrySelected2.getValue();
+
+                    for (AssetThreatSafeguardDTO aux : value2) {
+                        if (aux.getChecked()) {
+                            AssetSafeguardsThreatsInfoDTO infoDTO = new AssetSafeguardsThreatsInfoDTO(
+                                    aux.getIdListaTipoAmenaza(), aux.getIdTipoAmenaza(),
+                                    key2.getIdListaTipo(), key2.getIdTipo(), false);
+                            Safeguard safeguard = new Safeguard(null, aux.getIdAmenaza(),
+                                    idActivo, idProyecto, key2.getIdListaTipo(),
+                                    key2.getIdTipo(), null, null, null, null, null, null, null, null);
+
+                            List<Safeguard> listSafeguard = new ArrayList<>();
+                            listSafeguard.add(safeguard);
+                            expandableListDetailNueva.put(infoDTO, listSafeguard);
+                            expandableListTitleNuevo.add(infoDTO);
+                        }
+                    }
+                }
+            }
+        }
+
+        expandableListDetail = expandableListDetailNueva;
+        expandableListTitle = expandableListTitleNuevo;
+
+        expandableListAdapter = new CustomExpandableListAdapter(this.getContext(), expandableListTitle, expandableListDetailNueva);
+        expandableListView.setAdapter(expandableListAdapter);
+    }
+
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+
+        if (isVisibleToUser) {
+            Log.d("MyFragment", "Fragment is visible.");
+            recargarInfo();
+        } else
+            Log.d("MyFragment", "Fragment is not visible.");
+    }
 
 
 

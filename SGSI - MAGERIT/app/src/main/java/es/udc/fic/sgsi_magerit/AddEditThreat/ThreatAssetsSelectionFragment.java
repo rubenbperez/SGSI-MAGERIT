@@ -1,10 +1,12 @@
 package es.udc.fic.sgsi_magerit.AddEditThreat;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
@@ -76,9 +78,19 @@ public class ThreatAssetsSelectionFragment extends Fragment {
 
         lstOpcionesActivos = (ListView) view.findViewById(R.id.LstOpciones);
         ArrayAdapter<String> adaptador = new ArrayAdapter<String>(this.getContext(),
-                android.R.layout.simple_list_item_multiple_choice, assetNames);
-        lstOpcionesActivos.setAdapter(adaptador);
+                android.R.layout.simple_list_item_multiple_choice, assetNames){
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
 
+                View view = super.getView(position, convertView, parent);
+                TextView text = (TextView) view.findViewById(android.R.id.text1);
+
+                text.setTextColor(getResources().getColor(R.color.asset));
+
+                return view;
+            }
+        };
+        lstOpcionesActivos.setAdapter(adaptador);
 
         //Marcamos los elementos que tienen que estar marcados
         for (int i=0; i<data.size(); i++) {

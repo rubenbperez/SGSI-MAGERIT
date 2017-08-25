@@ -72,6 +72,7 @@ public class AddEditAssetThreatsActivity extends AppCompatActivity {
                 finish();
                 return true;
             case R.id.action_aceptar:
+                setResult(0, resultIntent);
                 item.setEnabled(false);
                 editarAmenazas();
                 item.setEnabled(true);
