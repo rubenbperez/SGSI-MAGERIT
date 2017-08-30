@@ -14,6 +14,12 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
+import es.udc.fic.sgsi_magerit.Model.Analisis.AnalisisInfoDTO;
+import es.udc.fic.sgsi_magerit.Model.Analisis.AssetAnalisisDTO;
+import es.udc.fic.sgsi_magerit.Model.Analisis.ParametrizacionAnalisisDTO;
+import es.udc.fic.sgsi_magerit.Model.Analisis.ParametrizacionAnalisisInfoDTO;
+import es.udc.fic.sgsi_magerit.Model.Analisis.SafeguardAnalisisDTO;
+import es.udc.fic.sgsi_magerit.Model.Analisis.ThreatAnalisisDTO;
 import es.udc.fic.sgsi_magerit.Model.Asset.Asset;
 import es.udc.fic.sgsi_magerit.Model.Asset.AssetAssetType;
 import es.udc.fic.sgsi_magerit.Model.Asset.AssetConstants;
@@ -45,6 +51,7 @@ import es.udc.fic.sgsi_magerit.Util.Converter;
 /**
  * Created by err0r on 13/05/2016.
  */
+
 public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
 
     String sqlCreateTableProyectos = "CREATE TABLE " + ProjectConstants.TABLE_NAME + "(" +
@@ -381,8 +388,6 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
         db.close();
         return idsTipos;
     }
-
-
 
     @Override
     public ParametrizacionDTO obtenerParametrizacionDeProyecto(Long idProyecto) {
@@ -1894,7 +1899,6 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
         cursor.close();
         db.close();
         return pendingTasks;
-
     }
 
     private List<PendingTaskDTO> obtenerAmenazasSinValorar(Long idProyecto) {
@@ -2173,7 +2177,284 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
     }
 
 
+    public List<ThreatAnalisisDTO> obtenerAmenazasDeActivoPorId(Long idActivo, Long idProyecto) {
+
+        SQLiteDatabase db = getReadableDatabase();
+        List<ThreatAnalisisDTO> amenazas = new ArrayList<>();
+
+        Cursor cursor = db.rawQuery("SELECT " + ThreatConstants.ID_AMENAZA_ACTIVO + ", " +
+                ThreatConstants.ID_LISTA_TIPO_AMENAZA + ", " +
+                ThreatConstants.ID_TIPO_AMENAZA + ", " +
+                ThreatConstants.ID_VALORACION_DEGRADACION_DISPONIBILIDAD + ", " +
+                ThreatConstants.ID_VALORACION_PROBABILIDAD_DISPONIBILIDAD + ", " +
+                ThreatConstants.ID_VALORACION_DEGRADACION_INTEGRIDAD + ", " +
+                ThreatConstants.ID_VALORACION_PROBABILIDAD_INTEGRIDAD + ", " +
+                ThreatConstants.ID_VALORACION_DEGRADACION_CONFIDENCIALIDAD + ", " +
+                ThreatConstants.ID_VALORACION_PROBABILIDAD_CONFIDENCIALIDAD + ", " +
+                ThreatConstants.ID_VALORACION_DEGRADACION_AUTENTICIDAD + ", " +
+                ThreatConstants.ID_VALORACION_PROBABILIDAD_AUTENTICIDAD + ", " +
+                ThreatConstants.ID_VALORACION_DEGRADACION_TRAZABILIDAD + ", " +
+                ThreatConstants.ID_VALORACION_PROBABILIDAD_TRAZABILIDAD + " " +
+                "FROM " + ThreatConstants.TABLE_NAME + " WHERE " +
+                ThreatConstants.ID_PROYECTO + " = " + idProyecto  + " AND " + ThreatConstants.ID_ACTIVO + "=" +
+                idActivo, null);
+
+        if (cursor.moveToFirst()){
+            do {
+                Long idAmenaza = cursor.getLong(0);
+                Long idListaTipoAmenaza = cursor.getLong(1);
+                Long idTipoAmenaza = cursor.getLong(2);
+                Integer idDegradacionDisp = null;
+
+                if (!cursor.isNull(3)) {
+                    idDegradacionDisp = cursor.getInt(3);
+                }
+
+                Integer idProbabilidadDisp = null;
+                if (!cursor.isNull(4)) {
+                    idProbabilidadDisp = cursor.getInt(4);
+                }
+
+                Integer idDegradacionInt = null;
+                if (!cursor.isNull(5)) {
+                    idDegradacionInt = cursor.getInt(5);
+                }
+
+                Integer idProbabilidadInt = null;
+                if (!cursor.isNull(6)) {
+                    idProbabilidadInt = cursor.getInt(6);
+                }
+
+                Integer idDegradacionConf = null;
+                if (!cursor.isNull(7)) {
+                    idDegradacionConf = cursor.getInt(7);
+                }
+
+                Integer idProbabilidadConf = null;
+                if (!cursor.isNull(8)) {
+                    idProbabilidadConf = cursor.getInt(8);
+                }
+
+                Integer idDegradacionAut = null;
+                if (!cursor.isNull(9)) {
+                    idDegradacionAut = cursor.getInt(9);
+                }
+
+                Integer idProbabilidadAut = null;
+                if (!cursor.isNull(10)) {
+                    idProbabilidadAut = cursor.getInt(10);
+                }
+
+                Integer idDegradacionTraz = null;
+                if (!cursor.isNull(11)) {
+                    idDegradacionTraz = cursor.getInt(11);
+                }
+
+                Integer idProbabilidadTraz = null;
+                if (!cursor.isNull(12)) {
+                    idProbabilidadTraz = cursor.getInt(12);
+                }
+
+                ThreatAnalisisDTO threat = new ThreatAnalisisDTO(idAmenaza,idActivo,idProyecto,idListaTipoAmenaza,
+                        idTipoAmenaza,idDegradacionDisp,idProbabilidadDisp,idDegradacionInt,idProbabilidadInt,
+                        idDegradacionConf,idProbabilidadConf,idDegradacionAut,idProbabilidadAut,idDegradacionTraz,
+                        idProbabilidadTraz);
+                amenazas.add(threat);
+            } while ( (cursor.moveToNext()));
+        }
+        cursor.close();
+        db.close();
+        return amenazas;
+    }
 
 
+    public List<SafeguardAnalisisDTO> obtenerSalvaguardasDeActivoPorId(Long idActivo, Long idProyecto) {
+
+        List <SafeguardAnalisisDTO> salvaguardas = new ArrayList<SafeguardAnalisisDTO>();
+
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT " +
+                SafeguardConstants.ID_SAFEGUARD + ", " +
+                SafeguardConstants.ID_ACTIVO + ", " +
+                SafeguardConstants.ID_AMENAZA + ", " +
+                SafeguardConstants.ID_LISTA_TIPO_SALVAGUARDA + ", " +
+                SafeguardConstants.ID_TIPO_SALVAGUARDA + ", " +
+                SafeguardConstants.ID_VALORACION_CONTROLSEGURIDAD_DISPONIBILIDAD + ", " +
+                SafeguardConstants.ID_VALORACION_CONTROLSEGURIDAD_INTEGRIDAD + ", " +
+                SafeguardConstants.ID_VALORACION_CONTROLSEGURIDAD_CONFIDENCIALIDAD + ", " +
+                SafeguardConstants.ID_VALORACION_CONTROLSEGURIDAD_AUTENTICIDAD + ", " +
+                SafeguardConstants.ID_VALORACION_CONTROLSEGURIDAD_TRAZABILIDAD + ", " +
+                SafeguardConstants.TIPO_PROTECCION + ", " +
+                SafeguardConstants.EFICACIA +
+                " FROM " + SafeguardConstants.TABLE_NAME + " WHERE " +
+                SafeguardConstants.ID_PROYECTO + " = " + idProyecto + " AND " + SafeguardConstants.ID_ACTIVO + " = " +
+                idActivo, null);
+        if (cursor.moveToFirst()){
+            do {
+                Long idSalvaguarda = cursor.getLong(0);
+                Long idActivoBD = cursor.getLong(1);
+                Long idAmenaza = cursor.getLong(2);
+                Long idListaSalv = cursor.getLong(3);
+                Long idTipoSalv = cursor.getLong(4);
+
+                Integer idValoracionDisp = null;
+                if (!cursor.isNull(5)) {
+                    idValoracionDisp = cursor.getInt(5);
+                }
+
+                Integer idValoracionInt = null;
+                if (!cursor.isNull(6)) {
+                    idValoracionInt = cursor.getInt(6);
+                }
+
+                Integer idValoracionConf = null;
+                if (!cursor.isNull(7)) {
+                    idValoracionConf = cursor.getInt(7);
+                }
+
+                Integer idValoracionAut = null;
+                if (!cursor.isNull(8)) {
+                    idValoracionAut = cursor.getInt(8);
+                }
+
+                Integer idValoracionTraz = null;
+                if (!cursor.isNull(9)) {
+                    idValoracionTraz = cursor.getInt(9);
+                }
+
+                Integer idTprotec = null;
+                if (!cursor.isNull(10)) {
+                    idTprotec = cursor.getInt(10);
+                }
+
+                Integer eficacia = null;
+                if (!cursor.isNull(11)) {
+                    eficacia = cursor.getInt(11);
+                }
+
+                SafeguardAnalisisDTO safeguard = new SafeguardAnalisisDTO(idSalvaguarda, idAmenaza,
+                        idListaSalv, idTipoSalv, idValoracionDisp, idValoracionInt, idValoracionConf,
+                        idValoracionAut, idValoracionTraz, idTprotec, eficacia);
+
+                salvaguardas.add(safeguard);
+            } while ( (cursor.moveToNext()));
+        }
+        cursor.close();
+        db.close();
+        return salvaguardas;
+
+    }
+
+    @Override
+    public List<AnalisisInfoDTO> obtenerDatosAnalisis(Long idProyecto) {
+
+        List<AnalisisInfoDTO> listAsset = new ArrayList<>();
+
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT " +
+                AssetConstants.ID_ACTIVO + ", " +
+                AssetConstants.ID_PROYECTO + ", " +
+                AssetConstants.ID_VALORACION_ACTIVO_DISPONIBILIDAD + ", " +
+                AssetConstants.ID_VALORACION_ACTIVO_INTEGRIDAD + ", " +
+                AssetConstants.ID_VALORACION_ACTIVO_CONFIDENCIALIDAD + ", " +
+                AssetConstants.ID_VALORACION_ACTIVO_AUTENTICIDAD + ", " +
+                AssetConstants.ID_VALORACION_ACTIVO_TRAZABILIDAD + ", " +
+                AssetConstants.NOMBRE + ", " +
+                AssetConstants.CODIGO +
+                " FROM " + AssetConstants.TABLE_NAME + " WHERE "
+                + AssetConstants.ID_PROYECTO + "=" + idProyecto , null);
+
+        if (cursor.moveToFirst()) {
+            do{
+                Long idActivo = cursor.getLong(0);
+                Long idProyectoDB = cursor.getLong(1);
+                Integer idValoracionDisp = null;
+                if (!cursor.isNull(2))
+                    idValoracionDisp = cursor.getInt(2);
+
+                Integer idValoracionInt = null;
+                if (!cursor.isNull(3))
+                    idValoracionInt = cursor.getInt(3);
+
+                Integer idValoracionConf = null;
+                if (!cursor.isNull(4))
+                    idValoracionConf = cursor.getInt(4);
+
+                Integer idValoracionAut = null;
+                if(!cursor.isNull(5))
+                    idValoracionAut = cursor.getInt(5);
+
+                Integer idValoracionTraz = null;
+                if (!cursor.isNull(6))
+                    idValoracionTraz = cursor.getInt(6);
+
+                String nombre = cursor.getString(7);
+                String codigo = cursor.getString(8);
+
+                AssetAnalisisDTO as = new AssetAnalisisDTO(idActivo, idProyecto, idValoracionDisp, idValoracionInt,
+                        idValoracionConf, idValoracionAut, idValoracionTraz, nombre, codigo);
+
+                List<ThreatAnalisisDTO> amenazasActivo = obtenerAmenazasDeActivoPorId(idActivo, idProyecto);
+                List<SafeguardAnalisisDTO> salvaguardasActivo = obtenerSalvaguardasDeActivoPorId(idActivo, idProyecto);
+
+                AnalisisInfoDTO analisisInfo = new AnalisisInfoDTO(as,amenazasActivo,salvaguardasActivo);
+
+                listAsset.add(analisisInfo);
+            } while ( (cursor.moveToNext()));
+        }
+        cursor.close();
+        db.close();
+        return listAsset;
+    }
+
+
+    private List<ParametrizacionAnalisisInfoDTO> obtenerParametrizacion(Long idProyecto, String tableName,
+                                                                        String idColumn) {
+        List<ParametrizacionAnalisisInfoDTO> parametrizacion = new ArrayList<>();
+
+        SQLiteDatabase db = getReadableDatabase();
+
+        Cursor cursor = db.rawQuery("SELECT " + idColumn + ", " +
+                ProjectSizingConstants.ID_TIPO + ", " +
+                ProjectSizingConstants.VALOR + ", " +
+                ProjectSizingConstants.ACTIVADO + " FROM " + tableName
+                + " WHERE " + ProjectSizingConstants.ID_PROYECTO + " = " + idProyecto,null);
+
+        if (cursor.moveToFirst()){
+            do {
+                Long id = cursor.getLong(0);
+                Integer idTipo = cursor.getInt(1);
+                Double valor = cursor.getDouble(2);
+                Integer act = cursor.getInt(3);
+                Boolean activado = act == 0 ? true : false;
+
+                ParametrizacionAnalisisInfoDTO parametro = new ParametrizacionAnalisisInfoDTO(id,idProyecto.intValue(),
+                        idTipo, valor, activado);
+                parametrizacion.add(parametro);
+
+            } while ( (cursor.moveToNext()));
+        }
+        cursor.close();
+        db.close();
+        return parametrizacion;
+    }
+
+
+    @Override
+    public ParametrizacionAnalisisDTO obtenerParametrizacionProyectoParaAnalisis(Long idProyecto) {
+
+        List<ParametrizacionAnalisisInfoDTO> parametrizacionActivo = obtenerParametrizacion(idProyecto,
+                ProjectSizingConstants.TABLE_NAME_PARAMETRIZACION_ACTIVO, ProjectSizingConstants.ID_PARAMETRIZACION_ACTIVO);
+        List<ParametrizacionAnalisisInfoDTO> parametrizacionVulnerabilidad = obtenerParametrizacion(idProyecto,
+                ProjectSizingConstants.TABLE_NAME_PARAMETRIZACION_VULNERABILIDAD, ProjectSizingConstants.ID_PARAMETRIZACION_VULNERABILIDAD);
+        List<ParametrizacionAnalisisInfoDTO> parametrizacionImpacto = obtenerParametrizacion(idProyecto,
+                ProjectSizingConstants.TABLE_NAME_PARAMETRIZACION_IMPACTO, ProjectSizingConstants.ID_PARAMETRIZACION_IMPACTO);
+        List<ParametrizacionAnalisisInfoDTO> parametrizacionCtrlSeguridad = obtenerParametrizacion(idProyecto,
+                ProjectSizingConstants.TABLE_NAME_PARAMETRIZACION_CONTROLSEGURIDAD, ProjectSizingConstants.ID_PARAMETRIZACION_CONTROLSEGURIDAD);
+
+        ParametrizacionAnalisisDTO parametrizacion = new ParametrizacionAnalisisDTO(parametrizacionActivo,parametrizacionVulnerabilidad,
+                parametrizacionImpacto,parametrizacionCtrlSeguridad);
+        return parametrizacion;
+    }
 
 }

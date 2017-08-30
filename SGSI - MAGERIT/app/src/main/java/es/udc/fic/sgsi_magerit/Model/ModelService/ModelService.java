@@ -4,6 +4,8 @@ import java.text.ParseException;
 import java.util.HashMap;
 import java.util.List;
 
+import es.udc.fic.sgsi_magerit.Model.Analisis.AnalisisInfoDTO;
+import es.udc.fic.sgsi_magerit.Model.Analisis.ParametrizacionAnalisisDTO;
 import es.udc.fic.sgsi_magerit.Model.Asset.Asset;
 import es.udc.fic.sgsi_magerit.Model.Asset.AssetAssetType;
 import es.udc.fic.sgsi_magerit.Model.Asset.AssetDTO;
@@ -167,5 +169,9 @@ public interface ModelService {
 
 
     public List<PendingTaskDTO> obtenerTareasPendientes(Long idProyecto);
+
+    public List<AnalisisInfoDTO> obtenerDatosAnalisis(Long idProyecto);
+
+    public ParametrizacionAnalisisDTO obtenerParametrizacionProyectoParaAnalisis(Long idProyecto);
 
 }

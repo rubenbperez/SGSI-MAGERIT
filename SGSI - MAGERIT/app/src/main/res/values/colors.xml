@@ -15,4 +15,8 @@
     <color name="threatBackground">#F8E6E0</color>
     <color name="safeguardBackground">#D8F6CE</color>
     <color name="pendingTasksBackground">#F7F8E0</color>
+    <color name="transparent">#80000000</color>
+    <color name="green">#4EB6AD</color>
+    <color name="dark_green">#2E6D67</color>
+    <color name="white">#FFFFFF</color>
 </resources>

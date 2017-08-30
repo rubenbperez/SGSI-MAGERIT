@@ -17,6 +17,7 @@ public class GlobalConstants {
     public final static String[] TIPO_PROTECCION = {"Preventiva", "Disuasoria"};
     public final static String[] TIPO_ELEMENTO_TAREA = {"Activo", "Amenaza", "Salvaguarda"};
     public final static String[] TIPO_CAUSA_TAREA_PENDIENTE = {"Sin Valorar", "Sin Amenazas", "Sin Degradación", "Sin Probabilidad"};
+    public final static String[] RADIOBUTTON_ANALISIS = {"Riesgo","Impacto"};
 
     /********************************************************************************************/
     //LISTAS PARA TIPOS DE ACTIVOS
