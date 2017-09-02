@@ -9,15 +9,15 @@ public class AnalisisDTO {
     private long idProyecto;
     private String nombreActivo;
     private String codigoActivo;
-    private Integer valoracionDisponibilidad;
-    private Integer valoracionIntegridad;
-    private Integer valoracionConfidencialidad;
-    private Integer valoracionAutenticidad;
-    private Integer valoracionTrazabilidad;
+    private Long valoracionDisponibilidad;
+    private Long valoracionIntegridad;
+    private Long valoracionConfidencialidad;
+    private Long valoracionAutenticidad;
+    private Long valoracionTrazabilidad;
 
     public AnalisisDTO(long idActivo, long idProyecto, String nombreActivo, String codigoActivo,
-                       Integer valoracionDisponibilidad, Integer valoracionIntegridad,
-                       Integer valoracionConfidencialidad, Integer valoracionAutenticidad, Integer valoracionTrazabilidad) {
+                       Long valoracionDisponibilidad, Long valoracionIntegridad,
+                       Long valoracionConfidencialidad, Long valoracionAutenticidad, Long valoracionTrazabilidad) {
         this.idActivo = idActivo;
         this.idProyecto = idProyecto;
         this.nombreActivo = nombreActivo;
@@ -61,43 +61,43 @@ public class AnalisisDTO {
         this.codigoActivo = codigoActivo;
     }
 
-    public Integer getValoracionDisponibilidad() {
+    public Long getValoracionDisponibilidad() {
         return valoracionDisponibilidad;
     }
 
-    public void setValoracionDisponibilidad(Integer valoracionDisponibilidad) {
+    public void setValoracionDisponibilidad(Long valoracionDisponibilidad) {
         this.valoracionDisponibilidad = valoracionDisponibilidad;
     }
 
-    public Integer getValoracionIntegridad() {
+    public Long getValoracionIntegridad() {
         return valoracionIntegridad;
     }
 
-    public void setValoracionIntegridad(Integer valoracionIntegridad) {
+    public void setValoracionIntegridad(Long valoracionIntegridad) {
         this.valoracionIntegridad = valoracionIntegridad;
     }
 
-    public Integer getValoracionConfidencialidad() {
+    public Long getValoracionConfidencialidad() {
         return valoracionConfidencialidad;
     }
 
-    public void setValoracionConfidencialidad(Integer valoracionConfidencialidad) {
+    public void setValoracionConfidencialidad(Long valoracionConfidencialidad) {
         this.valoracionConfidencialidad = valoracionConfidencialidad;
     }
 
-    public Integer getValoracionAutenticidad() {
+    public Long getValoracionAutenticidad() {
         return valoracionAutenticidad;
     }
 
-    public void setValoracionAutenticidad(Integer valoracionAutenticidad) {
+    public void setValoracionAutenticidad(Long valoracionAutenticidad) {
         this.valoracionAutenticidad = valoracionAutenticidad;
     }
 
-    public Integer getValoracionTrazabilidad() {
+    public Long getValoracionTrazabilidad() {
         return valoracionTrazabilidad;
     }
 
-    public void setValoracionTrazabilidad(Integer valoracionTrazabilidad) {
+    public void setValoracionTrazabilidad(Long valoracionTrazabilidad) {
         this.valoracionTrazabilidad = valoracionTrazabilidad;
     }
 }

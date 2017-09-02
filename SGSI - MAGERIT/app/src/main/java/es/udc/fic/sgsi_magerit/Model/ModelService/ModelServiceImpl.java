@@ -2426,7 +2426,7 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
                 Integer idTipo = cursor.getInt(1);
                 Double valor = cursor.getDouble(2);
                 Integer act = cursor.getInt(3);
-                Boolean activado = act == 0 ? true : false;
+                Boolean activado = act == 0 ? false : true;
 
                 ParametrizacionAnalisisInfoDTO parametro = new ParametrizacionAnalisisInfoDTO(id,idProyecto.intValue(),
                         idTipo, valor, activado);

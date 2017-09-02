@@ -152,9 +152,10 @@ public class EstimateAssetSafeguardsFragment extends Fragment {
             spinnerDisp.setAdapter((SpinnerAdapter) spinnerAdapterDisp);
 
             if (expandableListDetail.get(expandableListTitle.get(listPosition)).get(
-                    expandedListPosition).getIdControlSeguridadDisponibilidad() != null)
+                    expandedListPosition).getIdControlSeguridadDisponibilidad() != null  && expandableListDetail.get(expandableListTitle.get(listPosition)).get(
+                    expandedListPosition).getIdControlSeguridadDisponibilidad() <= strParamTProteccion.size())
                 spinnerDisp.setSelection(expandableListDetail.get(expandableListTitle.get(listPosition)).get(
-                        expandedListPosition).getIdControlSeguridadDisponibilidad());
+                        expandedListPosition).getIdControlSeguridadDisponibilidad()+1);
 
             spinnerDisp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
@@ -162,7 +163,7 @@ public class EstimateAssetSafeguardsFragment extends Fragment {
                     int index = parent.getSelectedItemPosition();
                     if (index != 0)
                         expandableListDetail.get(expandableListTitle.get(listPosition)).get(
-                                expandedListPosition).setIdControlSeguridadDisponibilidad(index);
+                                expandedListPosition).setIdControlSeguridadDisponibilidad(index-1);
                     else
                         expandableListDetail.get(expandableListTitle.get(listPosition)).get(
                                 expandedListPosition).setIdControlSeguridadDisponibilidad(null);
@@ -181,9 +182,10 @@ public class EstimateAssetSafeguardsFragment extends Fragment {
             spinnerInt.setAdapter((SpinnerAdapter) spinnerAdapterInt);
 
             if (expandableListDetail.get(expandableListTitle.get(listPosition)).get(
-                    expandedListPosition).getIdControlSeguridadIntegridad() != null)
+                    expandedListPosition).getIdControlSeguridadIntegridad() != null  && expandableListDetail.get(expandableListTitle.get(listPosition)).get(
+                    expandedListPosition).getIdControlSeguridadIntegridad() <= strParamTProteccion.size())
                 spinnerInt.setSelection(expandableListDetail.get(expandableListTitle.get(listPosition)).get(
-                        expandedListPosition).getIdControlSeguridadIntegridad());
+                        expandedListPosition).getIdControlSeguridadIntegridad()+1);
 
             spinnerInt.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
@@ -191,7 +193,7 @@ public class EstimateAssetSafeguardsFragment extends Fragment {
                     int index = parent.getSelectedItemPosition();
                     if (index != 0)
                         expandableListDetail.get(expandableListTitle.get(listPosition)).get(
-                                expandedListPosition).setIdControlSeguridadIntegridad(index);
+                                expandedListPosition).setIdControlSeguridadIntegridad(index-1);
                     else
                         expandableListDetail.get(expandableListTitle.get(listPosition)).get(
                                 expandedListPosition).setIdControlSeguridadIntegridad(null);
@@ -210,9 +212,10 @@ public class EstimateAssetSafeguardsFragment extends Fragment {
             spinnerConf.setAdapter((SpinnerAdapter) spinnerAdapterConf);
 
             if (expandableListDetail.get(expandableListTitle.get(listPosition)).get(
-                    expandedListPosition).getIdControlSeguridadConfidencialidad() != null)
+                    expandedListPosition).getIdControlSeguridadConfidencialidad() != null  && expandableListDetail.get(expandableListTitle.get(listPosition)).get(
+                    expandedListPosition).getIdControlSeguridadConfidencialidad() <= strParamTProteccion.size())
                 spinnerConf.setSelection(expandableListDetail.get(expandableListTitle.get(listPosition)).get(
-                        expandedListPosition).getIdControlSeguridadConfidencialidad());
+                        expandedListPosition).getIdControlSeguridadConfidencialidad()+1);
 
             spinnerConf.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
@@ -220,7 +223,7 @@ public class EstimateAssetSafeguardsFragment extends Fragment {
                     int index = parent.getSelectedItemPosition();
                     if (index != 0)
                         expandableListDetail.get(expandableListTitle.get(listPosition)).get(
-                                expandedListPosition).setIdControlSeguridadConfidencialidad(index);
+                                expandedListPosition).setIdControlSeguridadConfidencialidad(index-1);
                     else
                         expandableListDetail.get(expandableListTitle.get(listPosition)).get(
                                 expandedListPosition).setIdControlSeguridadConfidencialidad(null);
@@ -239,9 +242,10 @@ public class EstimateAssetSafeguardsFragment extends Fragment {
             spinnerAut.setAdapter((SpinnerAdapter) spinnerAdapterAut);
 
             if (expandableListDetail.get(expandableListTitle.get(listPosition)).get(
-                    expandedListPosition).getIdControlSeguridadAutenticidad() != null)
+                    expandedListPosition).getIdControlSeguridadAutenticidad() != null   && expandableListDetail.get(expandableListTitle.get(listPosition)).get(
+                    expandedListPosition).getIdControlSeguridadAutenticidad() <= strParamTProteccion.size())
                 spinnerAut.setSelection(expandableListDetail.get(expandableListTitle.get(listPosition)).get(
-                        expandedListPosition).getIdControlSeguridadAutenticidad());
+                        expandedListPosition).getIdControlSeguridadAutenticidad()+1);
 
             spinnerAut.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
@@ -249,7 +253,7 @@ public class EstimateAssetSafeguardsFragment extends Fragment {
                     int index = parent.getSelectedItemPosition();
                     if (index != 0)
                         expandableListDetail.get(expandableListTitle.get(listPosition)).get(
-                                expandedListPosition).setIdControlSeguridadAutenticidad(index);
+                                expandedListPosition).setIdControlSeguridadAutenticidad(index-1);
                     else
                         expandableListDetail.get(expandableListTitle.get(listPosition)).get(
                                 expandedListPosition).setIdControlSeguridadAutenticidad(null);
@@ -268,9 +272,10 @@ public class EstimateAssetSafeguardsFragment extends Fragment {
             spinnerTraz.setAdapter((SpinnerAdapter) spinnerAdapterTraz);
 
             if (expandableListDetail.get(expandableListTitle.get(listPosition)).get(
-                    expandedListPosition).getIdControlSeguridadTrazabilidad() != null)
+                    expandedListPosition).getIdControlSeguridadTrazabilidad() != null  && expandableListDetail.get(expandableListTitle.get(listPosition)).get(
+                    expandedListPosition).getIdControlSeguridadTrazabilidad() <= strParamTProteccion.size())
                 spinnerTraz.setSelection(expandableListDetail.get(expandableListTitle.get(listPosition)).get(
-                        expandedListPosition).getIdControlSeguridadTrazabilidad());
+                        expandedListPosition).getIdControlSeguridadTrazabilidad()+1);
 
             spinnerTraz.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
@@ -278,7 +283,7 @@ public class EstimateAssetSafeguardsFragment extends Fragment {
                     int index = parent.getSelectedItemPosition();
                     if (index != 0)
                         expandableListDetail.get(expandableListTitle.get(listPosition)).get(
-                                expandedListPosition).setIdControlSeguridadTrazabilidad(index);
+                                expandedListPosition).setIdControlSeguridadTrazabilidad(index-1);
                     else
                         expandableListDetail.get(expandableListTitle.get(listPosition)).get(
                                 expandedListPosition).setIdControlSeguridadTrazabilidad(null);
@@ -298,14 +303,14 @@ public class EstimateAssetSafeguardsFragment extends Fragment {
             if (expandableListDetail.get(expandableListTitle.get(listPosition)).get(
                     expandedListPosition).getTipoProteccion() != null)
                 spinnerTProtec.setSelection(expandableListDetail.get(expandableListTitle.get(listPosition)).get(
-                        expandedListPosition).getTipoProteccion());
+                        expandedListPosition).getTipoProteccion()-1);
             spinnerTProtec.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                     int index = parent.getSelectedItemPosition();
                     if (index != 0)
                         expandableListDetail.get(expandableListTitle.get(listPosition)).get(
-                                expandedListPosition).setTipoProteccion(index);
+                                expandedListPosition).setTipoProteccion(index+1);
                     else
                         expandableListDetail.get(expandableListTitle.get(listPosition)).get(
                                 expandedListPosition).setTipoProteccion(null);

@@ -2,10 +2,11 @@ package es.udc.fic.sgsi_magerit.AnalisisFragment;
 
 import android.content.Context;
 import android.content.res.Configuration;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,11 +15,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -37,9 +36,11 @@ public class Analisis extends Fragment {
     private ModelServiceImpl service;
     private AnalisisAdapter adaptador;
     private long idProyectoActivo;
-    OrientationEventListener mOrientationListener;
+    //OrientationEventListener mOrientationListener;
     private Integer radioSelected;
-
+    List<AnalisisInfoDTO> datas;
+    ParametrizacionAnalisisDTO parametrizacion;
+    Integer orientacion;
 
     public Analisis() {
         // Required empty public constructor
@@ -60,47 +61,75 @@ public class Analisis extends Fragment {
 
                 if (checkedId == R.id.riesgo) {
                     radioSelected = Arrays.asList(GlobalConstants.RADIOBUTTON_ANALISIS).indexOf("Riesgo");
+                    data = DataAnalisisGenerator.generarDatosAnalisisRiesgo(datas,parametrizacion);
+                    adaptador.notifyDataSetChanged();
                 }
                 else {
                     radioSelected = Arrays.asList(GlobalConstants.RADIOBUTTON_ANALISIS).indexOf("Impacto");
+                    data = DataAnalisisGenerator.generarDatosAnalisisImpacto(datas,parametrizacion);
+                    adaptador.notifyDataSetChanged();
                 }
             }
         });
 
-
-        OrientationEventListener mOrientationListener;
+        //ESTE NON RULA BEN
+        /*OrientationEventListener mOrientationListener;
         mOrientationListener = new OrientationEventListener(this.getContext(),
                 SensorManager.SENSOR_DELAY_UI) {
             @Override
             public void onOrientationChanged(int orientation) {
                 Log.d("ORIENTACION", "Orientation changed to " + orientation);
-                if (isPortrait(orientation)) {
+                /*if(getActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
                     Log.d("ORIENTACION","Portrait");
+                    orientacion = GlobalConstants.ORIENTACION_PORTRAIT;
+                    adaptador.notifyDataSetChanged();
                 } else {
                     Log.d("ORIENTACION", "landscape");
+                    orientacion = GlobalConstants.ORIENTACION_LANDSCAPE;
+                    adaptador.notifyDataSetChanged();
                 }
             }
         };
 
-        List<AnalisisInfoDTO> datas = service.obtenerDatosAnalisis(idProyectoActivo);
-        ParametrizacionAnalisisDTO parametrizacion = service.obtenerParametrizacionProyectoParaAnalisis(idProyectoActivo);
-
-        data = DataAnalisisGenerator.generarDatosAnalisisRiesgo(datas,parametrizacion);
-        
-
         if (mOrientationListener.canDetectOrientation()) {
             mOrientationListener.enable();
-        }
+        }*/
+
+        SensorManager sensorManager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
+        sensorManager.registerListener(new SensorEventListener() {
+            int orientation=-1;
+
+            @Override
+            public void onSensorChanged(SensorEvent event) {
+                if (event.values[1]<6.5 && event.values[1]>-6.5) {
+                    if (orientation!=1) {
+                        orientacion = GlobalConstants.ORIENTACION_LANDSCAPE;
+                        adaptador.notifyDataSetChanged();
+                        Log.d("Sensor", "Landscape");
+                    }
+                    orientation=1;
+                } else {
+                    if (orientation!=0) {
+                        orientacion = GlobalConstants.ORIENTACION_PORTRAIT;
+                        adaptador.notifyDataSetChanged();
+                        Log.d("Sensor", "Portrait");
+                    }
+                    orientation=0;
+                }
+            }
+
+            @Override
+            public void onAccuracyChanged(Sensor sensor, int accuracy) {
+                // TODO Auto-generated method stub
+
+            }
+        }, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_GAME);
 
 
-        /*AnalisisDTO a1 = new AnalisisDTO(1,1,"hola","hl",100000,500000,1000000,5000,null);
-        AnalisisDTO a2 = new AnalisisDTO(1,1,"hey","brrr",3500,861000,35000,null,null);
-        AnalisisDTO a3 = new AnalisisDTO(1,1,"acff","tuu",null,null,500000,null,null);
+        datas = service.obtenerDatosAnalisis(idProyectoActivo);
+        parametrizacion = service.obtenerParametrizacionProyectoParaAnalisis(idProyectoActivo);
 
-        data = new ArrayList<>();
-        data.add(a1);
-        data.add(a2);
-        data.add(a3);*/
+        data = DataAnalisisGenerator.generarDatosAnalisisRiesgo(datas,parametrizacion);
 
         adaptador =
                 new AnalisisAdapter(this.getContext(), data);
@@ -127,37 +156,52 @@ public class Analisis extends Fragment {
                     data.get(position).getNombreActivo());
 
             TextView lblDisp = (TextView)item.findViewById(R.id.disp);
-            Integer disp = data.get(position).getValoracionDisponibilidad();
+            Long disp = data.get(position).getValoracionDisponibilidad();
             if (disp != null)
-                lblDisp.setText(disp.toString());
+                if (orientacion == GlobalConstants.ORIENTACION_LANDSCAPE)
+                    lblDisp.setText(DataAnalisisGenerator.formatIntegerLandscape(disp));
+                else
+                    lblDisp.setText(DataAnalisisGenerator.formatIntegerPortrait(disp));
             else
                 lblDisp.setText("-");
 
             TextView lblInt = (TextView)item.findViewById(R.id.integ);
-            Integer integ = data.get(position).getValoracionIntegridad();
+            Long integ = data.get(position).getValoracionIntegridad();
             if (integ != null)
-                lblInt.setText(integ.toString());
+                if (orientacion == GlobalConstants.ORIENTACION_LANDSCAPE)
+                    lblInt.setText(DataAnalisisGenerator.formatIntegerLandscape(integ));
+                else
+                    lblInt.setText(DataAnalisisGenerator.formatIntegerPortrait(integ));
             else
                 lblInt.setText("-");
 
             TextView lblConf = (TextView)item.findViewById(R.id.conf);
-            Integer conf = data.get(position).getValoracionConfidencialidad();
+            Long conf = data.get(position).getValoracionConfidencialidad();
             if (conf != null)
-                lblConf.setText(conf.toString());
+                if (orientacion == GlobalConstants.ORIENTACION_LANDSCAPE)
+                    lblConf.setText(DataAnalisisGenerator.formatIntegerLandscape(conf));
+                else
+                    lblConf.setText(DataAnalisisGenerator.formatIntegerPortrait(conf));
             else
                 lblConf.setText("-");
 
             TextView lblAut = (TextView)item.findViewById(R.id.aut);
-            Integer aut = data.get(position).getValoracionAutenticidad();
+            Long aut = data.get(position).getValoracionAutenticidad();
             if (aut != null)
-                lblAut.setText(aut.toString());
+                if (orientacion == GlobalConstants.ORIENTACION_LANDSCAPE)
+                    lblAut.setText(DataAnalisisGenerator.formatIntegerLandscape(aut));
+            else
+                lblAut.setText(DataAnalisisGenerator.formatIntegerPortrait(aut));
             else
                 lblAut.setText("-");
 
             TextView lblTraz = (TextView)item.findViewById(R.id.traz);
-            Integer traz = data.get(position).getValoracionTrazabilidad();
+            Long traz = data.get(position).getValoracionTrazabilidad();
             if (traz != null)
-                lblTraz.setText(traz.toString());
+                if (orientacion == GlobalConstants.ORIENTACION_LANDSCAPE)
+                    lblTraz.setText(DataAnalisisGenerator.formatIntegerLandscape(traz));
+            else
+                lblTraz.setText(DataAnalisisGenerator.formatIntegerPortrait(traz));
             else
                 lblTraz.setText("-");
 
@@ -168,6 +212,5 @@ public class Analisis extends Fragment {
     private boolean isPortrait(int orientation) {
         return (orientation >= (270) && orientation <= 360) || (orientation >= 0 && orientation <= 90);
     }
-
 
 }
