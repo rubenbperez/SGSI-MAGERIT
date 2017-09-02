@@ -566,29 +566,29 @@ public class AddProjectActivity extends AppCompatActivity implements SizingProje
         }
 
         service.crearParametrizacionActivo(idProyecto,(long)1,
-                Integer.parseInt(rangoSuperior1.replace(",","")),
-                Integer.parseInt(rangoInferior1.replace(",","")),
-                Integer.parseInt(valor1.replace(",","")),activado1);
+                Integer.parseInt(rangoSuperior1.replace(".","")),
+                Integer.parseInt(rangoInferior1.replace(".","")),
+                Integer.parseInt(valor1.replace(".","")),activado1);
 
         service.crearParametrizacionActivo(idProyecto,(long)2,
-                Integer.parseInt(rangoSuperior2.replace(",","")),
-                Integer.parseInt(rangoInferior2.replace(",","")),
-                Integer.parseInt(valor2.replace(",","")),activado2);
+                Integer.parseInt(rangoSuperior2.replace(".","")),
+                Integer.parseInt(rangoInferior2.replace(".","")),
+                Integer.parseInt(valor2.replace(".","")),activado2);
 
         service.crearParametrizacionActivo(idProyecto,(long)3,
-                Integer.parseInt(rangoSuperior3.replace(",","")),
-                Integer.parseInt(rangoInferior3.replace(",","")),
-                Integer.parseInt(valor3.replace(",","")),activado3);
+                Integer.parseInt(rangoSuperior3.replace(".","")),
+                Integer.parseInt(rangoInferior3.replace(".","")),
+                Integer.parseInt(valor3.replace(".","")),activado3);
 
         service.crearParametrizacionActivo(idProyecto,(long)4,
-                Integer.parseInt(rangoSuperior4.replace(",","")),
-                Integer.parseInt(rangoInferior4.replace(",","")),
-                Integer.parseInt(valor4.replace(",","")),activado4);
+                Integer.parseInt(rangoSuperior4.replace(".","")),
+                Integer.parseInt(rangoInferior4.replace(".","")),
+                Integer.parseInt(valor4.replace(".","")),activado4);
 
         service.crearParametrizacionActivo(idProyecto,(long)5,
-                Integer.parseInt(rangoSuperior5.replace(",","")),
-                Integer.parseInt(rangoInferior5.replace(",","")),
-                Integer.parseInt(valor5.replace(",","")),activado5);
+                Integer.parseInt(rangoSuperior5.replace(".","")),
+                Integer.parseInt(rangoInferior5.replace(".","")),
+                Integer.parseInt(valor5.replace(".","")),activado5);
         return true;
     }
 
@@ -681,29 +681,29 @@ public class AddProjectActivity extends AppCompatActivity implements SizingProje
         }
 
         service.editarParametrizacionActivo(idsDimensionamientoActivo.get(0),
-                Integer.parseInt(rangoSuperior1.replace(",","")),
-                Integer.parseInt(rangoInferior1.replace(",","")),
-                Integer.parseInt(valor1.replace(",","")),activado1);
+                Integer.parseInt(rangoSuperior1.replace(".","")),
+                Integer.parseInt(rangoInferior1.replace(".","")),
+                Integer.parseInt(valor1.replace(".","")),activado1);
 
         service.editarParametrizacionActivo(idsDimensionamientoActivo.get(1),
-                Integer.parseInt(rangoSuperior2.replace(",","")),
-                Integer.parseInt(rangoInferior2.replace(",","")),
-                Integer.parseInt(valor2.replace(",","")),activado2);
+                Integer.parseInt(rangoSuperior2.replace(".","")),
+                Integer.parseInt(rangoInferior2.replace(".","")),
+                Integer.parseInt(valor2.replace(".","")),activado2);
 
         service.editarParametrizacionActivo(idsDimensionamientoActivo.get(2),
-                Integer.parseInt(rangoSuperior3.replace(",","")),
-                Integer.parseInt(rangoInferior3.replace(",","")),
-                Integer.parseInt(valor3.replace(",","")),activado3);
+                Integer.parseInt(rangoSuperior3.replace(".","")),
+                Integer.parseInt(rangoInferior3.replace(".","")),
+                Integer.parseInt(valor3.replace(".","")),activado3);
 
         service.editarParametrizacionActivo(idsDimensionamientoActivo.get(3),
-                Integer.parseInt(rangoSuperior4.replace(",","")),
-                Integer.parseInt(rangoInferior4.replace(",","")),
-                Integer.parseInt(valor4.replace(",","")),activado4);
+                Integer.parseInt(rangoSuperior4.replace(".","")),
+                Integer.parseInt(rangoInferior4.replace(".","")),
+                Integer.parseInt(valor4.replace(".","")),activado4);
 
         service.editarParametrizacionActivo(idsDimensionamientoActivo.get(4),
-                Integer.parseInt(rangoSuperior5.replace(",","")),
-                Integer.parseInt(rangoInferior5.replace(",","")),
-                Integer.parseInt(valor5.replace(",","")),activado5);
+                Integer.parseInt(rangoSuperior5.replace(".","")),
+                Integer.parseInt(rangoInferior5.replace(".","")),
+                Integer.parseInt(valor5.replace(".","")),activado5);
         return true;
     }
 

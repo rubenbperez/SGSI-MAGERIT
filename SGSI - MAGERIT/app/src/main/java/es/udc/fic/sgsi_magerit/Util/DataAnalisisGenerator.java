@@ -237,6 +237,7 @@ public class DataAnalisisGenerator {
                     }
 
                 }
+            }
 
             if (valorDispMax == null && valoracionDisponibilidadActivo != null)
                 valorDispMax = new Double(0);
@@ -252,8 +253,6 @@ public class DataAnalisisGenerator {
 
             if (valorTrazMax == null && valoracionTrazabilidadActivo != null)
                 valorTrazMax = new Double(0);
-
-            }
 
             AnalisisDTO element = new AnalisisDTO(activo.getAsset().getIdActivo(), activo.getAsset().getIdProyecto(),
                     activo.getAsset().getNombreActivo(), activo.getAsset().getCodigoActivo(), valorDispMax != null ? valorDispMax.longValue():null,
@@ -471,22 +470,22 @@ public class DataAnalisisGenerator {
 
                 }
 
-                if (valorDispMax == null && valoracionDisponibilidadActivo != null)
-                    valorDispMax = new Double(0);
-
-                if (valorIntMax == null && valoracionIntegridadActivo != null)
-                    valorIntMax = new Double(0);
-
-                if (valorConfMax == null && valoracionConfidencialidadActivo != null)
-                    valorConfMax = new Double(0);
-
-                if (valorAutMax == null && valoracionAutenticidadActivo != null)
-                    valorAutMax = new Double(0);
-
-                if (valorTrazMax == null && valoracionTrazabilidadActivo != null)
-                    valorTrazMax = new Double(0);
-
             }
+
+            if (valorDispMax == null && valoracionDisponibilidadActivo != null)
+                valorDispMax = new Double(0);
+
+            if (valorIntMax == null && valoracionIntegridadActivo != null)
+                valorIntMax = new Double(0);
+
+            if (valorConfMax == null && valoracionConfidencialidadActivo != null)
+                valorConfMax = new Double(0);
+
+            if (valorAutMax == null && valoracionAutenticidadActivo != null)
+                valorAutMax = new Double(0);
+
+            if (valorTrazMax == null && valoracionTrazabilidadActivo != null)
+                valorTrazMax = new Double(0);
 
             AnalisisDTO element = new AnalisisDTO(activo.getAsset().getIdActivo(), activo.getAsset().getIdProyecto(),
                     activo.getAsset().getNombreActivo(), activo.getAsset().getCodigoActivo(), valorDispMax != null ? valorDispMax.longValue() : null,

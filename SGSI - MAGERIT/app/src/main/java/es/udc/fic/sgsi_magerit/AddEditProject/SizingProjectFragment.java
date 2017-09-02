@@ -295,7 +295,7 @@ public class SizingProjectFragment extends Fragment implements View.OnFocusChang
 
     private void tablaActivos (View view, List<ParametrizacionActivo> pActivos) {
         //Listeners para Parametrizar Activos
-        format = NumberFormat.getInstance(Locale.US);
+        format = NumberFormat.getInstance(Locale.GERMAN);
         EditText et1_1 = (EditText) view.findViewById(R.id.TxtInputTable1Row1_1);
         EditText et1_2 = (EditText) view.findViewById(R.id.TxtInputTable1Row1_2);
         EditText et1_3 = (EditText) view.findViewById(R.id.TxtInputTable1Row1_3);
@@ -826,37 +826,37 @@ public class SizingProjectFragment extends Fragment implements View.OnFocusChang
 
             switch (numberOfLowerElements) {
                 case 5:
-                    if (!et1Compare.getText().toString().isEmpty() && Long.parseLong(et.getText().toString().replace(",", "")) <
-                            Long.parseLong(et1Compare.getText().toString().replace(",", ""))) {
-                        et.setError(AddProjectActivityConstants.ERROR_NUMERO_MAYOR_A + et1Compare.getText().toString().replace(",", ""));
+                    if (!et1Compare.getText().toString().isEmpty() && Long.parseLong(et.getText().toString().replace(".", "")) <
+                            Long.parseLong(et1Compare.getText().toString().replace(".", ""))) {
+                        et.setError(AddProjectActivityConstants.ERROR_NUMERO_MAYOR_A + et1Compare.getText().toString().replace(".", ""));
                         flagClean = false;
                         break;
                     }
                 case 4:
-                    if (!et2Compare.getText().toString().isEmpty() && Long.parseLong(et.getText().toString().replace(",", "")) <
-                            Long.parseLong(et2Compare.getText().toString().replace(",", ""))) {
-                        et.setError(AddProjectActivityConstants.ERROR_NUMERO_MAYOR_A + et2Compare.getText().toString().replace(",", ""));
+                    if (!et2Compare.getText().toString().isEmpty() && Long.parseLong(et.getText().toString().replace(".", "")) <
+                            Long.parseLong(et2Compare.getText().toString().replace(".", ""))) {
+                        et.setError(AddProjectActivityConstants.ERROR_NUMERO_MAYOR_A + et2Compare.getText().toString().replace(".", ""));
                         flagClean = false;
                         break;
                     }
                 case 3:
-                    if (!et3Compare.getText().toString().isEmpty() && Long.parseLong(et.getText().toString().replace(",", "")) <
-                            Long.parseLong(et3Compare.getText().toString().replace(",", ""))) {
-                        et.setError(AddProjectActivityConstants.ERROR_NUMERO_MAYOR_A + et3Compare.getText().toString().replace(",", ""));
+                    if (!et3Compare.getText().toString().isEmpty() && Long.parseLong(et.getText().toString().replace(".", "")) <
+                            Long.parseLong(et3Compare.getText().toString().replace(".", ""))) {
+                        et.setError(AddProjectActivityConstants.ERROR_NUMERO_MAYOR_A + et3Compare.getText().toString().replace(".", ""));
                         flagClean = false;
                         break;
                     }
                 case 2:
-                    if (!et4Compare.getText().toString().isEmpty() && Long.parseLong(et.getText().toString().replace(",", "")) <
-                            Long.parseLong(et4Compare.getText().toString().replace(",", ""))) {
-                        et.setError(AddProjectActivityConstants.ERROR_NUMERO_MAYOR_A + et4Compare.getText().toString().replace(",", ""));
+                    if (!et4Compare.getText().toString().isEmpty() && Long.parseLong(et.getText().toString().replace(".", "")) <
+                            Long.parseLong(et4Compare.getText().toString().replace(".", ""))) {
+                        et.setError(AddProjectActivityConstants.ERROR_NUMERO_MAYOR_A + et4Compare.getText().toString().replace(".", ""));
                         flagClean = false;
                         break;
                     }
                 case 1:
-                    if (!et5Compare.getText().toString().isEmpty() && Long.parseLong(et.getText().toString().replace(",", "")) <
-                            Long.parseLong(et5Compare.getText().toString().replace(",", ""))) {
-                        et.setError(AddProjectActivityConstants.ERROR_NUMERO_MAYOR_A + et5Compare.getText().toString().replace(",", ""));
+                    if (!et5Compare.getText().toString().isEmpty() && Long.parseLong(et.getText().toString().replace(".", "")) <
+                            Long.parseLong(et5Compare.getText().toString().replace(".", ""))) {
+                        et.setError(AddProjectActivityConstants.ERROR_NUMERO_MAYOR_A + et5Compare.getText().toString().replace(".", ""));
                         flagClean = false;
                         break;
                     }
@@ -868,37 +868,37 @@ public class SizingProjectFragment extends Fragment implements View.OnFocusChang
 
             switch (5 - numberOfLowerElements) {
                 case 5:
-                    if (!et5Compare.getText().toString().isEmpty() && Long.parseLong(et.getText().toString().replace(",", "")) >
-                            Long.parseLong(et5Compare.getText().toString().replace(",", ""))) {
-                        et.setError(AddProjectActivityConstants.ERROR_NUMERO_MENOR_A + et5Compare.getText().toString().replace(",", ""));
+                    if (!et5Compare.getText().toString().isEmpty() && Long.parseLong(et.getText().toString().replace(".", "")) >
+                            Long.parseLong(et5Compare.getText().toString().replace(".", ""))) {
+                        et.setError(AddProjectActivityConstants.ERROR_NUMERO_MENOR_A + et5Compare.getText().toString().replace(".", ""));
                         flagClean = false;
                         break;
                     }
                 case 4:
-                    if (!et4Compare.getText().toString().isEmpty() && Long.parseLong(et.getText().toString().replace(",", "")) >
-                            Long.parseLong(et4Compare.getText().toString().replace(",", ""))) {
-                        et.setError(AddProjectActivityConstants.ERROR_NUMERO_MENOR_A + et4Compare.getText().toString().replace(",", ""));
+                    if (!et4Compare.getText().toString().isEmpty() && Long.parseLong(et.getText().toString().replace(".", "")) >
+                            Long.parseLong(et4Compare.getText().toString().replace(".", ""))) {
+                        et.setError(AddProjectActivityConstants.ERROR_NUMERO_MENOR_A + et4Compare.getText().toString().replace(".", ""));
                         flagClean = false;
                         break;
                     }
                 case 3:
-                    if (!et3Compare.getText().toString().isEmpty() && Long.parseLong(et.getText().toString().replace(",", "")) >
-                            Long.parseLong(et3Compare.getText().toString().replace(",", ""))) {
-                        et.setError(AddProjectActivityConstants.ERROR_NUMERO_MENOR_A + et3Compare.getText().toString().replace(",", ""));
+                    if (!et3Compare.getText().toString().isEmpty() && Long.parseLong(et.getText().toString().replace(".", "")) >
+                            Long.parseLong(et3Compare.getText().toString().replace(".", ""))) {
+                        et.setError(AddProjectActivityConstants.ERROR_NUMERO_MENOR_A + et3Compare.getText().toString().replace(".", ""));
                         flagClean = false;
                         break;
                     }
                 case 2:
-                    if (!et2Compare.getText().toString().isEmpty() && Long.parseLong(et.getText().toString().replace(",", "")) >
-                            Long.parseLong(et2Compare.getText().toString().replace(",", ""))) {
-                        et.setError(AddProjectActivityConstants.ERROR_NUMERO_MENOR_A + et2Compare.getText().toString().replace(",", ""));
+                    if (!et2Compare.getText().toString().isEmpty() && Long.parseLong(et.getText().toString().replace(".", "")) >
+                            Long.parseLong(et2Compare.getText().toString().replace(".", ""))) {
+                        et.setError(AddProjectActivityConstants.ERROR_NUMERO_MENOR_A + et2Compare.getText().toString().replace(".", ""));
                         flagClean = false;
                         break;
                     }
                 case 1:
-                    if (!et1Compare.getText().toString().isEmpty() && Long.parseLong(et.getText().toString().replace(",", "")) >
-                            Long.parseLong(et1Compare.getText().toString().replace(",", ""))) {
-                        et.setError(AddProjectActivityConstants.ERROR_NUMERO_MENOR_A + et1Compare.getText().toString().replace(",", ""));
+                    if (!et1Compare.getText().toString().isEmpty() && Long.parseLong(et.getText().toString().replace(".", "")) >
+                            Long.parseLong(et1Compare.getText().toString().replace(".", ""))) {
+                        et.setError(AddProjectActivityConstants.ERROR_NUMERO_MENOR_A + et1Compare.getText().toString().replace(".", ""));
                         flagClean = false;
                         break;
                     }
@@ -922,9 +922,9 @@ public class SizingProjectFragment extends Fragment implements View.OnFocusChang
                 etPrimario.setError(null);
                 return;
             }
-            Long etPrimarioLong = Long.parseLong(etPrimario.getText().toString().replace(",", ""));
-            if (etPrimarioLong > Long.parseLong(etRangoSuperior.getText().toString().replace(",", ""))
-                    || etPrimarioLong < Long.parseLong(etRangoInferior.getText().toString().replace(",", ""))) {
+            Long etPrimarioLong = Long.parseLong(etPrimario.getText().toString().replace(".", ""));
+            if (etPrimarioLong > Long.parseLong(etRangoSuperior.getText().toString().replace(".", ""))
+                    || etPrimarioLong < Long.parseLong(etRangoInferior.getText().toString().replace(".", ""))) {
                 etPrimario.setError(AddProjectActivityConstants.ERROR_NUMERO_COMPRENDIDO);
             } else {
                 etPrimario.setError(null);
@@ -957,12 +957,12 @@ public class SizingProjectFragment extends Fragment implements View.OnFocusChang
                 etPrimario.setError(null);
                 return;
             }
-            Long etPrimarioLong = Long.parseLong(etPrimario.getText().toString().replace(",", ""));
+            Long etPrimarioLong = Long.parseLong(etPrimario.getText().toString().replace(".", ""));
 
             if (!etRangoSuperior.getText().toString().isEmpty() &&
                     !etRangoInferior.getText().toString().isEmpty()) {
-                if (etPrimarioLong > Long.parseLong(etRangoSuperior.getText().toString().replace(",", ""))
-                        || etPrimarioLong < Long.parseLong(etRangoInferior.getText().toString().replace(",", ""))) {
+                if (etPrimarioLong > Long.parseLong(etRangoSuperior.getText().toString().replace(".", ""))
+                        || etPrimarioLong < Long.parseLong(etRangoInferior.getText().toString().replace(".", ""))) {
                     etPrimario.setError(AddProjectActivityConstants.ERROR_NUMERO_COMPRENDIDO);
                 } else {
                     etPrimario.setError(null);
@@ -986,9 +986,9 @@ public class SizingProjectFragment extends Fragment implements View.OnFocusChang
             if (editText2 != null)
                 editText2.setFilters(new InputFilter[]{new InputFilter.LengthFilter(9)});
             String str = editText1.getText().toString();
-            editText1.setText(format.format(Long.parseLong(str.replace(",", ""))));
+            editText1.setText(format.format(Long.parseLong(str.replace(".", ""))));
         } else {
-            editText1.setText(editText1.getText().toString().replace(",", ""));
+            editText1.setText(editText1.getText().toString().replace(".", ""));
             editText1.setFilters(new InputFilter[]{new InputFilter.LengthFilter(7)});
             if (editText2 != null)
                 editText2.setFilters(new InputFilter[]{new InputFilter.LengthFilter(7)});
