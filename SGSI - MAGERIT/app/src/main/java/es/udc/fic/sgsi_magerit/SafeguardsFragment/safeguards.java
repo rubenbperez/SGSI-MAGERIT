@@ -23,6 +23,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import es.udc.fic.sgsi_magerit.AddEditSafeguards.AddEditSafeguardActivity;
+import es.udc.fic.sgsi_magerit.Model.Asset.AssetDTO;
 import es.udc.fic.sgsi_magerit.Model.ModelService.ModelServiceImpl;
 import es.udc.fic.sgsi_magerit.Model.Safeguard.SafeguardDTO;
 import es.udc.fic.sgsi_magerit.R;
@@ -131,7 +132,7 @@ public class Safeguards extends Fragment {
                                 Log.i("Dialogos", "Confirmacion Aceptada.");
                                 service.eliminarSalvaguardaPorTipo(data.get(index).getIdListaTipo(), data.get(index).getIdTipo(), idProyectoActivo);
                                 data.remove(index);
-                                //comprobarElementosNavView(data,navView);
+                                comprobarElementosNavView(data,navView);
                                 adaptador.notifyDataSetChanged();
                                 dialog.cancel();
                             }
@@ -157,6 +158,22 @@ public class Safeguards extends Fragment {
         return true;
     }
 
+    private void comprobarElementosNavView(List<SafeguardDTO> safeguard, NavigationView navView) {
+
+        comprobarElementosNavViewGenerico(service.obtenerActivos(idProyectoActivo),navView, R.id.menuAmenazas); //Amenazas
+        comprobarElementosNavViewGenerico(service.obtenerAmenazas(idProyectoActivo),navView, R.id.menuSalvaguardas); //salvaguardas
+        comprobarElementosNavViewGenerico(service.obtenerActivos(idProyectoActivo),navView, R.id.menuAnalisis); //Analisis
+        comprobarElementosNavViewGenerico(service.obtenerActivos(idProyectoActivo),navView, R.id.menuTareasPendientes); //Tareas Pendientes
+    }
+
+    private void comprobarElementosNavViewGenerico(List<?> lst, NavigationView navView, Integer menu) {
+        if (lst.isEmpty()) {
+            navView.getMenu().findItem(menu).setEnabled(false);
+        } else {
+            navView.getMenu().findItem(menu).setEnabled(true);
+        }
+
+    }
 
     private String obtenerCodidoYNombreSalvaguarda(SafeguardDTO safeguard) {
         String codeName = "";

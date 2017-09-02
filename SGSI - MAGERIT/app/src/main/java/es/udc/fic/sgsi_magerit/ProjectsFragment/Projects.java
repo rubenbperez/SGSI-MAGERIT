@@ -120,12 +120,18 @@ public class Projects extends Fragment {
             navView.getMenu().findItem(R.id.menuActivos).setEnabled(false);
             navView.getMenu().findItem(R.id.menuAmenazas).setEnabled(false);
             navView.getMenu().findItem(R.id.menuSalvaguardas).setEnabled(false);
+            navView.getMenu().findItem(R.id.menuAnalisis).setEnabled(false);
+            navView.getMenu().findItem(R.id.menuTareasPendientes).setEnabled(false);
             return;
         }
 
         for (Project p: proyectos) {
             if (p.getActivated()) {
-                navView.getMenu().findItem(R.id.menuActivos).setEnabled(true);
+                navView.getMenu().findItem(R.id.menuActivos).setEnabled(true); //Activos
+                comprobarElementosNavViewGenerico(service.obtenerActivos(p.getId()),navView, R.id.menuAmenazas); //Amenazas
+                comprobarElementosNavViewGenerico(service.obtenerAmenazas(p.getId()),navView, R.id.menuSalvaguardas); //salvaguardas
+                comprobarElementosNavViewGenerico(service.obtenerActivos(p.getId()),navView, R.id.menuAnalisis); //Analisis
+                comprobarElementosNavViewGenerico(service.obtenerActivos(p.getId()),navView, R.id.menuTareasPendientes); //
                 break;
             } else {
                 navView.getMenu().findItem(R.id.menuActivos).setEnabled(false);
@@ -135,11 +141,14 @@ public class Projects extends Fragment {
         }
     }
 
-    private void comprobarElementosNavViewAmenazas(List<?> lst, NavigationView navView) {
+
+
+
+    private void comprobarElementosNavViewGenerico(List<?> lst, NavigationView navView, Integer menu) {
         if (lst.isEmpty()) {
-            navView.getMenu().findItem(R.id.menuAmenazas).setEnabled(false);
+            navView.getMenu().findItem(menu).setEnabled(false);
         } else {
-            navView.getMenu().findItem(R.id.menuAmenazas).setEnabled(true);
+            navView.getMenu().findItem(menu).setEnabled(true);
         }
 
     }

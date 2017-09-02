@@ -124,8 +124,8 @@ public class Assets extends Fragment {
                 service.eliminarActivosYTiposActivo(data.get(index).getIdActivo());
                 data.remove(index);
                 adaptador.notifyDataSetChanged();
-                comprobarElementosNavView(data,navView);
                 break;*/
+                comprobarElementosNavView(data,navView);
                 AlertDialog dialog = new AlertDialog.Builder(getActivity()).create();
                 dialog.setTitle("Confirmación");
                 dialog.setMessage("¿Está seguro de querer eliminar este activo?");
@@ -178,12 +178,21 @@ public class Assets extends Fragment {
 
     private void comprobarElementosNavView(List<AssetDTO> assets, NavigationView navView) {
 
-        if (assets.isEmpty()) {
-            navView.getMenu().findItem(R.id.menuAmenazas).setEnabled(false);
-        } else {
-            navView.getMenu().findItem(R.id.menuAmenazas).setEnabled(true);
-        }
+        comprobarElementosNavViewGenerico(assets,navView, R.id.menuAmenazas); //Amenazas
+        comprobarElementosNavViewGenerico(service.obtenerAmenazas(idProyectoActivo),navView, R.id.menuSalvaguardas); //salvaguardas
+        comprobarElementosNavViewGenerico(assets,navView, R.id.menuAnalisis); //Analisis
+        comprobarElementosNavViewGenerico(assets,navView, R.id.menuTareasPendientes); //
     }
+
+    private void comprobarElementosNavViewGenerico(List<?> lst, NavigationView navView, Integer menu) {
+        if (lst.isEmpty()) {
+            navView.getMenu().findItem(menu).setEnabled(false);
+        } else {
+            navView.getMenu().findItem(menu).setEnabled(true);
+        }
+
+    }
+
 
     public class AssetAdapter extends ArrayAdapter<AssetDTO> {
 
