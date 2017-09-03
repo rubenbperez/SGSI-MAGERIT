@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingLeft="35dp"
-        android:textSize="16dp"
+        android:textSize="16sp"
         android:textColor="@color/asset"
         android:textStyle=""
         android:typeface="sans"

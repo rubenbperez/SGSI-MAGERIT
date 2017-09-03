@@ -9,8 +9,11 @@
     </style>
 
     <style name="HintTextLabel" parent="TextAppearance.Design.Hint">
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">20sp</item>
     </style>
 
+    <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">16sp</item>
+    </style>
 
 </resources>
