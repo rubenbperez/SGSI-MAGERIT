@@ -143,11 +143,11 @@ public class IdentifyAssetSafeguardThreatsFragment extends Fragment {
                     Boolean value = null;
                     if (cb.isChecked()) {
                         cb.setChecked(false);
-                        expandedList.setChecked(false);
+                        //expandedList.setChecked(false);
                         value = false;
                     } else {
                         cb.setChecked(true);
-                        expandedList.setChecked(true);
+                        //expandedList.setChecked(true);
                         value = true;
                     }
                     SafeguardInfoDTO key = expandableListTitle.get(listPosition);
@@ -239,7 +239,6 @@ public class IdentifyAssetSafeguardThreatsFragment extends Fragment {
         HashMap<SafeguardInfoDTO, List<AssetThreatSafeguardDTO>> expandableListDetailNueva = new HashMap<>();
         List<SafeguardInfoDTO> expandableListTitleNuevo = new ArrayList<>();
 
-        List<AssetThreatSafeguardDTO> threats = service.obtenerAmenazasDeActivo2(idActivo,idProyecto);
         for(Map.Entry<SafeguardInfoDTO, List<AssetThreatSafeguardDTO>>  entry : expandableListDetail.entrySet()) {
             SafeguardInfoDTO key = entry.getKey();
             List<AssetThreatSafeguardDTO> value = entry.getValue();
@@ -274,11 +273,13 @@ public class IdentifyAssetSafeguardThreatsFragment extends Fragment {
                 if (flag) {
                     SafeguardInfoDTO safeguard = new SafeguardInfoDTO(sf.getIdListaTipo(), sf.getIdTipo(), false);
                     expandableListTitleNuevo.add(safeguard);
+                    List<AssetThreatSafeguardDTO> threats = service.obtenerAmenazasDeActivo2(idActivo,idProyecto);
                     expandableListDetailNueva.put(safeguard, threats);
                 }
             } else {
                 SafeguardInfoDTO safeguard = new SafeguardInfoDTO(sf.getIdListaTipo(), sf.getIdTipo(), false);
                 expandableListTitleNuevo.add(safeguard);
+                List<AssetThreatSafeguardDTO> threats = service.obtenerAmenazasDeActivo2(idActivo,idProyecto);
                 expandableListDetailNueva.put(safeguard, threats);
             }
         }

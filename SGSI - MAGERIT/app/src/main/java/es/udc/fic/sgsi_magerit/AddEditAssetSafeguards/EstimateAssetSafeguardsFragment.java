@@ -457,13 +457,13 @@ public class EstimateAssetSafeguardsFragment extends Fragment {
         }
 
         // anado las nuevas que no estaban antiguamente
-        for(Map.Entry<SafeguardInfoDTO, List<AssetThreatSafeguardDTO>>  entrySelected : expandableSafegardsThreatSelected.entrySet()) {
+        for (Map.Entry<SafeguardInfoDTO, List<AssetThreatSafeguardDTO>> entrySelected : expandableSafegardsThreatSelected.entrySet()) {
             SafeguardInfoDTO keySelected = entrySelected.getKey();
             List<AssetThreatSafeguardDTO> valueSelected = entrySelected.getValue();
 
             if (!expandableListDetail.isEmpty()) {
 
-                for (AssetThreatSafeguardDTO aux: valueSelected) {
+                for (AssetThreatSafeguardDTO aux : valueSelected) {
                     boolean flag = false;
                     for (Map.Entry<AssetSafeguardsThreatsInfoDTO, List<Safeguard>> entryActual : expandableListDetail.entrySet()) {
                         AssetSafeguardsThreatsInfoDTO key = entryActual.getKey();
@@ -490,24 +490,27 @@ public class EstimateAssetSafeguardsFragment extends Fragment {
 
                 }
             } else { //anadimos todos los elementos
-                for (Map.Entry<SafeguardInfoDTO, List<AssetThreatSafeguardDTO>> entrySelected2 : expandableSafegardsThreatSelected.entrySet()) {
-                    SafeguardInfoDTO key2 = entrySelected2.getKey();
-                    List<AssetThreatSafeguardDTO> value2 = entrySelected2.getValue();
+                //fuck
+            }
+        }
+        if (expandableListDetail.isEmpty()) {
+            for (Map.Entry<SafeguardInfoDTO, List<AssetThreatSafeguardDTO>> entrySelected2 : expandableSafegardsThreatSelected.entrySet()) {
+                SafeguardInfoDTO key2 = entrySelected2.getKey();
+                List<AssetThreatSafeguardDTO> value2 = entrySelected2.getValue();
 
-                    for (AssetThreatSafeguardDTO aux : value2) {
-                        if (aux.getChecked()) {
-                            AssetSafeguardsThreatsInfoDTO infoDTO = new AssetSafeguardsThreatsInfoDTO(
-                                    aux.getIdListaTipoAmenaza(), aux.getIdTipoAmenaza(),
-                                    key2.getIdListaTipo(), key2.getIdTipo(), false);
-                            Safeguard safeguard = new Safeguard(null, aux.getIdAmenaza(),
-                                    idActivo, idProyecto, key2.getIdListaTipo(),
-                                    key2.getIdTipo(), null, null, null, null, null, null, null, null);
+                for (AssetThreatSafeguardDTO aux : value2) {
+                    if (aux.getChecked()) {
+                        AssetSafeguardsThreatsInfoDTO infoDTO = new AssetSafeguardsThreatsInfoDTO(
+                                aux.getIdListaTipoAmenaza(), aux.getIdTipoAmenaza(),
+                                key2.getIdListaTipo(), key2.getIdTipo(), false);
+                        Safeguard safeguard = new Safeguard(null, aux.getIdAmenaza(),
+                                idActivo, idProyecto, key2.getIdListaTipo(),
+                                key2.getIdTipo(), null, null, null, null, null, null, null, null);
 
-                            List<Safeguard> listSafeguard = new ArrayList<>();
-                            listSafeguard.add(safeguard);
-                            expandableListDetailNueva.put(infoDTO, listSafeguard);
-                            expandableListTitleNuevo.add(infoDTO);
-                        }
+                        List<Safeguard> listSafeguard = new ArrayList<>();
+                        listSafeguard.add(safeguard);
+                        expandableListDetailNueva.put(infoDTO, listSafeguard);
+                        expandableListTitleNuevo.add(infoDTO);
                     }
                 }
             }

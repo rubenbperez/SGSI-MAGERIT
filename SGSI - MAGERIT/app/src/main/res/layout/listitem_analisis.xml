@@ -13,6 +13,7 @@
         android:layout_weight=".18"
         android:text="Code"
         android:textSize="14sp"
+        android:textColor="@color/asset"
         android:clickable="false"
         android:focusable="false"
         android:focusableInTouchMode="false"

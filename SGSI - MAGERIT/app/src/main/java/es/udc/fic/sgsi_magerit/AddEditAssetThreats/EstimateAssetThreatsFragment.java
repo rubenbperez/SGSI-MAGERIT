@@ -538,7 +538,8 @@ public class EstimateAssetThreatsFragment extends Fragment {
         for (int i = 0; i < lst.getAdapter().getCount(); i++) {
             if (checked.get(i)) {
                 AssetThreatDTO assetThreat = new AssetThreatDTO(null, asset.getIdActivo(), asset.getIdProyecto(),
-                        asset.getCodigoActivo(), asset.getNombreActivo(), (long)idListaTipoAmenaza, (long)i, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, false);
+                        asset.getCodigoActivo(), asset.getNombreActivo(), (long)idListaTipoAmenaza,
+                        (long)i, null, null, null, null, null, null, null, null, null, null, false);
                 elementosMarcados.add(assetThreat);
             }
         }

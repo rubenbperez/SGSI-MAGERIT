@@ -209,7 +209,7 @@ public class Projects extends Fragment {
                 adaptador.notifyDataSetChanged();
                 comprobarElementosNavView(data,navView);
                 break;*/
-                AlertDialog dialog = new AlertDialog.Builder(getActivity()).create();
+                AlertDialog dialog = new AlertDialog.Builder(getContext()).create();
                 dialog.setTitle("Confirmación");
                 dialog.setMessage("¿Está seguro de querer eliminar este proyecto?");
                 dialog.setCancelable(false);

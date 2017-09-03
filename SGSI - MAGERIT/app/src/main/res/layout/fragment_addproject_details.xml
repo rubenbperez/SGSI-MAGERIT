@@ -34,7 +34,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"
-                    android:hint="Nombre del proyecto"
+                    android:hint="Nombre"
                     android:imeOptions="flagNoFullscreen"/>
 
             </android.support.design.widget.TextInputLayout>
@@ -52,7 +52,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"
-                    android:hint="Director del proyecto"
+                    android:hint="Director"
                     android:imeOptions="flagNoFullscreen"/>
 
             </android.support.design.widget.TextInputLayout>
@@ -70,7 +70,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textMultiLine"
-                    android:hint="Descripción del proyecto"
+                    android:hint="Descripción"
                     android:imeOptions="flagNoFullscreen"/>
 
             </android.support.design.widget.TextInputLayout>
@@ -88,7 +88,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"
-                    android:hint="Versión del proyecto"
+                    android:hint="Versión"
                     android:imeOptions="flagNoFullscreen"/>
 
             </android.support.design.widget.TextInputLayout>
@@ -108,7 +108,7 @@
                     android:focusable="false"
                     android:focusableInTouchMode="false"
                     android:inputType="text"
-                    android:hint="Fecha de creación del proyecto"/>
+                    android:hint="Fecha de creación"/>
 
             </android.support.design.widget.TextInputLayout>
 

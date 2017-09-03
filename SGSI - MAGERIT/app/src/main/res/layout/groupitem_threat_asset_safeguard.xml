@@ -20,7 +20,9 @@
         android:typeface="sans"
         android:clickable="false"
         android:focusable="false"
-        android:focusableInTouchMode="false" />
+        android:focusableInTouchMode="false"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"/>
 
     <TextView
         android:id="@+id/none"
@@ -32,7 +34,9 @@
         android:typeface="sans"
         android:clickable="false"
         android:focusable="false"
-        android:focusableInTouchMode="false" />
+        android:focusableInTouchMode="false"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"/>
 
     <TextView
         android:id="@+id/threat"
@@ -45,6 +49,8 @@
         android:typeface="sans"
         android:clickable="false"
         android:focusable="false"
-        android:focusableInTouchMode="false" />
+        android:focusableInTouchMode="false"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"/>
 
 </LinearLayout>

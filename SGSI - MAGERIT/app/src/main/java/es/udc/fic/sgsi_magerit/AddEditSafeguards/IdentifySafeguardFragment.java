@@ -385,22 +385,22 @@ public class IdentifySafeguardFragment extends Fragment {
             lstOpcionesProtecSW.setAdapter(lstCommunicationNets);
 
             // Lista de proteccion interconexion
-            lstOpcionesProtecIntercon = (ListView) view.findViewById(R.id.ListInfoSup);
+            lstOpcionesProtecIntercon = (ListView) view.findViewById(R.id.ListInterconnect);
             ArrayAdapter<String> interco = new ArrayAdapter<String>(this.getContext(), android.R.layout.simple_list_item_single_choice, listaProteccionIntercon);
             lstOpcionesProtecIntercon.setAdapter(interco);
 
             // Lista de Proteccion soportes
-            lstOpcionesProtecSop = (ListView) view.findViewById(R.id.ListAuxEquip);
+            lstOpcionesProtecSop = (ListView) view.findViewById(R.id.ListInfoSup);
             ArrayAdapter<String> lstSop = new ArrayAdapter<String>(this.getContext(), android.R.layout.simple_list_item_single_choice, listaProteccionSoporte);
             lstOpcionesProtecSop.setAdapter(lstSop);
 
             // Lista de proteccion auxiliar
-            lstOpcionesProtecAux = (ListView) view.findViewById(R.id.ListInstallations);
+            lstOpcionesProtecAux = (ListView) view.findViewById(R.id.ListAuxEquip);
             ArrayAdapter<String> lstAux = new ArrayAdapter<String>(this.getContext(), android.R.layout.simple_list_item_single_choice, listaProteccionAux);
             lstOpcionesProtecAux.setAdapter(lstAux);
 
             // Lista proteccion instalaciones
-            lstOpcionesProtecInst = (ListView) view.findViewById(R.id.ListPersonal);
+            lstOpcionesProtecInst = (ListView) view.findViewById(R.id.ListInstallations);
             ArrayAdapter<String> lstInst = new ArrayAdapter<String>(this.getContext(), android.R.layout.simple_list_item_single_choice, listaProteccionInst);
             lstOpcionesProtecInst.setAdapter(lstInst);
 
