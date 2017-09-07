@@ -1673,8 +1673,10 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
                 Long idListaSafeguard = cursor.getLong(0);
                 Long idTipoSafeguard = cursor.getLong(1);
 
-                Cursor cursor2 = db.rawQuery("SELECT DISTINCT s." +
-                        SafeguardConstants.ID_SAFEGUARD + ", t." +
+                Cursor cursor2 = db.rawQuery("SELECT s." +
+                        SafeguardConstants.ID_SAFEGUARD + ", s." +
+                        SafeguardConstants.ID_LISTA_TIPO_SALVAGUARDA + ", s." +
+                        SafeguardConstants.ID_TIPO_SALVAGUARDA + ", t." +
                         ThreatConstants.ID_AMENAZA_ACTIVO + ", t." + ThreatConstants.ID_LISTA_TIPO_AMENAZA + ", t." +
                         ThreatConstants.ID_TIPO_AMENAZA + " FROM " + ThreatConstants.TABLE_NAME +
                         " t LEFT JOIN " + SafeguardConstants.TABLE_NAME + " s ON t." + ThreatConstants.ID_AMENAZA_ACTIVO
@@ -1688,21 +1690,43 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
                 if (cursor2.moveToFirst()) {
                     do {
                         Long idSalvaguarda = null;
-                        if (!cursor.isNull(0)) {
+                        if (!cursor2.isNull(0)) {
                             idSalvaguarda = cursor2.getLong(0);
                         }
-                        Long idAmenaza = cursor2.getLong(1);
-                        Long idListaTipoAmenaza = cursor2.getLong(2);
-                        Long idTipoAmenaza = cursor2.getLong(3);
+                        Long idListaSafeguard2 = cursor2.getLong(1);
+                        Long idTipoSafeguard2 = cursor2.getLong(2);
+                        Long idAmenaza = cursor2.getLong(3);
+                        Long idListaTipoAmenaza = cursor2.getLong(4);
+                        Long idTipoAmenaza = cursor2.getLong(5);
                         Boolean checked = false;
 
-                        if (idsThreatsActivoConSalvaguarda.contains(idAmenaza))
+                        if (idSalvaguarda != null && idListaSafeguard == idListaSafeguard2 && idTipoSafeguard == idTipoSafeguard2)
                             checked = true;
+                        else {
+                            idSalvaguarda = null;
+                        }
 
                         AssetThreatSafeguardDTO threatSafeguard = new AssetThreatSafeguardDTO(
-                                idSalvaguarda,idAmenaza,idListaTipoAmenaza,idTipoAmenaza,idProyecto,checked);
+                                idAmenaza,idSalvaguarda,idListaTipoAmenaza,idTipoAmenaza,idProyecto,checked);
 
-                        threatsSafeguard.add(threatSafeguard);
+                        boolean flag = true;
+
+                        for (int i=0 ; i < threatsSafeguard.size(); i++) {
+                            if (threatsSafeguard.get(i).getIdListaTipoAmenaza() == idListaTipoAmenaza
+                                    && threatsSafeguard.get(i).getIdTipoAmenaza() == idTipoAmenaza &&
+                                    checked == true) {
+                                threatsSafeguard.remove(i);
+                                break;
+                            }
+
+                            if (threatsSafeguard.get(i).getIdListaTipoAmenaza() == idListaTipoAmenaza
+                                    && threatsSafeguard.get(i).getIdTipoAmenaza() == idTipoAmenaza) {
+                                flag = false;
+                            }
+                        }
+
+                        if (flag)
+                            threatsSafeguard.add(threatSafeguard);
                     } while ( (cursor2.moveToNext()));
                 }
                 if (!threatsSafeguard.isEmpty())
@@ -2046,15 +2070,17 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
         SQLiteDatabase db = getReadableDatabase();
         List<PendingTaskDTO> pendingTasks = new ArrayList<>();
 
-        Cursor cursor = db.rawQuery("SELECT t." +
+        Cursor cursor = db.rawQuery("SELECT DISTINCT t." +
                 ThreatConstants.ID_AMENAZA_ACTIVO + ", " + ThreatConstants.ID_LISTA_TIPO_AMENAZA + ", " +
                 ThreatConstants.ID_TIPO_AMENAZA + ", a." + AssetConstants.ID_ACTIVO + ", a." +
                 AssetConstants.NOMBRE + ", a." + AssetConstants.CODIGO +
                 " FROM " + ThreatConstants.TABLE_NAME + " t LEFT JOIN " +
                 AssetConstants.TABLE_NAME + " a ON t." + ThreatConstants.ID_ACTIVO + " = a." +
                 AssetConstants.ID_ACTIVO + " LEFT JOIN " + SafeguardConstants.TABLE_NAME + " s ON t." +
-                ThreatConstants.ID_LISTA_TIPO_AMENAZA + " = s." + SafeguardConstants.ID_AMENAZA +
-                " WHERE t." + ThreatConstants.ID_PROYECTO + " = " + idProyecto,null);
+                ThreatConstants.ID_AMENAZA_ACTIVO + " = s." + SafeguardConstants.ID_AMENAZA +
+                " WHERE t." + ThreatConstants.ID_PROYECTO + " = " + idProyecto + " AND s." +
+                SafeguardConstants.ID_SAFEGUARD + " IS NULL",null);
+
 
         if (cursor.moveToFirst()){
             do {

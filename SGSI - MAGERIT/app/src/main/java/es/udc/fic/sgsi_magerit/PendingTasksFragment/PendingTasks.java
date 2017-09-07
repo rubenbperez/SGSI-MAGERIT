@@ -231,6 +231,9 @@ public class PendingTasks extends Fragment {
             }
 
             if (resultCode == 0)
+                data.clear();
+                data.addAll(data = service.obtenerTareasPendientes(idProyecto));
+                adaptador.notifyDataSetChanged();
                 return;
         }
     }

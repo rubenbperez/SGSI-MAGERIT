@@ -2,9 +2,9 @@
 <resources>
     <string-array name="Sizing_spinner">
         <item>Parametrizar Activos</item>
-        <item>Parametrizar Vulnerabilidad</item>
-        <item>Parametrizar Impacto</item>
-        <item>Parametrizar Control de seguridad</item>
+        <item>Parametrizar Frecuencia</item>
+        <item>Parametrizar Degradación</item>
+        <item>Parametrizar Efecto Salvaguardas</item>
     </string-array>
 
 
