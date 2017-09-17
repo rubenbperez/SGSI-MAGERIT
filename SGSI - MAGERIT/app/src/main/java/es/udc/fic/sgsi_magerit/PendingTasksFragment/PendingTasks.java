@@ -68,7 +68,7 @@ public class PendingTasks extends Fragment {
                 }
             }});
 
-        PendingTaskAdapter adaptador =
+        adaptador =
                 new PendingTaskAdapter(this.getContext(), data);
 
         lstOpciones = (ListView)view.findViewById(R.id.LstPendingTasks);
@@ -226,15 +226,14 @@ public class PendingTasks extends Fragment {
 
             if (resultCode == 1) {
                 data.clear();
-                data.addAll(data = service.obtenerTareasPendientes(idProyecto));
+                data.addAll(service.obtenerTareasPendientes(idProyecto));
                 adaptador.notifyDataSetChanged();
             }
 
             if (resultCode == 0)
                 data.clear();
-                data.addAll(data = service.obtenerTareasPendientes(idProyecto));
+                data.addAll(service.obtenerTareasPendientes(idProyecto));
                 adaptador.notifyDataSetChanged();
-                return;
         }
     }
 
