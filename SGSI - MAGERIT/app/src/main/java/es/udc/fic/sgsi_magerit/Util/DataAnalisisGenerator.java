@@ -520,13 +520,13 @@ public class DataAnalisisGenerator {
 
         long truncated = value / (divideBy / 10); //the number part of the output times 10
         boolean hasDecimal = truncated < 100 && (truncated / 10d) != (truncated / 10);
-        return hasDecimal ? (truncated / 10d) + suffix : (truncated / 10) + suffix;
+        return hasDecimal ? (truncated / 10d) + suffix : (truncated / 10) + suffix + "€";
     }
 
 
     public static String formatIntegerLandscape (long value) {
         DecimalFormat formatter = new DecimalFormat("#,###");
-        return formatter.format(value);
+        return formatter.format(value) + "€";
     }
 
 }
