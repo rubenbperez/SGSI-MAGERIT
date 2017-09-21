@@ -6,8 +6,8 @@
     android:descendantFocusability="blocksDescendants"
     android:focusable="false"
     android:focusableInTouchMode="false"
-    android:paddingTop="2dp"
-    android:paddingBottom="2dp">
+    android:paddingTop="4dp"
+    android:paddingBottom="4dp">
 
     <TextView
         android:id="@+id/asset_code_name"
@@ -21,7 +21,9 @@
         android:focusable="false"
         android:focusableInTouchMode="false"
         android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"/>
+        android:layout_marginRight="5dp"
+        android:paddingTop="4dp"
+        android:paddingBottom="2dp"/>
 
     <TextView
         android:id="@+id/asset_desc"

@@ -51,7 +51,6 @@ public class Projects extends Fragment {
                              Bundle savedInstanceState) {
 
         navView = (NavigationView)getActivity().findViewById(R.id.navview);
-
         service = new ModelServiceImpl(getContext(), GlobalConstants.DATABASE_NAME,1);
         try {
             data = service.obtenerProyectos();
@@ -108,7 +107,7 @@ public class Projects extends Fragment {
                         proyectoADesmarcar, proyectoAMarcar);
             }
         });
-
+        comprobarElementosNavView(data,navView);
         registerForContextMenu(lstOpciones);
         return view;
 
@@ -137,6 +136,8 @@ public class Projects extends Fragment {
                 navView.getMenu().findItem(R.id.menuActivos).setEnabled(false);
                 navView.getMenu().findItem(R.id.menuAmenazas).setEnabled(false);
                 navView.getMenu().findItem(R.id.menuSalvaguardas).setEnabled(false);
+                navView.getMenu().findItem(R.id.menuAnalisis).setEnabled(false);
+                navView.getMenu().findItem(R.id.menuTareasPendientes).setEnabled(false);
             }
         }
     }

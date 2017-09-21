@@ -247,7 +247,7 @@ public class GlobalConstants {
             "[HW.pabx] Protección de la centralita telefónica (PABX)"};
 
     public final static String[] SALVAGUARDA_TIPO_PROTECCION_COMS = {"[COM.start] Entrada en servicio",
-            "[COM.SC] Se aplican periles de seguridad", "[COM.A] Aseguramiento de la disponibilidad",
+            "[COM.SC] Se aplican perfiles de seguridad", "[COM.A] Aseguramiento de la disponibilidad",
             "[COM.aut] Autenticación del canal", "[COM.I] Protección de la integridad de los datos intercambiados",
             "[COM.C] Protección criptográfica de la confidencialidad de los datos intercambiados",
             "[COM.op] Operación", "[COM.CM] Cambios (actualizaciones y mantenimiento)", "[COM.end] Terminación",
