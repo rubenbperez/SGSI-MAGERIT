@@ -1509,12 +1509,30 @@ public class ModelServiceImpl extends SQLiteOpenHelper implements ModelService {
                 Long idAmenaza = cursor.getLong(3);
                 Long idListaThreat = cursor.getLong(4);
                 Long idTipoThreat = cursor.getLong(5);
-                Integer idValoracionAut = cursor.getInt(6);
-                Integer idValoracionConf = cursor.getInt(7);
-                Integer idValoracionDisp = cursor.getInt(8);
-                Integer idValoracionInt = cursor.getInt(9);
-                Integer idValoracionTraz = cursor.getInt(10);
-                Integer idTprotec = cursor.getInt(11);
+
+                Integer idValoracionAut = null;
+                if (!cursor.isNull(6))
+                    idValoracionAut = cursor.getInt(6);
+
+                Integer idValoracionConf = null;
+                if (!cursor.isNull(7))
+                    idValoracionConf = cursor.getInt(7);
+
+                Integer idValoracionDisp = null;
+                if (!cursor.isNull(8))
+                    idValoracionDisp = cursor.getInt(8);
+
+                Integer idValoracionInt = null;
+                if (!cursor.isNull(9))
+                    idValoracionInt = cursor.getInt(9);
+
+                Integer idValoracionTraz = null;
+                if (!cursor.isNull(10))
+                    idValoracionTraz = cursor.getInt(10);
+
+                Integer idTprotec = null;
+                if (!cursor.isNull(11))
+                    idTprotec = cursor.getInt(11);
 
                 List<Safeguard> safeguards = new ArrayList<>();
 

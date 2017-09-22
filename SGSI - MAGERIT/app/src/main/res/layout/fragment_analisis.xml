@@ -5,42 +5,43 @@
     android:orientation="vertical">
 
     <RadioGroup
-        android:checkedButton="@+id/riesgo"
         android:id="@+id/toggle"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="5dp"
         android:background="@drawable/selector_out_line"
-        android:layout_marginBottom="@dimen/margin_medium"
+        android:checkedButton="@+id/riesgo"
         android:orientation="horizontal">
 
         <RadioButton
-            android:layout_marginTop="1dp"
-            android:layout_marginBottom="1dp"
-            android:layout_marginLeft="1dp"
             android:id="@+id/riesgo"
-            android:background="@drawable/toggle_widget_background"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight=".5"
+            android:layout_marginBottom="1dp"
+            android:layout_marginLeft="1dp"
+            android:layout_marginTop="1dp"
+            android:layout_weight="0.50"
+            android:background="@drawable/toggle_widget_background"
             android:button="@null"
             android:gravity="center"
             android:text="Riesgo"
+            android:textSize="18sp"
             android:textColor="@color/white" />
 
         <RadioButton
-            android:layout_marginRight="1dp"
-            android:layout_marginTop="1dp"
-            android:layout_marginBottom="1dp"
             android:id="@+id/impacto"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_marginBottom="1dp"
+            android:layout_marginRight="1dp"
+            android:layout_marginTop="1dp"
             android:layout_weight=".5"
             android:background="@drawable/toggle_widget_background"
             android:button="@null"
             android:gravity="center"
             android:text="Impacto"
-            android:textColor="@color/white"
-            />
+            android:textSize="18sp"
+            android:textColor="@color/white" />
     </RadioGroup>
 
     <LinearLayout
@@ -124,15 +125,16 @@
             android:gravity="center_vertical|center"/>
     </LinearLayout>
 
+    <ListView
+        android:id="@+id/LstOpciones"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true" />
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@android:color/darker_gray"/>
-
-    <ListView android:id="@+id/LstOpciones"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clickable="true" />
 
 </LinearLayout>
 
